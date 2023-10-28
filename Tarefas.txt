@@ -1,0 +1,8 @@
+-> Não necessariamente precisa ser realizado em ordem
+-> Quando for completo, colocar um x no lugar do .
+
+. Criar o diagrama de classes para o sistema (não precisa estar completo, mas com uma base)
+. Criar diagrama de classes para o banco de dados
+. Criar o banco de dados
+. Criar conexão do banco de dados com o sistema
+. Pensar no que fazer com produtos já comprados. (Arquivar, excluir, criar uma categoria própria...)
