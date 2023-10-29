@@ -11,6 +11,8 @@
     
     -> Produtos poderão ser exibidos com filtros de tag: roupas para praia, peças de computador, etc...
 
+    -> Deixar algumas lojas pré-cadastradas. Tipo: shein, aliexpress e exibir uma miniatura da logo da loja
+    por cima da foto do produto quando for exibido na tela
 
 
 -> Ideias para o sistema:
@@ -22,3 +24,4 @@
 
     -> Os usuários poderão adicionar tags aos produtos. Por exemplo: roupas para praia. Deverá haver uma
     função que retorne todos os produtos que tem essa tag.
+
