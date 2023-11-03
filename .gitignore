@@ -1,4 +1,2 @@
 .vscode/
 bin/
-lib/javafx/javafx-sdk-17.0.9/lib/*.so
-lib/javafx/javafx-sdk-17.0.9/lib/*.properties
