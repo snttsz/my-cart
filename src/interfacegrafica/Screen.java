@@ -1,8 +1,12 @@
 package interfacegrafica;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -10,32 +14,21 @@ import javafx.stage.Stage;
 
 public class Screen extends Application
 {
-    public static void main(String[] args) throws Exception
+    private final String pathResources = "../resources/";
+
+    @Override
+    public void start(Stage stage) throws Exception 
+    {
+        Parent root = FXMLLoader.load(getClass().getResource(pathResources + "interface.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void launchScreen(String[] args) 
     {
         launch(args);
     }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception 
-    {
-        primaryStage.setTitle("Teste");
-        Button botao = new Button("Clique aqui");
-        botao.setOnAction(new EventHandler<ActionEvent>() 
-        {
-
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                System.out.println("FUDEU!");
-            }
-                
-        });
-
-        StackPane root = new StackPane();
-        root.getChildren().addAll(botao);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-    }
-    
-    private double tamanhoScreen;
 }
