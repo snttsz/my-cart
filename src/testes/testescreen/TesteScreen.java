@@ -1,13 +1,22 @@
 package testes.testescreen;
 
-import interfacegrafica.Screen;
+import interfacegrafica.InitialScreenLogged;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class TesteScreen 
+public class TesteScreen extends Application
 {
-    public static void main(String args[])
+    @Override
+    public void start(Stage stage) 
     {
-        Screen screen = new Screen();
+        InitialScreenLogged minhaTela = new InitialScreenLogged("MyCart", "InitialScreenLogged.fxml", "Username");
 
-        screen.launchScreen(args);
+        minhaTela.start(stage);
+
+    }
+
+    public static void main(String[] args) 
+    {
+        launch(args);
     }
 }
