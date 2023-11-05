@@ -1,3 +1,7 @@
 
+No vscode, vá em "Run" e "Add Configuration", isso irá abrir um arquivo chamado "launch.json"
+Na chave com o nome do arquivo onde está o main no projeto, adicione a chave
+"vmArgs" e atribua como valor os argumentos do módulo.
+
 # Modulo da interface gráfica:
 --module-path \"lib/javafx/javafx-sdk-17.0.9/lib\" --add-modules javafx.controls,javafx.fxml
