@@ -8,6 +8,5 @@ public class TesteScreen
     {
         Screen screen = new Screen();
 
-        screen.launchScreen(args);
     }
 }
