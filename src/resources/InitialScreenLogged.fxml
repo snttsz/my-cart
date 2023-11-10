@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.InitialScreenLoggedController">
@@ -49,20 +50,40 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Button fx:id="adicionarProduto" layoutX="881.0" layoutY="168.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 10;">
+      <Button fx:id="adicionarProduto" layoutX="881.0" layoutY="166.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="30.0" prefWidth="206.0" style="-fx-background-radius: 10;">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="pesquisar" layoutX="850.0" layoutY="59.0" mnemonicParsing="false" opacity="0.0" prefHeight="33.0" prefWidth="31.0">
+      <Button fx:id="pesquisar" layoutX="850.0" layoutY="59.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="33.0" prefWidth="31.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
+      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button fx:id="logomarcaInicio" layoutX="57.0" layoutY="4.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="102.0" prefWidth="179.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <AnchorPane layoutX="61.0" layoutY="363.0" prefHeight="111.0" prefWidth="112.0" style="-fx-background-radius: 100; -fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="118.0" fitWidth="112.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/avatar.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 
 </AnchorPane>

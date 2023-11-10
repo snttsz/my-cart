@@ -1,19 +1,18 @@
 package interfacegrafica;
 
 import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 import java.net.URL;
-import java.security.Key;
 import java.util.ResourceBundle;
 
 /**
@@ -42,24 +41,9 @@ public abstract class ControllerLogged implements Initializable
     public void botaoMenuMouseOff(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
-
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
-
-            if (botaoSource.getId() == inicio.getId())
-            {
-                inicio.setOpacity(0);
-            }
-            else if (botaoSource.getId() == categorias.getId())
-            {
-                categorias.setOpacity(0);
-            }
-            else if (botaoSource.getId() == lojasCadastradas.getId())
-            {
-                lojasCadastradas.setOpacity(0);
-            }
-        }
+        Button botaoSource = (Button) source;
+        
+        botaoSource.setOpacity(0.0);
     }
 
     /**
@@ -78,24 +62,14 @@ public abstract class ControllerLogged implements Initializable
     public void botaoMenuMouseOn(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
+        Button botaoSource = (Button) source;
 
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
-
-            if (botaoSource.getId() == inicio.getId())
-            {
-                inicio.setOpacity(0.17);
-            }
-            else if (botaoSource.getId() == categorias.getId())
-            {
-                categorias.setOpacity(0.17);
-            }
-            else if (botaoSource.getId() == lojasCadastradas.getId())
-            {
-                lojasCadastradas.setOpacity(0.17);
-            }
-        }
+        botaoSource.setOpacity(0.17);
+        
+        /*  
+         * Seta o cursor para "HAND" (mãozinha)
+        */
+        this.cursorOn(mouse);
     }
 
     /**
@@ -113,24 +87,20 @@ public abstract class ControllerLogged implements Initializable
     public void botaoMenuClicked(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
+        Button botaoSource = (Button) source;
 
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
+        botaoSource.setOpacity(0.3);
 
-            if (botaoSource.getId() == inicio.getId())
-            {
-                inicio.setOpacity(0.3);
-            }
-            else if (botaoSource.getId() == categorias.getId())
-            {
-                categorias.setOpacity(0.3);
-            }
-            else if (botaoSource.getId() == lojasCadastradas.getId())
-            {
-                lojasCadastradas.setOpacity(0.3);
-            }
-        }
+        /*  
+        * Seta o cursor pra "DEFAULT" (ponteiro)
+        */
+        this.cursorNormal(mouse);
+
+        /*  
+        * Mostra uma "seta" ao lado do botão para indicar que ele está acionado.
+        */
+        this.mostrarSeta(botaoSource);
+
     }
 
     /**
@@ -148,6 +118,10 @@ public abstract class ControllerLogged implements Initializable
         String fontName = "System";
         double fontSize = 17.0;
 
+        /* 
+         * Se o campo de pesquisa estiver em branco, restaura o prompt text pro 
+         * default.
+         */
         if (pesquisarField.getText().isEmpty())
         {
            
@@ -158,6 +132,10 @@ public abstract class ControllerLogged implements Initializable
             pesquisarField.setFont(systemFont);
         
         }
+        /* 
+         * Caso alguma tecla for digitada, define as configurações de estilo e fonte do
+         * texto.
+         */
         else
         {
             
@@ -166,6 +144,66 @@ public abstract class ControllerLogged implements Initializable
             Font systemFont = Font.font(fontName, FontPosture.REGULAR, fontSize);
             pesquisarField.setFont(systemFont);
         
+        }
+    }
+
+    @FXML
+    public void cursorOn(MouseEvent mouse)
+    {
+        Node source = (Node) mouse.getSource();
+
+        source.setCursor(Cursor.HAND);
+    }
+
+    @FXML
+    public void cursorNormal(MouseEvent mouse)
+    {
+        Node source = (Node) mouse.getSource();
+
+        source.setCursor(Cursor.DEFAULT);
+    }
+
+    public void mostrarSeta(Button botao)
+    {
+        if (botao.getId() == inicio.getId())
+        {
+            if (setaInicio.getOpacity() == 0)
+            {
+                setaInicio.setOpacity(1);
+            }
+
+            setaCategorias.setOpacity(0);
+            setaLojasCadastradas.setOpacity(0);
+        }
+        else if (botao.getId() == categorias.getId())
+        {
+            if (setaCategorias.getOpacity() == 0)
+            {
+                setaCategorias.setOpacity(1);
+                setaInicio.setOpacity(0);
+            }
+            else
+            {
+                setaCategorias.setOpacity(0);
+                setaInicio.setOpacity(1);
+            }
+
+            setaLojasCadastradas.setOpacity(0);
+        }
+        else if (botao.getId() == lojasCadastradas.getId())
+        {
+            if (setaLojasCadastradas.getOpacity() == 0)
+            {
+                setaLojasCadastradas.setOpacity(1);
+                setaInicio.setOpacity(0);
+            }
+            else
+            {
+                setaLojasCadastradas.setOpacity(0);
+                setaInicio.setOpacity(1);
+            }
+
+            setaCategorias.setOpacity(0);
         }
     }
 
@@ -207,5 +245,17 @@ public abstract class ControllerLogged implements Initializable
     @FXML 
     protected TextField pesquisarField;
 
+    /* 
+     *    Figuras geométricas
+     */
+
+    @FXML
+    protected Polygon setaInicio;
+
+    @FXML
+    protected Polygon setaCategorias;
+
+    @FXML
+    protected Polygon setaLojasCadastradas;
 
 }

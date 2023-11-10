@@ -18,64 +18,19 @@ public class InitialScreenLoggedController extends ControllerLogged
         this.userName = userName;
     }
 
-    @Override
-    public void botaoMenuMouseOff(MouseEvent mouse)
+    public void botaoAddProdutoMouseOff(MouseEvent mouse)
     {
-        Node source = (Node) mouse.getSource();
-
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
-
-            if (botaoSource.getId() == adicionarProduto.getId())
-            {
-                adicionarProduto.setOpacity(0.0);
-            }
-            else
-            {
-                super.botaoMenuMouseOff(mouse);
-            }
-        }
+        adicionarProduto.setOpacity(0);
     }
 
-    @Override
-    public void botaoMenuMouseOn(MouseEvent mouse)
+    public void botaoAddProdutoMouseOn(MouseEvent mouse)
     {
-        Node source = (Node) mouse.getSource();
-
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
-
-            if (botaoSource.getId() == adicionarProduto.getId())
-            {
-                adicionarProduto.setOpacity(0.17);
-            }
-            else
-            {
-                super.botaoMenuMouseOn(mouse);
-            }
-        }
+        adicionarProduto.setOpacity(0.17);
     }
 
-    @Override
-    public void botaoMenuClicked(MouseEvent mouse)
+    public void botaoAddProdutoClicked(MouseEvent mouse)
     {
-        Node source = (Node) mouse.getSource();
-
-        if (source instanceof Button)
-        {
-            Button botaoSource = (Button) source;
-
-            if (botaoSource.getId() == adicionarProduto.getId())
-            {
-                adicionarProduto.setOpacity(0.3);
-            }
-            else
-            {
-                super.botaoMenuClicked(mouse);
-            }
-        }
+        adicionarProduto.setOpacity(0.3);
     }
 
     /* 
