@@ -1,7 +1,9 @@
-package sistema;
+package sistema.entitymodels;
 
 public class ProdutoEletronico extends Produto
-{   
+{
+
+    /* Construtores */
 
     public ProdutoEletronico(){};
 
@@ -10,5 +12,19 @@ public class ProdutoEletronico extends Produto
         super(codigo, nome, preco, data_de_adicao, valorArrecadado, valorFrete);
     }
 
+    /* Getters e Setters */
+
+    public int getDimensoes() 
+    {
+        return dimensoes;
+    }
+
+    public void setDimensoes(int dimensoes) 
+    {
+        this.dimensoes = dimensoes;
+    }
+
+    /* Atributos */
+    
     int dimensoes;
 }

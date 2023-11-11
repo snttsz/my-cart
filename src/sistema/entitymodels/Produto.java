@@ -1,4 +1,4 @@
-package sistema;
+package sistema.entitymodels;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ public abstract class Produto
 
     /* Construtores */
 
-    Produto(){};
+    public Produto(){};
 
     public Produto(int codigo, String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)  
     {
@@ -45,7 +45,6 @@ public abstract class Produto
         this.categoria = categoria;
         this.especificacoes = especificacoes;
         this.tags = tags;
-
     }
 
     public double getPreco() 

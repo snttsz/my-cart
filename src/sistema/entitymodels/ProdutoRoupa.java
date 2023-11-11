@@ -1,9 +1,9 @@
-package sistema;
+package sistema.entitymodels;
 
 public class ProdutoRoupa extends Produto
 {
     
-    
+
     public ProdutoRoupa(String tamanho, String cor, String material) 
     {
         this.tamanho = tamanho;

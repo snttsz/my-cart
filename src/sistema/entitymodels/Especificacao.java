@@ -1,4 +1,4 @@
-package sistema;
+package sistema.entitymodels;
 
 public class Especificacao 
 {

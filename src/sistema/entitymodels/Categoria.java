@@ -1,4 +1,4 @@
-package sistema;
+package sistema.entitymodels;
 
 // É uma ajuda pra interface ter um objeto categoria, já é mais fácil pra puxar os dados
 // A gente pode desenvolver essa classe também, se pensarmos em mais coisas pra adicionar 
