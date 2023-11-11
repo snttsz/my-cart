@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -27,7 +29,7 @@ public abstract class ControllerLogged implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
-
+        
     }
 
     /**
@@ -203,6 +205,9 @@ public abstract class ControllerLogged implements Initializable
         }
     }
 
+    protected abstract void mudarSceneLojasCadastradas();
+    protected abstract void mudarSceneCategorias();
+
     /* 
      * 
      *      FXML ENTIDADES
@@ -252,7 +257,7 @@ public abstract class ControllerLogged implements Initializable
     protected Polygon setaCategorias;
 
     @FXML
-    protected Polygon setaLojasCadastradas;
+    public Polygon setaLojasCadastradas;
 
     /* 
      *    Menu
@@ -260,5 +265,16 @@ public abstract class ControllerLogged implements Initializable
 
     @FXML 
     protected SplitMenuButton categoriasMenu;
+
+    /* 
+     *    Panes
+     */
+
+    @FXML
+    protected ScrollPane scrollPane;
+
+    @FXML
+    // Pane inside scrollPane
+    protected AnchorPane mainPane;
 
 }
