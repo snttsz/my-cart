@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -122,14 +123,14 @@ public abstract class ControllerLogged implements Initializable
          * Se o campo de pesquisa estiver em branco, restaura o prompt text pro 
          * default.
          */
-        if (pesquisarField.getText().isEmpty())
+        if (this.pesquisarField.getText().isEmpty())
         {
            
-            pesquisarField.setOpacity(0.65);
-            pesquisarField.setPromptText("Pesquisar um produto");
+            this.pesquisarField.setOpacity(0.65);
+            this.pesquisarField.setPromptText("Pesquisar um produto");
             
             Font systemFont = Font.font(fontName, FontPosture.ITALIC, fontSize);
-            pesquisarField.setFont(systemFont);
+            this.pesquisarField.setFont(systemFont);
         
         }
         /* 
@@ -139,10 +140,10 @@ public abstract class ControllerLogged implements Initializable
         else
         {
             
-            pesquisarField.setOpacity(1);
+            this.pesquisarField.setOpacity(1);
             
             Font systemFont = Font.font(fontName, FontPosture.REGULAR, fontSize);
-            pesquisarField.setFont(systemFont);
+            this.pesquisarField.setFont(systemFont);
         
         }
     }
@@ -165,45 +166,40 @@ public abstract class ControllerLogged implements Initializable
 
     public void mostrarSeta(Button botao)
     {
-        if (botao.getId() == inicio.getId())
+        if (botao.getId() == this.inicio.getId())
         {
-            if (setaInicio.getOpacity() == 0)
+            if (this.setaInicio.getOpacity() == 0)
             {
-                setaInicio.setOpacity(1);
+                this.setaInicio.setOpacity(1);
             }
 
-            setaCategorias.setOpacity(0);
-            setaLojasCadastradas.setOpacity(0);
+            this.setaCategorias.setOpacity(0);
+            this.setaLojasCadastradas.setOpacity(0);
         }
-        else if (botao.getId() == categorias.getId())
+        else if (botao.getId() == this.categorias.getId())
         {
-            if (setaCategorias.getOpacity() == 0)
+            if (this.categoriasMenu.isShowing())
             {
-                setaCategorias.setOpacity(1);
-                setaInicio.setOpacity(0);
+                System.out.println("showing");
+                this.categoriasMenu.hide();
             }
             else
             {
-                setaCategorias.setOpacity(0);
-                setaInicio.setOpacity(1);
+                this.categoriasMenu.show();
             }
-
-            setaLojasCadastradas.setOpacity(0);
+            
+            this.setaInicio.setOpacity(0);
+            this.setaLojasCadastradas.setOpacity(0);
         }
         else if (botao.getId() == lojasCadastradas.getId())
         {
-            if (setaLojasCadastradas.getOpacity() == 0)
+            if (this.setaLojasCadastradas.getOpacity() == 0)
             {
-                setaLojasCadastradas.setOpacity(1);
-                setaInicio.setOpacity(0);
+                this.setaLojasCadastradas.setOpacity(1);    
             }
-            else
-            {
-                setaLojasCadastradas.setOpacity(0);
-                setaInicio.setOpacity(1);
-            }
-
-            setaCategorias.setOpacity(0);
+            
+            this.setaInicio.setOpacity(0);
+            this.setaCategorias.setOpacity(0);
         }
     }
 
@@ -257,5 +253,12 @@ public abstract class ControllerLogged implements Initializable
 
     @FXML
     protected Polygon setaLojasCadastradas;
+
+    /* 
+     *    Menu
+     */
+
+    @FXML 
+    protected SplitMenuButton categoriasMenu;
 
 }
