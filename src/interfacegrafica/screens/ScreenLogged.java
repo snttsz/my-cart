@@ -1,4 +1,4 @@
-package interfacegrafica;
+package interfacegrafica.screens;
 
 public class ScreenLogged extends Screen
 {

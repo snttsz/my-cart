@@ -1,6 +1,6 @@
 package testes.testescreen;
 
-import interfacegrafica.ScreenLogged;
+import interfacegrafica.screens.ScreenLogged;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

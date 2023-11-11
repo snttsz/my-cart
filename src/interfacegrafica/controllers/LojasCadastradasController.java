@@ -1,7 +1,5 @@
 package interfacegrafica.controllers;
 
-import interfacegrafica.ControllerLogged;
-
 public class LojasCadastradasController extends ControllerLogged
 {
 

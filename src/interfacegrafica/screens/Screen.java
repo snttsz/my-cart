@@ -1,4 +1,4 @@
-package interfacegrafica;
+package interfacegrafica.screens;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -128,7 +128,7 @@ public abstract class Screen extends Application
     protected final double alturaJanela = 575;
 
     // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
-    protected final String pathResources = "../resources/";
+    protected final String pathResources = "../../resources/";
 
     // Nome do arquivo .fxml equivalente à classe
     protected String fxmlname;
