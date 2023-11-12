@@ -1,4 +1,4 @@
-package sistema;
+package sistema.entitymodels;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,25 @@ public abstract class Produto
 
     /* Construtores */
 
-    Produto(){};
+    public Produto(){};
 
-    public Produto(int codigo, String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)  
+    public Produto(int codigo, String nome, double preco, String link, String url_foto, String marca,
+            String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, Categoria categoria,
+            ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
     {
-        this.setValores(codigo, nome, preco, data_de_adicao, valorArrecadado, valorFrete);
-        this.especificacoes = new ArrayList<Especificacao>();
-        this.tags = new ArrayList<String>();
-        this.nomeTabela = "Produto";
+        this.codigo = codigo;
+        this.nome = nome;
+        this.preco = preco;
+        this.link = link;
+        this.url_foto = url_foto;
+        this.marca = marca;
+        this.data_de_adicao = data_de_adicao;
+        this.prioridade = prioridade;
+        this.valorArrecadado = valorArrecadado;
+        this.valorFrete = valorFrete;
+        this.categoria = categoria;
+        this.especificacoes = especificacoes;
+        this.tags = tags;
     }
 
     /* Getters e setters */
@@ -47,7 +58,6 @@ public abstract class Produto
         this.tags = tags;
     }
 
-    
     public double getPreco() 
     {
         return this.preco;
@@ -178,79 +188,20 @@ public abstract class Produto
         this.valorArrecadado = valorArrecadado;
     }
 
-    public String getDescricao() 
-    {
-        return this.descricao;
-    }
-
-    public void setDescricao(String descricao) 
-    {
-        this.descricao = descricao;
-    }
-    
-    public int getDisponibilidade() 
-    {
-        return this.disponibilidade;
-    }
-
-    public void setDisponibilidade(int disponibilidade) 
-    {
-        this.disponibilidade = disponibilidade;
-    }
-
-    public String getNomeTabela() 
-    {
-        return this.nomeTabela;
-    }
-
-    /* 
-     * Enum com as tabelas da classe
-     */
-    public enum ColunaProduto
-    {
-        ID("idProduto"),
-        NOME("nome"),
-        PRECO("valor"),
-        LINK("url"),
-        MARCA("marca"),
-        DATA_DE_ADICAO("data_de_adicao"),
-        DISPONIBILIDADE("disponibilidade"),
-        PRIORIDADE("prioridade"),
-        URL_FOTO("url_foto"),
-        VALOR_ARRECADADO("valor_arrecadado"),
-        DESCRICAO("descricao"),
-        VALOR_FRETE("valor_frete");
-        
-        private final String nomeColuna;
-        
-        ColunaProduto(String nomeColuna)
-        {
-            this.nomeColuna = nomeColuna;
-        }
-        
-        public String getNomeColuna()
-        {
-            return this.nomeColuna;
-        }
-    }
 
     /* Atributos */
-    
+
     private int codigo;
     private String nome;
-    private String descricao;
     private double preco;
     private String link;
     private String url_foto;
     private String marca;
     private String data_de_adicao;
     private int prioridade;
-    private int disponibilidade;
     private double valorArrecadado;
     private double valorFrete; 
     private Categoria categoria;
     private ArrayList<Especificacao> especificacoes;
-    private ArrayList<String> tags;
-    private String nomeTabela;
-
+    private ArrayList<String> tags; 
 }
