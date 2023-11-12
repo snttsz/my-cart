@@ -6,18 +6,30 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/* 
+ * Classe resposnsável por toda a parte de conexão com o banco de dados SQLite
+ */
 public class SQLiteConnectionManager 
 {
     
+    /* 
+     * Construtores
+     */
     public SQLiteConnectionManager(){};
 
+    /* 
+     * Métodos Gerais
+     */
+    /* 
+     * Método responsável por criar uma conexão com o banco de dados
+     */
     public boolean conectar()
     {
         try
         {
             Class.forName("org.sqlite.JDBC");
             
-            String url = "jdbc:sqlite:src/bancodedados/banco_sqlite.db";   
+            String url = "jdbc:sqlite:database/banco_sqlite.db";   
             
             this.conexao = DriverManager.getConnection(url);
 
@@ -34,7 +46,9 @@ public class SQLiteConnectionManager
 
     } 
     
-    
+    /* 
+     * Método responsável por desconectar a aplicação do banco de dados
+     */
     public  boolean desconectar()
     {
         try
@@ -57,6 +71,7 @@ public class SQLiteConnectionManager
     }
 
     /* 
+     * Método responsável por criar e retornar um statement
      * Statement é uma instrução que você envia para o banco de dados para ser executada
      */
     public Statement criarStatement()
@@ -72,6 +87,39 @@ public class SQLiteConnectionManager
         }
     }
 
+    /* 
+     * Método responsável por enviar uma query para o banco de dados
+     * 
+     * IMPORTANTE lembrar que, por algum motivo o banco de dados só recebe um comando por vez.
+     * Portanto, se for criar duas tabelas, primeiro mande um create table, depois mande o outro, jamais os dois de vez.
+     */
+    public void enviarQuery(String instrucao)
+    {
+
+        boolean conectou = false;
+        try
+        {
+            conectou = conectar();
+
+            Statement statement = criarStatement();
+
+            statement.execute(instrucao);
+
+            System.out.println("O Query foi realizado com sucesso!");
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Erro no envio do Query: " + e.getMessage());
+        }
+        finally
+        {
+            if(conectou)
+            {
+                desconectar();
+            }
+        }
+    }
+
     /* GETTERS E SETTERS */
     public Connection getConexao() 
     {
@@ -80,7 +128,6 @@ public class SQLiteConnectionManager
 
     /* ATRIBUTOS */
     private Connection conexao;
-
 
 
 }

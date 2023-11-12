@@ -15,7 +15,6 @@ public abstract class Produto
         this.especificacoes = new ArrayList<Especificacao>();
         this.tags = new ArrayList<String>();
     }
-    
 
     /* Getters e setters */
 
@@ -178,20 +177,71 @@ public abstract class Produto
         this.valorArrecadado = valorArrecadado;
     }
 
+    public String getDescricao() 
+    {
+        return this.descricao;
+    }
+
+    public void setDescricao(String descricao) 
+    {
+        this.descricao = descricao;
+    }
+    
+    public int getDisponibilidade() 
+    {
+        return this.disponibilidade;
+    }
+
+    public void setDisponibilidade(int disponibilidade) 
+    {
+        this.disponibilidade = disponibilidade;
+    }
+
+    /* 
+     * Enum com as tabelas da classe
+     */
+    public enum ColunaProduto
+    {
+        NOME("nome"),
+        PRECO("valor"),
+        LINK("url"),
+        MARCA("marca"),
+        DATA_DE_ADICAO("data_de_adicao"),
+        DISPONIBILIDADE("disponibilidade"),
+        PRIORIDADE("prioridade"),
+        URL_FOTO("url_foto"),
+        VALOR_ARRECADADO("valor_arrecadado"),
+        DESCRICAO("descricao"),
+        VALOR_FRETE("valor_frete");
+        
+        private final String nomeColuna;
+        
+        ColunaProduto(String nomeColuna)
+        {
+            this.nomeColuna = nomeColuna;
+        }
+        
+        public String getNomeColuna()
+        {
+            return this.nomeColuna;
+        }
+    }
 
     /* Atributos */
-
+    
     private int codigo;
     private String nome;
+    private String descricao;
     private double preco;
     private String link;
     private String url_foto;
     private String marca;
     private String data_de_adicao;
     private int prioridade;
+    private int disponibilidade;
     private double valorArrecadado;
     private double valorFrete; 
     private Categoria categoria;
     private ArrayList<Especificacao> especificacoes;
-    private ArrayList<String> tags; 
+    private ArrayList<String> tags;
 }
