@@ -19,7 +19,9 @@ public class SQLiteConnectionManager
 
     /* 
      * Métodos Gerais
-     */
+                        */
+
+
     /* 
      * Método responsável por criar uma conexão com o banco de dados
      */
@@ -30,8 +32,8 @@ public class SQLiteConnectionManager
             Class.forName("org.sqlite.JDBC");
             
             String url = "jdbc:sqlite:database/banco_sqlite.db";   
-            
-            this.conexao = DriverManager.getConnection(url);
+
+            conexao = DriverManager.getConnection(url);
 
             System.out.println("Conectado com sucesso!");
 
@@ -49,13 +51,13 @@ public class SQLiteConnectionManager
     /* 
      * Método responsável por desconectar a aplicação do banco de dados
      */
-    public  boolean desconectar()
+    public boolean desconectar()
     {
         try
         {
-            if(this.conexao.isClosed() == false)
+            if(conexao.isClosed() == false)
             {
-                this.conexao.close();
+                conexao.close();
             }
     
             System.out.println("Desconectado com sucesso!");
@@ -78,7 +80,7 @@ public class SQLiteConnectionManager
     {
         try
         {
-            return this.conexao.createStatement();
+            return conexao.createStatement();
 
         }
         catch(SQLException e)
@@ -123,11 +125,11 @@ public class SQLiteConnectionManager
     /* GETTERS E SETTERS */
     public Connection getConexao() 
     {
-        return this.conexao;
+        return conexao;
     }
 
     /* ATRIBUTOS */
-    private Connection conexao;
+    private static Connection conexao;
 
 
 

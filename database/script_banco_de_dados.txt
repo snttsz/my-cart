@@ -1,12 +1,11 @@
-CREATE TABLE IF NOT EXISTS loja (
-  idloja INTEGER PRIMARY KEY AUTOINCREMENT,
+PRAGMA foreign_keys=off;
+
+-- Schema mydb
+
+CREATE TABLE IF NOT EXISTS Loja (
+  idLoja INTEGER PRIMARY KEY AUTOINCREMENT,
   nome TEXT NOT NULL,
   url TEXT
-);
-
-CREATE TABLE IF NOT EXISTS classificacao (
-  idclassificacao INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Produto (
@@ -19,75 +18,64 @@ CREATE TABLE IF NOT EXISTS Produto (
   disponibilidade INTEGER NOT NULL,
   prioridade INTEGER,
   url_foto TEXT,
-  loja_idloja INTEGER,
   valor_arrecadado REAL,
-  valor_frete REAL,
   descricao TEXT,
-  classificacao_idclassificacao INTEGER,
-  FOREIGN KEY (loja_idloja) REFERENCES loja (idloja) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  FOREIGN KEY (classificacao_idclassificacao) REFERENCES classificacao (idclassificacao) ON DELETE NO ACTION ON UPDATE NO ACTION
+  valor_frete REAL,
+  cor TEXT,
+  tamanho TEXT,
+  material TEXT,
+  autor TEXT,
+  categoria TEXT NOT NULL,
+  plataforma TEXT,
+  genero TEXT,
+  comprimento TEXT,
+  largura TEXT,
+  altura TEXT,
+  Loja_idLoja INTEGER,
+  FOREIGN KEY (Loja_idLoja) REFERENCES Loja (idLoja) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS tag (
-  idtag INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS Tag (
+  idTag INTEGER PRIMARY KEY AUTOINCREMENT,
   nome TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS usuario (
-  idusuario INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS Usuario (
+  idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
   nome TEXT NOT NULL,
   login TEXT NOT NULL,
   senha TEXT NOT NULL,
-  email TEXT NOT NULL
+  "email" TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS especificacao (
-  idespecificacao INTEGER PRIMARY KEY AUTOINCREMENT,
-  descricao TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS Especificacao (
+  idEspecificacao INTEGER PRIMARY KEY AUTOINCREMENT,
+  valor TEXT NOT NULL,
+  nome TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS produto_vestuario (
-  cor TEXT NOT NULL,
-  tamanho TEXT NOT NULL,
-  material TEXT,
-  Produto_idProduto INTEGER PRIMARY KEY,
-  FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS produto_livro (
-  autor TEXT,
-  Produto_idProduto INTEGER PRIMARY KEY,
-  FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS produto_jogo (
-  plataforma TEXT NOT NULL,
-  Produto_idProduto INTEGER PRIMARY KEY,
-  FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS tag_has_Produto (
-  tag_idtag INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS Usuario_has_Produto (
+  Usuario_idUsuario INTEGER NOT NULL,
   Produto_idProduto INTEGER NOT NULL,
-  PRIMARY KEY (tag_idtag, Produto_idProduto),
-  FOREIGN KEY (tag_idtag) REFERENCES tag (idtag) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  PRIMARY KEY (Usuario_idUsuario, Produto_idProduto),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS usuario_has_Produto (
-  usuario_idusuario INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS Especificacao_has_Produto (
+  Especificacao_idEspecificacao INTEGER NOT NULL,
   Produto_idProduto INTEGER NOT NULL,
-  PRIMARY KEY (usuario_idusuario, Produto_idProduto),
-  FOREIGN KEY (usuario_idusuario) REFERENCES usuario (idusuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  PRIMARY KEY (Especificacao_idEspecificacao, Produto_idProduto),
+  FOREIGN KEY (Especificacao_idEspecificacao) REFERENCES Especificacao (idEspecificacao) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS especificacao_has_Produto (
-  especificacao_idespecificacao INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS Tag_has_Produto (
+  Tag_idTag INTEGER NOT NULL,
   Produto_idProduto INTEGER NOT NULL,
-  PRIMARY KEY (especificacao_idespecificacao, Produto_idProduto),
-  FOREIGN KEY (especificacao_idespecificacao) REFERENCES especificacao (idespecificacao) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  PRIMARY KEY (Tag_idTag, Produto_idProduto),
+  FOREIGN KEY (Tag_idTag) REFERENCES Tag (idTag) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-
+PRAGMA foreign_keys=on;

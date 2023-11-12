@@ -1,4 +1,4 @@
-package sistema.entitymodels;
+package sistema;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,15 @@ public class Usuario {
 
     public Usuario(int id, String nome, String login, String senha, String email) {
         this.id = id;
+        this.nome = nome;
+        this.login = login;
+        this.senha = senha;
+        this.email = email;
+        this.produtos = new ArrayList<Produto>();
+    }
+
+    public Usuario(String nome, String login, String senha, String email) 
+    {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
@@ -33,13 +42,14 @@ public class Usuario {
         this.id = idUsuario;
     }
 
-    public int getId() {
-        return id;
+    public int getId() 
+    {
+        return this.id;
     }
 
     public String getNome() 
     {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) 
@@ -49,7 +59,7 @@ public class Usuario {
 
     public String getLogin() 
     {
-        return login;
+        return this.login;
     }
 
     public void setLogin(String login) 
@@ -59,7 +69,7 @@ public class Usuario {
 
     public String getSenha() 
     {
-        return senha;
+        return this.senha;
     }
 
     public void setSenha(String senha) 
@@ -69,7 +79,7 @@ public class Usuario {
 
     public String getEmail() 
     {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) 
@@ -79,7 +89,7 @@ public class Usuario {
 
     public ArrayList<Produto> getProdutos() 
     {
-        return produtos;
+        return this.produtos;
     }
 
     public void setProdutos(ArrayList<Produto> produtos) 
@@ -87,6 +97,34 @@ public class Usuario {
         this.produtos = produtos;
     }
 
+    public String getNomeTabela() 
+    {
+        return Usuario.nomeTabela;
+    }
+
+    /* 
+     * Enum com as tabelas da classe
+     */
+    public enum Coluna
+    {
+        ID("idUsuario"),
+        NOME("nome"),
+        LOGIN("login"),
+        SENHA("senha"),
+        EMAIL("email"),;
+
+        public final String nomeColuna;
+
+        Coluna(String nomeColuna)
+        {
+            this.nomeColuna = nomeColuna;
+        }
+
+        public String getNomeColuna()
+        {
+            return this.nomeColuna;
+        }
+    }
     /* Atributos */
 
     private int id;
@@ -94,5 +132,7 @@ public class Usuario {
     private String login;
     private String senha;
     private String email;
+    private static final String nomeTabela = "Usuario";
     private ArrayList<Produto> produtos;
+
 }

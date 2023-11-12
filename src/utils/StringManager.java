@@ -1,4 +1,4 @@
-package entradaesaida;
+package utils;
 
 import java.util.ArrayList;
 
@@ -151,4 +151,32 @@ public class StringManager
 
         return instrucao;
     }
+
+    /* 
+     * Método responsável por receber duas condições e adicionar um AND entre eles
+     */
+    public static String inserirAnd(String condicao1, String condicao2)
+    {
+        String instrucao = condicao1 + " AND " + condicao2;
+
+        return instrucao;
+    }
+
+    /* 
+     * Método responsável por receber um array de condições e adicionar um AND entre elas
+     */
+    public static String inserirIgualdade(ArrayList<String> condicoes)
+    {
+        String instrucao = new String();
+        for(int i = 0 ; i <condicoes.size()-1; i++)
+        {
+            instrucao = instrucao + condicoes.get(i) + " AND ";
+        }
+
+        instrucao = instrucao + condicoes.get(condicoes.size());
+
+        return instrucao;
+    }
+
+
 }

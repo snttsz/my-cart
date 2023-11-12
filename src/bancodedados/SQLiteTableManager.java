@@ -13,9 +13,8 @@ public class SQLiteTableManager
     /* 
     * Construtores
     */
-    public SQLiteTableManager(SQLiteConnectionManager conexaoSQLite)
+    public SQLiteTableManager()
     {
-        this.conexaoSQLite = conexaoSQLite;
         inicializarBanco();
     }
     
@@ -40,7 +39,7 @@ public class SQLiteTableManager
         
         for(String instrucao : instrucoes)
         {   
-            this.conexaoSQLite.enviarQuery(instrucao);
+            SQLiteTableManager.SQLiteConnectionManager.enviarQuery(instrucao);
         }
 
 
@@ -115,10 +114,14 @@ public class SQLiteTableManager
 
         return instrucao;
     }
-
-
+    
     /* ATRIBUTOS */
-    private final SQLiteConnectionManager conexaoSQLite;
+    private static final SQLiteConnectionManager SQLiteConnectionManager = new SQLiteConnectionManager();
     private String scriptPath;
+    
+    public static SQLiteConnectionManager getSqliteconnectionmanager() 
+    {
+        return SQLiteConnectionManager;
+    }
 
 }
