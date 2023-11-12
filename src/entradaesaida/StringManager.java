@@ -114,7 +114,7 @@ public class StringManager
     }
 
     /* 
-     * Método responsável por receber uma coluna e um novo valor para formar poder ser inserido no SET
+     * Método responsável por receber uma coluna e um valor e insere uma igualdade entre eles
      * 
      * Exemplo:
      * coluna = nome
@@ -122,20 +122,20 @@ public class StringManager
      * 
      * instrucao = nome = novoValor
      */
-    public static String montarNovoValor(String coluna, String novoValor)
+    public static String inserirIgualdade(String coluna, String valor)
     {
         String instrucao =
-        coluna + " = " + novoValor;
+        coluna + " = " + valor;
 
         return instrucao;
     }
 
     /* 
-     * Método responsável por receber um array de colunas e novos valores e formatá-los para serem inseridos no SET
+     * Método responsável por receber um array de colunas e valores e insere uma igualdade entre eles
      */
-    public static String montarNovoValor(ArrayList<String> colunas, ArrayList<String> novosValores)
+    public static String inserirIgualdade(ArrayList<String> colunas, ArrayList<String> valores)
     {
-        if(colunas.size() != novosValores.size())
+        if(colunas.size() != valores.size())
         {
             System.out.println("Erro ao montar novos valores. A quantidade de colunas e novos valores são diferentes!");
             return null;
@@ -144,12 +144,11 @@ public class StringManager
         String instrucao = new String();
         for(int i = 0 ; i <colunas.size()-1; i++)
         {
-            instrucao = instrucao + colunas.get(i) + " = " + novosValores.get(i) + ", ";
+            instrucao = instrucao + colunas.get(i) + " = " + valores.get(i) + ", ";
         }
 
-        instrucao = instrucao + colunas.get(colunas.size()) + " = " + novosValores.get(novosValores.size());
+        instrucao = instrucao + colunas.get(colunas.size()) + " = " + valores.get(valores.size());
 
         return instrucao;
     }
-
 }

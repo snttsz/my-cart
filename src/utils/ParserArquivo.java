@@ -1,10 +1,7 @@
 package utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -48,7 +45,7 @@ public class ParserArquivo
             while(scanner.hasNextLine())
             {
                 String line = scanner.nextLine();
-                
+
                 instrucaoAtual.append(line).append("\n");
                 
                 if (line.trim().endsWith(";")) 

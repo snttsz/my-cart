@@ -80,7 +80,18 @@ public class SQLiteTableManager
 
         return instrucao;
     }
-    
+
+    /* 
+     * Método responsável por retornar um comando para dar DELETE em uma linha de uma tabela passados por parâmetro
+     */
+    public static String delete(String tabela, String condicao)
+    {
+        String instrucao=
+        "DELETE FROM " + tabela + " WHERE " + condicao + ";";
+
+        return instrucao;
+    }
+
     /*
      * Esse método seleciona atributos específicos de uma tabela
      */

@@ -10,7 +10,7 @@ public class MontadorInstrucoes
     
     MontadorInstrucoes(){};
 
-    public static String montarProduto(Produto produto)
+    public static String InserirProduto(Produto produto)
     {
 
         ArrayList<String> valoresString = new ArrayList<String>();
@@ -73,9 +73,141 @@ public class MontadorInstrucoes
 
         String instrucao = SQLiteTableManager.insertTo("Produto", colunas, valores);
 
+        System.out.println(instrucao);
+
+        return instrucao;
+    }
+
+    public static String setNomeProduto(Produto produto, String novoNome)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.NOME.getNomeColuna(), novoNome);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setPrecoProduto(Produto produto, double novoPreco)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.PRECO.getNomeColuna(), Double.toString(novoPreco));
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setLinkProduto(Produto produto, String novoLink)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.LINK.getNomeColuna(), novoLink);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setMarcaProduto(Produto produto, String novaMarca)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.MARCA.getNomeColuna(), novaMarca);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setDataDeAdicaoProduto(Produto produto, String novaDataDeAdicao)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.DATA_DE_ADICAO.getNomeColuna(), novaDataDeAdicao);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setDisponibilidadeProduto(Produto produto, int novaDisponibilidade)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.DISPONIBILIDADE.getNomeColuna(), Integer.toString(novaDisponibilidade));
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+    
+    public static String setPrioridadeProduto(Produto produto, int novaPrioridade)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.PRIORIDADE.getNomeColuna(), Integer.toString(novaPrioridade));
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setUrlFotoProduto(Produto produto, String novaUrlFoto)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.URL_FOTO.getNomeColuna(), novaUrlFoto);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
         return instrucao;
     }
 
 
+    public static String setValorArrecadadoProduto(Produto produto, double novoValorArrecadado)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.VALOR_ARRECADADO.getNomeColuna(), Double.toString(novoValorArrecadado));
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setDescricaoProduto(Produto produto, String novaDescricao)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.DESCRICAO.getNomeColuna(), novaDescricao);
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String setValorFrete(Produto produto, double novoValorFrete)
+    {
+        String colunas_valores = StringManager.inserirIgualdade(Produto.ColunaProduto.VALOR_FRETE.getNomeColuna(), Double.toString(novoValorFrete));
+
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+
+        return instrucao;
+    }
+
+    public static String deleteProduto(Produto produto)
+    {
+        String condicao = StringManager.inserirIgualdade(Produto.ColunaProduto.ID.getNomeColuna(), Integer.toString(produto.getCodigo())); 
+
+        String instrucao = SQLiteTableManager.delete(produto.getNomeTabela(), condicao);
+
+        return instrucao;
+    }
+                
 
 }

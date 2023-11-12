@@ -14,6 +14,7 @@ public abstract class Produto
         this.setValores(codigo, nome, preco, data_de_adicao, valorArrecadado, valorFrete);
         this.especificacoes = new ArrayList<Especificacao>();
         this.tags = new ArrayList<String>();
+        this.nomeTabela = "Produto";
     }
 
     /* Getters e setters */
@@ -44,9 +45,9 @@ public abstract class Produto
         this.categoria = categoria;
         this.especificacoes = especificacoes;
         this.tags = tags;
-
     }
 
+    
     public double getPreco() 
     {
         return this.preco;
@@ -197,11 +198,17 @@ public abstract class Produto
         this.disponibilidade = disponibilidade;
     }
 
+    public String getNomeTabela() 
+    {
+        return this.nomeTabela;
+    }
+
     /* 
      * Enum com as tabelas da classe
      */
     public enum ColunaProduto
     {
+        ID("idProduto"),
         NOME("nome"),
         PRECO("valor"),
         LINK("url"),
@@ -244,4 +251,6 @@ public abstract class Produto
     private Categoria categoria;
     private ArrayList<Especificacao> especificacoes;
     private ArrayList<String> tags;
+    private String nomeTabela;
+
 }
