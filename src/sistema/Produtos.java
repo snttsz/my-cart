@@ -19,8 +19,8 @@ public class Produtos extends DAO<Produto> {
         List<Produto> produtos = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM produto")) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM produto")) {
 
             while (resultSet.next()) {
                 Produto produto = new Produto(); // Produto é abstrato

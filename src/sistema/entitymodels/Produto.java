@@ -9,13 +9,24 @@ public abstract class Produto
 
     public Produto(){};
 
-    public Produto(int codigo, String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)  
+    public Produto(int codigo, String nome, double preco, String link, String url_foto, String marca,
+            String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, Categoria categoria,
+            ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
     {
-        this.setValores(codigo, nome, preco, data_de_adicao, valorArrecadado, valorFrete);
-        this.especificacoes = new ArrayList<Especificacao>();
-        this.tags = new ArrayList<String>();
+        this.codigo = codigo;
+        this.nome = nome;
+        this.preco = preco;
+        this.link = link;
+        this.url_foto = url_foto;
+        this.marca = marca;
+        this.data_de_adicao = data_de_adicao;
+        this.prioridade = prioridade;
+        this.valorArrecadado = valorArrecadado;
+        this.valorFrete = valorFrete;
+        this.categoria = categoria;
+        this.especificacoes = especificacoes;
+        this.tags = tags;
     }
-    
 
     /* Getters e setters */
 

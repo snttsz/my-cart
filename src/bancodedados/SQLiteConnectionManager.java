@@ -81,8 +81,6 @@ public class SQLiteConnectionManager
     /* ATRIBUTOS */
     private Connection conexao;
 
-
-
 }
 
 

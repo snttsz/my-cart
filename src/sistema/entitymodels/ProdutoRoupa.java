@@ -1,26 +1,28 @@
 package sistema.entitymodels;
 
+import java.util.ArrayList;
+
 public class ProdutoRoupa extends Produto
 {
     
+    /* Construtores */
 
-    public ProdutoRoupa(String tamanho, String cor, String material) 
+    public ProdutoRoupa(){};
+
+    public ProdutoRoupa(int codigo, String nome, double preco, String link, String url_foto, String marca,
+            String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, Categoria categoria,
+            ArrayList<Especificacao> especificacoes, ArrayList<String> tags, String tamanho, String cor,
+            String material, String estilo) 
     {
+        super(codigo, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, valorFrete, categoria, especificacoes, tags);
         this.tamanho = tamanho;
         this.cor = cor;
         this.material = material;
+        this.estilo = estilo;
     }
 
-    public ProdutoRoupa(int codigo, String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete, String tamanho, 
-    String cor, String material) 
-    {
-        super(codigo, nome, preco, data_de_adicao, valorArrecadado, valorFrete);
-        this.tamanho = tamanho;
-        this.cor = cor;
-        this.material = material;
-    }
+    /* Getters e Setters */
 
-    
     public String getTamanho() 
     {
         return this.tamanho;
@@ -31,7 +33,8 @@ public class ProdutoRoupa extends Produto
         this.tamanho = tamanho;
     }
 
-    public String getCor() {
+    public String getCor() 
+    {
         return this.cor;
     }
 
@@ -50,8 +53,21 @@ public class ProdutoRoupa extends Produto
         this.material = material;
     }
 
+    public String getEstilo() 
+    {
+        return estilo;
+    }
 
-    private String tamanho;
+    public void setEstilo(String estilo) 
+    {
+        this.estilo = estilo;
+    }
+
+    /* Atributos */
+
+    private String tamanho; // G, P, M, GG ....
     private String cor;
-    private String material;
+    private String material; // Exemplo: nilon, algodão ...
+    private String estilo; // Exemplo: casual, esportivo, formal ...
+
 }
