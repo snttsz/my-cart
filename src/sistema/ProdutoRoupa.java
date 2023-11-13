@@ -43,7 +43,7 @@ public class ProdutoRoupa extends Produto
         this.cor = cor;
         this.material = material;
         
-        super.insert(this);
+        super.getProdutoDAO().insert(this);
     }
 
     /* Getters e Setters */

@@ -38,7 +38,7 @@ public class ProdutoLivro extends Produto
         this.autor = autor;
         this.genero = genero;
 
-        super.insert(this);
+        super.getProdutoDAO().insert(this);
     }
 
     /* Getters e Setters */

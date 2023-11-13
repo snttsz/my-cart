@@ -47,7 +47,7 @@ public class ProdutoMobilia extends Produto
         this.largura = largura;
         this.comprimento = comprimento;
 
-        super.insert(this);
+        super.getProdutoDAO().insert(this);
     }
     
     /* Getters e Setters */

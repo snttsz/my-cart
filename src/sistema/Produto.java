@@ -271,6 +271,11 @@ public abstract class Produto
         produtoDAO.updateDouble(this, Coluna.VALOR_ARRECADADO.getNomeColuna(), this.valorArrecadado);
     }
 
+    public ProdutoDAO getProdutoDAO() 
+    {
+        return Produto.produtoDAO;
+    }
+
     /* 
      * Enum com as tabelas da classe
      */
@@ -301,13 +306,6 @@ public abstract class Produto
         {
             return this.nomeColuna;
         }
-    }
-
-    /* Funções */
-
-    public static void insert(Produto produto)
-    {
-        produtoDAO.insert(produto);
     }
 
     /* 

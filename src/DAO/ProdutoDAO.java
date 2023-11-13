@@ -123,7 +123,10 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
                 produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
                 produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
-                produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
+                produto.    public void getProdutoById(int idProduto)
+                {
+                    
+                }put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
                 produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
                 produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
                 produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));

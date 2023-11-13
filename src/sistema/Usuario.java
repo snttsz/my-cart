@@ -144,6 +144,15 @@ public class Usuario {
             return this.nomeColuna;
         }
     }
+
+    /* Funções */
+
+    public void getProdutoById(int idProduto)
+    {
+        
+    }
+
+    public void 
     
     /* Atributos */
 

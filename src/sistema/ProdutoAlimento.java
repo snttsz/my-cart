@@ -29,6 +29,8 @@ public class ProdutoAlimento extends Produto
     {
         super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade,
         valorArrecadado, valorFrete, categoria, especificacoes, tags);
+
+        super.getProdutoDAO().insert(this);
     }
 
 }
