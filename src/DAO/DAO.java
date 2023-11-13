@@ -16,7 +16,7 @@ public abstract class DAO<T>
 
     public abstract T selectById(int id);
 
-    public abstract ArrayList<T> SelectAll();
+    public abstract ArrayList<T> selectAll();
 
     public abstract void insert(T entity);
 

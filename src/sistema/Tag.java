@@ -22,7 +22,7 @@ public class Tag
         this.nome = nome;
     }
 
-    public String getNomeTabela() 
+    public static String getNomeTabela() 
     {
         return Tag.nomeTabela;
     }
@@ -59,6 +59,6 @@ public class Tag
 
     /* ATRIBUTOS */
     private String nome;
-    private static final String nomeTabela = "Tag";
     private int id;
+    private static final String nomeTabela = "Tag";
 }

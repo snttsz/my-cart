@@ -21,7 +21,7 @@ public class Loja
 
     /* Getters e Setters */
 
-    public String getNomeTabela() 
+    public static String getNomeTabela() 
     {
         return Loja.nomeTabela;
     }

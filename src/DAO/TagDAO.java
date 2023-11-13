@@ -1,10 +1,11 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
-import sistema.Loja;
 import sistema.Tag;
 import utils.StringManager;
 
@@ -16,7 +17,7 @@ public class TagDAO extends DAO<Tag>
     {
         String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
 
-        String instrucao = SQLiteTableManager.delete(tag.getNomeTabela(), condicao);
+        String instrucao = SQLiteTableManager.delete(Tag.getNomeTabela(), condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -25,19 +26,86 @@ public class TagDAO extends DAO<Tag>
 
 
     @Override
-    public ArrayList<Tag> SelectAll() {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Tag> selectAll() 
+    {
+        /* 
+         * Montando instrução
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Tag.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+        
+        /* 
+         * Montando Tags
+         */
+        ArrayList<Tag> tags = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                int idTag = resultSet.getInt(Tag.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Tag.Coluna.NOME.getNomeColuna());
+
+                Tag tag = new Tag(nome, idTag);
+
+                tags.add(tag);
+            }
+            
+            return tags;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+ 
     }
-
-
 
     @Override
-    public Tag selectById(int id) {
-        // TODO Auto-generated method stub
+    public Tag selectById(int id) 
+    {
+        /* 
+         * Montando instrução
+         */
+        String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(id));
+        
+        String instrucao = SQLiteTableManager.select(Tag.getNomeTabela(), "*", condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando Tag
+         */
+        try
+        {
+
+            if(resultSet != null)
+            {
+                int idTag = resultSet.getInt(Tag.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Tag.Coluna.NOME.getNomeColuna());
+
+                Tag tag = new Tag(nome, idTag);
+
+                return tag;
+            }
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+        
         return null;
     }
-
 
 
     @Override
@@ -68,7 +136,7 @@ public class TagDAO extends DAO<Tag>
 
         String valores = StringManager.montarString(valoresStringNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(tag.getNomeTabela(), colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Tag.getNomeTabela(), colunas, valores);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -84,7 +152,7 @@ public class TagDAO extends DAO<Tag>
 
         String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
 
-        String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Tag.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
 
@@ -96,9 +164,9 @@ public class TagDAO extends DAO<Tag>
     {
         String colunas_valores = StringManager.inserirIgualdade(coluna, Integer.toString(novoValor));
 
-        String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
+        String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
 
-        String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Tag.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
@@ -110,7 +178,7 @@ public class TagDAO extends DAO<Tag>
 
         String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
 
-        String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Tag.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         

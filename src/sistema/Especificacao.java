@@ -2,12 +2,24 @@ package sistema;
 
 public class Especificacao 
 {
+    /* 
+     * Construtores
+     */
     public Especificacao(String nome, String valor) 
     {
         this.nome = nome;
         this.valor = valor;
     }
+    public Especificacao(String nome, String valor, int id) 
+    {
+        this.nome = nome;
+        this.valor = valor;
+        this.id = id;
+    }
 
+    /* 
+     * Getters and setters
+     */
     public String getNome() 
     {
         return this.nome;
@@ -28,7 +40,7 @@ public class Especificacao
         return this.id;
     }
 
-    public String getNomeTabela()
+    public static String getNomeTabela()
     {
         return Especificacao.nomeTabela;
     }

@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
@@ -10,17 +12,87 @@ import utils.StringManager;
 public class LojaDAO extends DAO<Loja> 
 {
 
-
-
     @Override
-    public ArrayList<Loja> SelectAll() {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Loja> selectAll() 
+    {
+        /* 
+         * Montando instrução
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Loja.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+        
+        /* 
+         * Montando lojas
+         */
+        ArrayList<Loja> lojas = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                int idLoja = resultSet.getInt(Loja.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
+                String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
+
+                Loja loja = new Loja(nome, url, idLoja);
+
+                lojas.add(loja);
+            }
+            
+            return lojas;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+ 
     }
 
     @Override
-    public Loja selectById(int id) {
-        // TODO Auto-generated method stub
+    public Loja selectById(int id) 
+    {
+        /* 
+         * Montando instrução
+         */
+        String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(id));
+        
+        String instrucao = SQLiteTableManager.select(Loja.getNomeTabela(), "*", condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando loja
+         */
+        try
+        {
+
+            if(resultSet != null)
+            {
+                int idLoja = resultSet.getInt(Loja.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
+                String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
+
+                Loja loja = new Loja(nome, url, idLoja);
+
+                return loja;
+            }
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+        
         return null;
     }
 
@@ -54,7 +126,7 @@ public class LojaDAO extends DAO<Loja>
 
         String valores = StringManager.montarString(valoresStringNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(loja.getNomeTabela(), colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Loja.getNomeTabela(), colunas, valores);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
 
@@ -65,7 +137,7 @@ public class LojaDAO extends DAO<Loja>
     {
         String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(loja.getId())); 
 
-        String instrucao = SQLiteTableManager.delete(loja.getNomeTabela(), condicao);
+        String instrucao = SQLiteTableManager.delete(Loja.getNomeTabela(), condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -80,7 +152,7 @@ public class LojaDAO extends DAO<Loja>
 
         String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(loja.getId())); 
 
-        String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Loja.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
 
@@ -94,7 +166,7 @@ public class LojaDAO extends DAO<Loja>
 
         String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(loja.getId())); 
 
-        String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Loja.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
@@ -106,12 +178,10 @@ public class LojaDAO extends DAO<Loja>
 
         String condicao = StringManager.inserirIgualdade(Loja.Coluna.ID.getNomeColuna(), Integer.toString(loja.getId())); 
 
-        String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Loja.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
-
-
 
 }

@@ -20,9 +20,18 @@ import utils.StringManager;
 public class ProdutoDAO extends DAO<Produto> 
 {
 
+    /* 
+     * Construtores
+     */
+    public ProdutoDAO(){};
+
+    /* 
+     * Métodos gerais
+     */
+
     @Override
     public Produto selectById(int id)
-     {
+    {
 
         /* 
          * Montando instrucao
@@ -34,6 +43,9 @@ public class ProdutoDAO extends DAO<Produto>
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
+        /* 
+         * Montando produto
+         */
         try
         {
             if(resultSet != null) 
@@ -74,24 +86,73 @@ public class ProdutoDAO extends DAO<Produto>
         }
         finally
         {
-            bancodedados.SQLiteConnectionManager.desconectar();
+            SQLiteConnectionManager.desconectar();
         }
 
-    return null;
-}
-
-
-
-    @Override
-    public ArrayList<Produto> SelectAll() {
-        // TODO Auto-generated method stub
         return null;
     }
 
+    @Override
+    public ArrayList<Produto> selectAll() 
+    {
+        /* 
+         * Montando instrução
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Produto.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando produtos
+         */
+        Map<String,String> produto = new HashMap<>();
+
+        ArrayList<Produto> produtosMontados = new ArrayList<>();
+        try
+        {
+            while (resultSet.next()) 
+            {
+                /* Inteiros */
+                produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
+                produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
+                produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
 
 
-    public ProdutoDAO(){};
+                /* Strings */
+                produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
+                produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
+                produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
+                produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
+                produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
+                produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
+                produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
 
+
+                /* Doubles */
+                produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
+
+                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
+
+                produtosMontados.add(montarProduto(produto, categoria));
+
+            }
+
+            return produtosMontados;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+
+    }
 
     public void insert(Produto produto) 
     {

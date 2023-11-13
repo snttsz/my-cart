@@ -1,6 +1,8 @@
 package testes.testesSQL;
 
 
+import java.util.ArrayList;
+
 import DAO.ProdutoDAO;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
@@ -20,9 +22,15 @@ public class TesteSQLite
 
         ProdutoDAO produtoDAO = new ProdutoDAO();
 
-        Produto teste = produtoDAO.selectById(1);
+        ArrayList<Produto> teste = new ArrayList<>();
 
-        System.out.println(teste.getNome());
+        teste =  produtoDAO.selectAll();
+
+        for(Produto p : teste)
+        {
+            System.out.println(p.getId());
+        }
+
 
  
     }

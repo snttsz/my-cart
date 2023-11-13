@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
@@ -10,16 +12,87 @@ import utils.StringManager;
 public class EspecificacaoDAO extends DAO<Especificacao>
 {
 
-
     @Override
-    public ArrayList<Especificacao> SelectAll() {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Especificacao> selectAll() 
+    {
+        /* 
+         * Montando instrução
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Especificacao.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+        
+        /* 
+         * Montando Especificacaos
+         */
+        ArrayList<Especificacao> especificacoes = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                int idEspecificacao = resultSet.getInt(Especificacao.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
+                String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
+
+                Especificacao especificacao = new Especificacao(nome, valor,idEspecificacao);
+
+                especificacoes.add(especificacao);
+            }
+            
+            return especificacoes;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+ 
     }
 
     @Override
-    public Especificacao selectById(int id) {
-        // TODO Auto-generated method stub
+    public Especificacao selectById(int id) 
+    {
+        /* 
+         * Montando instrução
+         */
+        String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(id));
+        
+        String instrucao = SQLiteTableManager.select(Especificacao.getNomeTabela(), "*", condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando Especificacao
+         */
+        try
+        {
+
+            if(resultSet != null)
+            {
+                int idEspecificacao = resultSet.getInt(Especificacao.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
+                String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
+
+                Especificacao Especificacao = new Especificacao(nome, valor, idEspecificacao);
+
+                return Especificacao;
+            }
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+        
         return null;
     }
 
@@ -53,7 +126,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String valores = StringManager.montarString(valoresStringNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(especificacao.getNomeTabela(), colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Especificacao.getNomeTabela(), colunas, valores);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -64,7 +137,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
     {
         String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(especificacao.getId())); 
 
-        String instrucao = SQLiteTableManager.delete(especificacao.getNomeTabela(), condicao);
+        String instrucao = SQLiteTableManager.delete(Especificacao.getNomeTabela(), condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -79,7 +152,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(especificacao.getId())); 
 
-        String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Especificacao.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
 
@@ -93,7 +166,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(especificacao.getId())); 
 
-        String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Especificacao.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
@@ -105,7 +178,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(especificacao.getId())); 
 
-        String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Especificacao.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         

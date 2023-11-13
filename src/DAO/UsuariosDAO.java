@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
@@ -15,7 +17,7 @@ public class UsuariosDAO extends DAO<Usuario>
     {
         String condicao = StringManager.inserirIgualdade(Usuario.Coluna.ID.getNomeColuna(), Integer.toString(usuario.getId())); 
 
-        String instrucao = SQLiteTableManager.delete(usuario.getNomeTabela(), condicao);
+        String instrucao = SQLiteTableManager.delete(Usuario.getNomeTabela(), condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -54,7 +56,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String valores = StringManager.montarString(valoresStringNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(usuario.getNomeTabela(), colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Usuario.getNomeTabela(), colunas, valores);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
@@ -69,7 +71,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String condicao = StringManager.inserirIgualdade(Usuario.Coluna.ID.getNomeColuna(), Integer.toString(usuario.getId())); 
 
-        String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Usuario.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
 
@@ -83,7 +85,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String condicao = StringManager.inserirIgualdade(Usuario.Coluna.ID.getNomeColuna(), Integer.toString(usuario.getId())); 
 
-        String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Usuario.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
@@ -95,27 +97,89 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String condicao = StringManager.inserirIgualdade(Usuario.Coluna.ID.getNomeColuna(), Integer.toString(usuario.getId())); 
 
-        String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Usuario.getNomeTabela(), colunas_valores, condicao);
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
     @Override
-    public ArrayList<Usuario> SelectAll() {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Usuario> selectAll() 
+    {
+        /* 
+         * Montando instrucao
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Usuario.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+
+        try
+        {
+            while(resultSet.next())
+            {
+                int id = resultSet.getInt(Usuario.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Usuario.Coluna.NOME.getNomeColuna());
+                String login = resultSet.getString(Usuario.Coluna.LOGIN.getNomeColuna());
+                String senha = resultSet.getString(Usuario.Coluna.SENHA.getNomeColuna());
+                String email = resultSet.getString(Usuario.Coluna.EMAIL.getNomeColuna());
+                
+                Usuario usuario = new Usuario(id, nome, login, senha, email);
+
+                usuarios.add(usuario);
+            }
+
+            return usuarios;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
     }
 
     @Override
-    public Usuario selectById(int id) {
-        // TODO Auto-generated method stub
+    public Usuario selectById(int id) 
+    {
+        /* 
+         * Montando instrucao
+         */
+
+        String instrucao = SQLiteTableManager.selectAll(Usuario.getNomeTabela());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        try
+        {
+            if(resultSet != null)
+            {
+                int idUsuario = resultSet.getInt(Usuario.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Usuario.Coluna.NOME.getNomeColuna());
+                String login = resultSet.getString(Usuario.Coluna.LOGIN.getNomeColuna());
+                String senha = resultSet.getString(Usuario.Coluna.SENHA.getNomeColuna());
+                String email = resultSet.getString(Usuario.Coluna.EMAIL.getNomeColuna());
+                
+                Usuario usuario = new Usuario(idUsuario, nome, login, senha, email);
+
+                return usuario;
+            }
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+        
         return null;
     }
-
-
-
-
-
 
 }

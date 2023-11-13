@@ -38,7 +38,8 @@ public class Usuario {
         this.produtos = produtos;
     }
 
-    public void setId(int idUsuario) {
+    public void setId(int idUsuario) 
+    {
         this.id = idUsuario;
     }
 
@@ -97,7 +98,7 @@ public class Usuario {
         this.produtos = produtos;
     }
 
-    public String getNomeTabela() 
+    public static String getNomeTabela() 
     {
         return Usuario.nomeTabela;
     }
@@ -132,7 +133,7 @@ public class Usuario {
     private String login;
     private String senha;
     private String email;
-    private static final String nomeTabela = "Usuario";
     private ArrayList<Produto> produtos;
+    private static final String nomeTabela = "Usuario";
 
 }
