@@ -1,18 +1,39 @@
 package sistema;
 
+import DAO.TagDAO;
+
 public class Tag 
 {
     /* Construtores */
     
     public Tag(){};
 
-    public Tag(String nome, int id) 
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public Tag(int id, String nome) 
+    {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
+    public Tag(String nome) 
     {
         this.nome = nome;
-        this.id = id;
+        
+        tagDAO.insert(this);
     }
     
     /* Getters e Setters */
+
+    public static String getNomeTabela() 
+    {
+        return Tag.nomeTabela;
+    }
+
     public String getNome()
     {
         return this.nome;
@@ -20,11 +41,7 @@ public class Tag
     public void setNome(String nome) 
     {
         this.nome = nome;
-    }
-
-    public static String getNomeTabela() 
-    {
-        return Tag.nomeTabela;
+        tagDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public int getId() 
@@ -35,6 +52,7 @@ public class Tag
     public void setId(int id) 
     {
         this.id = id;
+        tagDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     /* 
@@ -57,8 +75,10 @@ public class Tag
         }
     }
 
-    /* ATRIBUTOS */
-    private String nome;
+    /* Atributos */
+
     private int id;
+    private String nome;
+    private TagDAO tagDAO = new TagDAO();
     private static final String nomeTabela = "Tag";
 }

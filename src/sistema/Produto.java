@@ -2,6 +2,8 @@ package sistema;
 
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
+
 public abstract class Produto 
 {
 
@@ -16,7 +18,6 @@ public abstract class Produto
     String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
     String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
     {
-        this.id = id;
         this.disponibilidade = disponibilidade;
         this.descricao = descricao;
         this.nome = nome;
@@ -31,6 +32,7 @@ public abstract class Produto
         this.categoria = categoria;
         this.especificacoes = especificacoes;
         this.tags = tags;
+        this.id = id;
     }
 
         
@@ -58,38 +60,35 @@ public abstract class Produto
     }
     
     
-    
     /* Getters e setters */
 
-    protected void setValores(int id, String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)
+    protected void setValores(String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)
     {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.data_de_adicao = data_de_adicao;
-        this.valorArrecadado = valorArrecadado;
-        this.valorFrete = valorFrete;
+        this.setNome(nome);
+        this.setPreco(preco);
+        this.setData_de_adicao(data_de_adicao);
+        this.setValorArrecadado(valorArrecadado);
+        this.setValorFrete(valorFrete);
     }
     
-    protected void setValores(int id, int disponibilidade, String descricao, String nome, double preco, String link,
-    String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
+    protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, 
+    String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, String categoria, 
+    ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
     {
-        this.id = id;
-        this.disponibilidade = disponibilidade;
-        this.descricao = descricao;
-        this.nome = nome;
-        this.preco = preco;
-        this.link = link;
-        this.url_foto = url_foto;
-        this.marca = marca;
-        this.data_de_adicao = data_de_adicao;
-        this.prioridade = prioridade;
-        this.valorArrecadado = valorArrecadado;
-        this.valorFrete = valorFrete;
-        this.categoria = categoria;
-        this.especificacoes = especificacoes;
-        this.tags = tags;
+        this.setNome(nome);
+        this.setPreco(preco);
+        this.setLink(link);
+        this.setUrl_foto(url_foto);
+        this.setMarca(marca);
+        this.setPrioridade(prioridade);
+        this.setData_de_adicao(data_de_adicao);
+        this.setValorArrecadado(valorArrecadado);
+        this.setValorFrete(valorFrete);
+        this.setCategoria(categoria);
+        this.setEspecificacoes(especificacoes);
+        this.setTags(tags);
+        this.setDisponibilidade(disponibilidade);
+        this.setDescricao(descricao);
     }
 
     public static String getNomeTabela() 
@@ -97,10 +96,15 @@ public abstract class Produto
         return Produto.nomeTabela;
     }
 
+    public String getDescricao() 
+    {
+        return this.descricao;
+    } 
 
     public void setDescricao(String descricao) 
     {
         this.descricao = descricao;
+        produtoDAO.updateString(this, Coluna.DESCRICAO.getNomeColuna(), this.descricao);
     }
 
     public int getDisponibilidade() 
@@ -111,6 +115,7 @@ public abstract class Produto
     public void setDisponibilidade(int disponibilidade) 
     {
         this.disponibilidade = disponibilidade;
+        produtoDAO.updateInt(this, Coluna.DISPONIBILIDADE.getNomeColuna(), this.disponibilidade);
     }
 
     public double getPreco() 
@@ -121,11 +126,18 @@ public abstract class Produto
     public void setPreco(double preco) 
     {
         this.preco = preco;
+        produtoDAO.updateDouble(this, Coluna.PRECO.getNomeColuna(), this.preco);
     }
 
     public String getNome() 
     {
         return this.nome;
+    }
+
+    public void setNome(String nome) 
+    {
+        this.nome = nome;
+        produtoDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getLink() 
@@ -136,6 +148,7 @@ public abstract class Produto
     public void setLink(String link) 
     {
         this.link = link;
+        produtoDAO.updateString(this, Coluna.LINK.getNomeColuna(), this.link);
     }
 
     public String getUrl_foto() 
@@ -146,6 +159,7 @@ public abstract class Produto
     public void setUrl_foto(String url_foto) 
     {
         this.url_foto = url_foto;
+        produtoDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
 
     public String getMarca() 
@@ -156,6 +170,7 @@ public abstract class Produto
     public void setMarca(String marca) 
     {
         this.marca = marca;
+        produtoDAO.updateString(this, Coluna.MARCA.getNomeColuna(), this.marca);
     }
 
     public String getData_de_adicao() 
@@ -165,7 +180,7 @@ public abstract class Produto
 
     public void setData_de_adicao(String data_de_adicao) 
     {
-        this.data_de_adicao = data_de_adicao;
+        produtoDAO.updateString(this, Coluna.DATA_DE_ADICAO.getNomeColuna(), this.data_de_adicao);
     }
 
     public int getPrioridade() 
@@ -176,6 +191,7 @@ public abstract class Produto
     public void setPrioridade(int prioridade) 
     {
         this.prioridade = prioridade;
+        produtoDAO.updateInt(this, Coluna.PRIORIDADE.getNomeColuna(), this.prioridade);
     }
 
     public double getValorFrete() 
@@ -186,6 +202,7 @@ public abstract class Produto
     public void setValorFrete(double valorFrete) 
     {
         this.valorFrete = valorFrete;
+        produtoDAO.updateDouble(this, Coluna.VALOR_FRETE.getNomeColuna(), this.valorFrete);
     }
 
     public String getCategoria() 
@@ -196,6 +213,7 @@ public abstract class Produto
     public void setCategoria(String categoria) 
     {
         this.categoria = categoria;
+        produtoDAO.updateString(this, Coluna.CATEGORIA.getNomeColuna(), this.categoria);
     }
 
     public ArrayList<Especificacao> getEspecificacoes() 
@@ -205,7 +223,19 @@ public abstract class Produto
 
     public void setEspecificacoes(ArrayList<Especificacao> especificacoes) 
     {
+        /*
+        ArrayList<Especificacao> especificacoes_antigas = this.especificacoes;
+
+        especificacoes_antigas.forEach(especificacao -> {
+            especificacao.deletar();
+        });
+
         this.especificacoes = especificacoes;
+
+        this.especificacoes.forEach(especificacao -> {
+            especificacao.adicionar();
+        });
+        */
     }
 
     public ArrayList<String> getTags() 
@@ -215,12 +245,8 @@ public abstract class Produto
 
     public void setTags(ArrayList<String> tags) 
     {
-        this.tags = tags;
-    }
-
-    public void setNome(String nome) 
-    {
-        this.nome = nome;
+        /*
+        */
     }
 
     public int getId() 
@@ -231,6 +257,7 @@ public abstract class Produto
     public void setId(int id) 
     {
         this.id = id;
+        produtoDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
     
     public double getValorArrecadado() 
@@ -241,12 +268,8 @@ public abstract class Produto
     public void setValorArrecadado(double valorArrecadado) 
     {
         this.valorArrecadado = valorArrecadado;
+        produtoDAO.updateDouble(this, Coluna.VALOR_ARRECADADO.getNomeColuna(), this.valorArrecadado);
     }
-
-    public String getDescricao() 
-    {
-        return this.descricao;
-    } 
 
     /* 
      * Enum com as tabelas da classe
@@ -278,6 +301,13 @@ public abstract class Produto
         {
             return this.nomeColuna;
         }
+    }
+
+    /* Funções */
+
+    public static void insert(Produto produto)
+    {
+        produtoDAO.insert(produto);
     }
 
     /* 
@@ -322,6 +352,7 @@ public abstract class Produto
     private String categoria;
     private ArrayList<Especificacao> especificacoes;
     private ArrayList<String> tags;
+    private static ProdutoDAO produtoDAO = new ProdutoDAO();
     private static final String nomeTabela = "Produto";
 
 }

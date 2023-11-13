@@ -277,6 +277,7 @@ public class ProdutoDAO extends DAO<Produto>
     public Produto montarProduto(Map<String,String> produto, String categoria)
     {
         int id = Integer.parseInt(produto.get(Produto.Coluna.ID.getNomeColuna()));
+        System.out.println("ID: " + id);
         int prioridade = Integer.parseInt(produto.get(Produto.Coluna.PRIORIDADE.getNomeColuna()));
         int disponibilidade = Integer.parseInt(produto.get(Produto.Coluna.DISPONIBILIDADE.getNomeColuna()));
 
@@ -295,7 +296,7 @@ public class ProdutoDAO extends DAO<Produto>
         {
             ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
             valorFrete, categoria, null, null);
-
+            
             return produtoEletronico;
         }
         else if(categoria.equals(Produto.Categorias.ALIMENTICIO.getCategoria()))

@@ -2,13 +2,19 @@ package sistema;
 
 import java.util.ArrayList;
 
+import DAO.UsuariosDAO;
+
 public class Usuario {
     
     /* Contrutores */
 
     public Usuario(){};
 
-    public Usuario(int id, String nome, String login, String senha, String email) {
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public Usuario(int id, String nome, String login, String senha, String email) 
+    {
         this.id = id;
         this.nome = nome;
         this.login = login;
@@ -17,6 +23,9 @@ public class Usuario {
         this.produtos = new ArrayList<Produto>();
     }
 
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
     public Usuario(String nome, String login, String senha, String email) 
     {
         this.nome = nome;
@@ -24,28 +33,35 @@ public class Usuario {
         this.senha = senha;
         this.email = email;
         this.produtos = new ArrayList<Produto>();
+
+        usuarioDAO.insert(this);
     }
 
     /* Getters e Setters */
 
-    public void setValores(int id, String nome, String login, String senha, String email, ArrayList<Produto> produtos)
+    public void setValores(String nome, String login, String senha, String email, ArrayList<Produto> produtos)
     {
-        this.id = id;
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
-        this.produtos = produtos;
+        this.setNome(nome);
+        this.setLogin(login);
+        this.setSenha(senha);
+        this.setEmail(email);
+        this.setProdutos(produtos);
     }
 
-    public void setId(int idUsuario) 
+    public static String getNomeTabela() 
     {
-        this.id = idUsuario;
+        return Usuario.nomeTabela;
     }
 
     public int getId() 
     {
         return this.id;
+    }
+
+    public void setId(int id) 
+    {
+        this.id = id;
+        usuarioDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getNome() 
@@ -56,6 +72,7 @@ public class Usuario {
     public void setNome(String nome) 
     {
         this.nome = nome;
+        usuarioDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getLogin() 
@@ -66,6 +83,7 @@ public class Usuario {
     public void setLogin(String login) 
     {
         this.login = login;
+        usuarioDAO.updateString(this, Coluna.LOGIN.getNomeColuna(), this.login);
     }
 
     public String getSenha() 
@@ -76,6 +94,7 @@ public class Usuario {
     public void setSenha(String senha) 
     {
         this.senha = senha;
+        usuarioDAO.updateString(this, Coluna.SENHA.getNomeColuna(), this.senha);
     }
 
     public String getEmail() 
@@ -86,6 +105,7 @@ public class Usuario {
     public void setEmail(String email) 
     {
         this.email = email;
+        usuarioDAO.updateString(this, Coluna.EMAIL.getNomeColuna(), this.email);
     }
 
     public ArrayList<Produto> getProdutos() 
@@ -96,11 +116,9 @@ public class Usuario {
     public void setProdutos(ArrayList<Produto> produtos) 
     {
         this.produtos = produtos;
-    }
-
-    public static String getNomeTabela() 
-    {
-        return Usuario.nomeTabela;
+        this.produtos.forEach(produto -> {
+            //Produtos
+        });
     }
 
     /* 
@@ -126,6 +144,7 @@ public class Usuario {
             return this.nomeColuna;
         }
     }
+    
     /* Atributos */
 
     private int id;
@@ -133,7 +152,8 @@ public class Usuario {
     private String login;
     private String senha;
     private String email;
-    private ArrayList<Produto> produtos;
+    private UsuariosDAO usuarioDAO = new UsuariosDAO();
     private static final String nomeTabela = "Usuario";
+    private ArrayList<Produto> produtos;
 
 }

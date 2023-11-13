@@ -35,7 +35,7 @@ public class LojaDAO extends DAO<Loja>
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
 
-                Loja loja = new Loja(nome, url, idLoja);
+                Loja loja = new Loja(idLoja, nome, url);
 
                 lojas.add(loja);
             }
@@ -78,7 +78,7 @@ public class LojaDAO extends DAO<Loja>
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
 
-                Loja loja = new Loja(nome, url, idLoja);
+                Loja loja = new Loja(idLoja, nome, url);
 
                 return loja;
             }

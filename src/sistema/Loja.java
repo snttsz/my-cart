@@ -1,9 +1,7 @@
 package sistema;
 
+import DAO.LojaDAO;
 
-// Um produto pode ou não ter uma loja associada
-// A gente pode fazer uma aba pra lojas também, e essas lojas vão ter produtos cadastrados
-// E na hora de cadastrar um produto ele pode ser associado a uma loja já cadastrada
 public class Loja 
 {
     
@@ -11,15 +9,34 @@ public class Loja
 
     public Loja(){};
 
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public Loja(int id, String nome, String url) 
+    {
+        this.id = id;
+        this.nome = nome;
+        this.url = url;
+    }
 
-    public Loja(String nome, String url, int id) 
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
+    public Loja(String nome, String url) 
     {
         this.nome = nome;
         this.url = url;
-        this.id = id;
+
+        lojaDAO.insert(this);
     }
 
     /* Getters e Setters */
+
+    public void setValores(String nome, String url)
+    {
+        this.setNome(nome);
+        this.setUrl(url);
+    }
 
     public static String getNomeTabela() 
     {
@@ -34,6 +51,7 @@ public class Loja
     public void setNome(String nome) 
     {
         this.nome = nome;
+        lojaDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public int getId() 
@@ -43,15 +61,18 @@ public class Loja
 
     public void setId(int id) {
         this.id = id;
+        lojaDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getUrl() 
     {
         return this.url;
     }
+    
     public void setUrl(String url) 
     {
         this.url = url;
+        lojaDAO.updateString(this, Coluna.URL.getNomeColuna(), this.url);
     }
 
     /* 
@@ -80,6 +101,7 @@ public class Loja
     private String nome;
     private String url;
     private int id;
+    private LojaDAO lojaDAO = new LojaDAO();
     private static final String nomeTabela = "Loja";
 
 }

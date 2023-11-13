@@ -35,7 +35,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
                 String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
                 String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
 
-                Especificacao especificacao = new Especificacao(nome, valor,idEspecificacao);
+                Especificacao especificacao = new Especificacao(idEspecificacao, nome, valor);
 
                 especificacoes.add(especificacao);
             }
@@ -78,7 +78,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
                 String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
                 String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
 
-                Especificacao Especificacao = new Especificacao(nome, valor, idEspecificacao);
+                Especificacao Especificacao = new Especificacao(idEspecificacao, nome, valor);
 
                 return Especificacao;
             }

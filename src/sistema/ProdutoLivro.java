@@ -2,6 +2,8 @@ package sistema;
 
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
+
 public class ProdutoLivro extends Produto
 {   
 
@@ -9,8 +11,9 @@ public class ProdutoLivro extends Produto
 
     public ProdutoLivro(){};
 
-    /* Getters e Setters */
-
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
     public ProdutoLivro(int id, int disponibilidade, String descricao, String nome, double preco, String link,
         String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, String autor, String genero) 
@@ -22,7 +25,9 @@ public class ProdutoLivro extends Produto
         this.genero = genero;
     }
 
-    
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
     public ProdutoLivro(int disponibilidade, String descricao, String nome, double preco, String link, String url_foto,
         String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete,
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, String autor,
@@ -32,7 +37,11 @@ public class ProdutoLivro extends Produto
         valorArrecadado, valorFrete, categoria, especificacoes, tags);
         this.autor = autor;
         this.genero = genero;
+
+        super.insert(this);
     }
+
+    /* Getters e Setters */
 
     public String getAutor() 
     {
@@ -42,6 +51,7 @@ public class ProdutoLivro extends Produto
     public void setAutor(String autor) 
     {
         this.autor = autor;
+        produtoDAO.updateString(this, Coluna.AUTOR.getNomeColuna(), this.autor);
     }
 
     public String getGenero() 
@@ -52,6 +62,7 @@ public class ProdutoLivro extends Produto
     public void setGenero(String genero) 
     {
         this.genero = genero;
+        produtoDAO.updateString(this, Coluna.GENERO.getNomeColuna(), this.genero);
     }
 
     /* 
@@ -79,5 +90,6 @@ public class ProdutoLivro extends Produto
     /* Atributos */
     private String autor;
     private String genero;
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
 
 }

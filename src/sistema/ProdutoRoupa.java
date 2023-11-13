@@ -2,6 +2,8 @@ package sistema;
 
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
+
 public class ProdutoRoupa extends Produto
 {
     
@@ -9,40 +11,42 @@ public class ProdutoRoupa extends Produto
 
     public ProdutoRoupa(){};
 
-    
-        public ProdutoRoupa(int id, int disponibilidade, String descricao, String nome, double preco, String link,
-            String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-            String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
-            String tamanho, String cor, String material) 
-        {
-    
-            super(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, especificacoes, tags);
-            this.tamanho = tamanho;
-            this.cor = cor;
-            this.material = material;
-            
-        }
-
-        
-
-
-    /* Getters e Setters */
-
-
-
-    public ProdutoRoupa(int disponibilidade, String descricao, String nome, double preco, String link,
-        String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado,
-        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public ProdutoRoupa(int id, int disponibilidade, String descricao, String nome, double preco, String link,
+        String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
         String tamanho, String cor, String material) 
     {
-        super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade,
-            valorArrecadado, valorFrete, categoria, especificacoes, tags);
-            this.tamanho = tamanho;
-            this.cor = cor;
-            this.material = material;
+
+        super(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+        valorFrete, categoria, especificacoes, tags);
+        this.tamanho = tamanho;
+        this.cor = cor;
+        this.material = material;
+        
     }
 
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
+    public ProdutoRoupa(int disponibilidade, String descricao, String nome, double preco, String link,
+        String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String tamanho, String cor, String material) 
+    {
+
+        super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+        valorFrete, categoria, especificacoes, tags);
+        this.tamanho = tamanho;
+        this.cor = cor;
+        this.material = material;
+        
+        super.insert(this);
+    }
+
+    /* Getters e Setters */
 
     public String getTamanho() 
     {
@@ -52,6 +56,7 @@ public class ProdutoRoupa extends Produto
     public void setTamanho(String tamanho) 
     {
         this.tamanho = tamanho;
+        produtoDAO.updateString(this, Coluna.TAMANHO.getNomeColuna(), this.tamanho);
     }
 
     public String getCor() 
@@ -62,6 +67,7 @@ public class ProdutoRoupa extends Produto
     public void setCor(String cor) 
     {
         this.cor = cor;
+        produtoDAO.updateString(this, Coluna.COR.getNomeColuna(), this.cor);
     }
 
     public String getMaterial() 
@@ -72,6 +78,7 @@ public class ProdutoRoupa extends Produto
     public void setMaterial(String material) 
     {
         this.material = material;
+        produtoDAO.updateString(this, Coluna.MATERIAL.getNomeColuna(), this.material);
     }
 
     /* 
@@ -100,6 +107,7 @@ public class ProdutoRoupa extends Produto
 
     private String tamanho; 
     private String cor;
-    private String material; 
+    private String material;
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
 
 }

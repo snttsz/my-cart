@@ -47,7 +47,7 @@ public class TagDAO extends DAO<Tag>
                 int idTag = resultSet.getInt(Tag.Coluna.ID.getNomeColuna());
                 String nome = resultSet.getString(Tag.Coluna.NOME.getNomeColuna());
 
-                Tag tag = new Tag(nome, idTag);
+                Tag tag = new Tag(idTag, nome);
 
                 tags.add(tag);
             }
@@ -89,7 +89,7 @@ public class TagDAO extends DAO<Tag>
                 int idTag = resultSet.getInt(Tag.Coluna.ID.getNomeColuna());
                 String nome = resultSet.getString(Tag.Coluna.NOME.getNomeColuna());
 
-                Tag tag = new Tag(nome, idTag);
+                Tag tag = new Tag(idTag, nome);
 
                 return tag;
             }
