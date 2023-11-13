@@ -1,9 +1,13 @@
 package interfacegrafica.controllers;
 
 import javafx.fxml.Initializable;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitMenuButton;
@@ -14,7 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,7 +36,24 @@ public abstract class ControllerLogged implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
-        
+        // Aguarda até que o processo de inicialização seja finalizado para executar
+        // o comando.
+        Platform.runLater(() -> 
+        {
+            Stage stage = (Stage) this.root.getScene().getWindow();
+            String title = stage.getTitle();
+
+            int indiceDoHifen = title.lastIndexOf("-");
+
+            String username = title.substring(indiceDoHifen + 1).trim();
+
+            if (username.length() > 13)
+            {
+                username = username.substring(0, 9) + "...";
+            }
+
+            this.username.setText(username);
+        });
     }
 
     /**
@@ -100,10 +124,22 @@ public abstract class ControllerLogged implements Initializable
         this.cursorNormal(mouse);
 
         /*  
-        * Mostra uma "seta" ao lado do botão para indicar que ele está acionado.
+        * Checa se o botão clicado foi "Categorias" para exibir o menu lateral
         */
-        this.mostrarSeta(botaoSource);
-
+        if (botaoSource.getId() == this.categorias.getId())
+        {
+            if (this.categoriasMenu.isShowing())
+            {
+                this.categoriasMenu.hide();
+            }
+            else
+            {
+                this.categoriasMenu.show();
+            }
+            
+            this.setaInicio.setOpacity(0);
+            this.setaLojasCadastradas.setOpacity(0);
+        }
     }
 
     /**
@@ -141,12 +177,10 @@ public abstract class ControllerLogged implements Initializable
          */
         else
         {
-            
             this.pesquisarField.setOpacity(1);
             
             Font systemFont = Font.font(fontName, FontPosture.REGULAR, fontSize);
             this.pesquisarField.setFont(systemFont);
-        
         }
     }
 
@@ -166,53 +200,42 @@ public abstract class ControllerLogged implements Initializable
         source.setCursor(Cursor.DEFAULT);
     }
 
-    public void mostrarSeta(Button botao)
+    protected void carregarNovaScene(String fxmlname)
     {
-        if (botao.getId() == this.inicio.getId())
+        try 
         {
-            if (this.setaInicio.getOpacity() == 0)
-            {
-                this.setaInicio.setOpacity(1);
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlname));
+            Parent novoRoot = loader.load();
+            
+            Stage stage = (Stage) this.root.getScene().getWindow();
+            Scene novaScene = new Scene(novoRoot);
 
-            this.setaCategorias.setOpacity(0);
-            this.setaLojasCadastradas.setOpacity(0);
-        }
-        else if (botao.getId() == this.categorias.getId())
+            stage.setScene(novaScene);
+            stage.show();
+        } 
+        catch (IOException e) 
         {
-            if (this.categoriasMenu.isShowing())
-            {
-                System.out.println("showing");
-                this.categoriasMenu.hide();
-            }
-            else
-            {
-                this.categoriasMenu.show();
-            }
-            
-            this.setaInicio.setOpacity(0);
-            this.setaLojasCadastradas.setOpacity(0);
-        }
-        else if (botao.getId() == lojasCadastradas.getId())
-        {
-            if (this.setaLojasCadastradas.getOpacity() == 0)
-            {
-                this.setaLojasCadastradas.setOpacity(1);    
-            }
-            
-            this.setaInicio.setOpacity(0);
-            this.setaCategorias.setOpacity(0);
+            e.printStackTrace();
         }
     }
 
+    // TODO: checar se essas funções serão realmente abstratas
     protected abstract void mudarSceneLojasCadastradas();
     protected abstract void mudarSceneCategorias();
+    protected abstract void mudarSceneInicio();
 
     /* 
      * 
      *      FXML ENTIDADES
      * 
      */
+
+    /* 
+    *    root
+    */
+
+    @FXML
+    protected Node root;
 
     /* 
      *    Botões
@@ -276,5 +299,21 @@ public abstract class ControllerLogged implements Initializable
     @FXML
     // Pane inside scrollPane
     protected AnchorPane mainPane;
+
+    /* 
+     *    Texto
+     */
+
+    @FXML
+    protected Text username;
+
+    /* 
+     * 
+     *      ATRIBUTOS INTERNOS
+     * 
+     */
+
+    // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
+    private final String pathResources = "../../resources/";
 
 }

@@ -3,76 +3,80 @@ package interfacegrafica.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 public class InitialScreenLoggedController extends ControllerLogged
 {
-    // TODO: ver como pegar o titulo da janela para atribuir como nome de usuário
-
     @FXML
-    public void botaoAddProdutoMouseOff(MouseEvent mouse)
+    public void botaoAddMouseOff(MouseEvent mouse)
     {
-        adicionarProduto.setOpacity(0);
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(0.0);
     }
 
     @FXML
-    public void botaoAddProdutoMouseOn(MouseEvent mouse)
+    public void botaoAddMouseOn(MouseEvent mouse)
     {
-        adicionarProduto.setOpacity(0.17);
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(0.17);
+
+        this.cursorOn(mouse);
     }
 
     @FXML
-    public void botaoAddProdutoClicked(MouseEvent mouse)
+    public void botaoAddClicked(MouseEvent mouse)
     {
-        adicionarProduto.setOpacity(0.3);
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(0.3);
+
+        this.cursorNormal(mouse);
     }
 
     @FXML
+    @Override
     public void botaoMenuClicked(MouseEvent mouse)
     {
         super.botaoMenuClicked(mouse);
 
         Node botao = (Node) mouse.getSource();
 
-        if (botao.getId() == lojasCadastradas.getId())
+        if (botao.getId() == this.lojasCadastradas.getId())
         {
-            this.adicionadosRecentementeImg.setOpacity(0);
-            this.quaseLaImg.setOpacity(0);
-
-            if (this.listaVazia2Inicio.getOpacity() == 1)
-            {
-                this.listaVazia2Inicio.setOpacity(0);
-            }
-            if (this.listaVaziaInicio.getOpacity() == 1)
-            {
-                this.listaVaziaInicio.setOpacity(0);
-            }
+            this.mudarSceneLojasCadastradas();
         }
-        else if (botao.getId() == categorias.getId())
+        else if (botao.getId() == this.categorias.getId())
         {
-
+            this.mudarSceneCategorias();
         }
-        else if (botao.getId() == inicio.getId())
+        else if (botao.getId() == this.inicio.getId())
         {
-            this.adicionadosRecentementeImg.setOpacity(1);
-            this.quaseLaImg.setOpacity(1);
-            this.listaVazia2Inicio.setOpacity(1);
-            this.listaVaziaInicio.setOpacity(1);
+            this.mudarSceneInicio();
         }
     }
 
     @Override
-    public void mudarSceneCategorias()
+    public void mudarSceneInicio()
     {
+        this.carregarNovaScene("ScreenLogged.fxml");
+    }
+
+    @Override
+    public void mudarSceneCategorias()
+    {   
 
     }
 
     @Override 
     public void mudarSceneLojasCadastradas()
     {
-
+        this.carregarNovaScene("ScreenLojasCadastradas.fxml");
     }
 
     /* 
@@ -88,6 +92,9 @@ public class InitialScreenLoggedController extends ControllerLogged
 
     @FXML
     private Button adicionarProduto;
+
+    @FXML
+    private Button adicionarLoja;
 
     /* 
      *    Texto
