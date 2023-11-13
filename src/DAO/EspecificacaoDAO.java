@@ -10,14 +10,15 @@ import utils.StringManager;
 public class EspecificacaoDAO extends DAO<Especificacao>
 {
 
+
     @Override
-    public List<Especificacao> getAll() {
+    public ArrayList<Especificacao> SelectAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Especificacao getById(int id) {
+    public Especificacao selectById(int id) {
         // TODO Auto-generated method stub
         return null;
     }

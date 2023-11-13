@@ -1,7 +1,6 @@
 package DAO;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bancodedados.SQLiteTableManager;
 import sistema.Usuario;
@@ -102,13 +101,13 @@ public class UsuariosDAO extends DAO<Usuario>
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public ArrayList<Usuario> SelectAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Usuario getById(int id) {
+    public Usuario selectById(int id) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -4,7 +4,6 @@ package testes.testesSQL;
 import DAO.ProdutoDAO;
 import DAO.Usuario_has_Produto;
 import DAO.UsuariosDAO;
-import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
 import sistema.ProdutoEletronico;
@@ -22,13 +21,11 @@ public class TesteSQLite
         Usuario usuario = new Usuario("Kalvin", "teste", "123", "kalvin123@.com");
 
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        UsuariosDAO usuarioDAO = new UsuariosDAO();
-        Usuario_has_Produto Usuario_has_Produto = new Usuario_has_Produto();
 
-        Usuario_has_Produto.delete(usuario, produto);
+        Produto teste = produtoDAO.selectById(1);
 
-        produtoDAO.insert(produto);
-        usuarioDAO.insert(usuario);
+        System.out.println(teste.getNome());
+
  
     }
 }

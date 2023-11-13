@@ -22,17 +22,23 @@ public class TagDAO extends DAO<Tag>
         
     }
 
+
+
     @Override
-    public List<Tag> getAll() {
+    public ArrayList<Tag> SelectAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
+
+
     @Override
-    public Tag getById(int id) {
+    public Tag selectById(int id) {
         // TODO Auto-generated method stub
         return null;
     }
+
+
 
     @Override
     public void insert(Tag tag) 

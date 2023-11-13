@@ -3,6 +3,7 @@ package bancodedados;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -119,6 +120,61 @@ public class SQLiteConnectionManager
             {
                 desconectar();
             }
+        }
+    }
+
+    public ResultSet receberQuery(String instrucao)
+    {
+        ResultSet resultSet = null;
+
+        Statement statement = null;
+
+        boolean conectou = false;
+        try
+        {
+            conectou = conectar();
+
+            statement = criarStatement();
+
+            resultSet = statement.executeQuery(instrucao);
+            
+            System.out.println("O Query foi realizado com sucesso!");
+
+
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Erro no recebimento da mensagem vinda do banco: " + e.getMessage());
+        }
+        finally
+        {
+            //fecharStatement(statement);
+        }
+
+        return resultSet;
+    }
+
+    public void fecharResultSet(ResultSet resultSet)
+    {
+        try
+        {
+            resultSet.close();
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Erro ao fechar as conexões: " + e.getMessage());
+        }
+    }
+
+      public void fecharStatement(Statement statement)
+    {
+        try
+        {
+            statement.close();
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Erro ao fechar as conexões: " + e.getMessage());
         }
     }
 

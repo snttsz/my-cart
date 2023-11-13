@@ -92,7 +92,7 @@ public abstract class Produto
         this.tags = tags;
     }
 
-    public String getNomeTabela() 
+    public static String getNomeTabela() 
     {
         return Produto.nomeTabela;
     }
@@ -247,8 +247,6 @@ public abstract class Produto
     {
         return this.descricao;
     } 
-
-    
 
     /* 
      * Enum com as tabelas da classe

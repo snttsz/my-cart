@@ -100,7 +100,7 @@ public class ProdutoMobilia extends Produto
     {
         MATERIAL("material"),
         COR("cor"),
-        TAMANHO("tamanho"),
+        LARGURA("LARGURA"),
         ALTURA("altura"),
         COMPRIMENTO("comprimento");
 

@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import bancodedados.SQLiteConnectionManager;
@@ -28,9 +29,9 @@ public abstract class DAO<T>
      * Métodos CRUD (Create, Read, Update, Delete)
      */
 
-    public abstract T getById(int id);
+    public abstract T selectById(int id);
 
-    public abstract List<T> getAll();
+    public abstract ArrayList<T> SelectAll();
 
     public abstract void insert(T entity);
 

@@ -94,7 +94,7 @@ public class SQLiteTableManager
     /*
      * Esse método seleciona atributos específicos de uma tabela
      */
-    public static String selectAtributos(String tabela, String atributos)
+    public static String select(String tabela, String atributos)
     {
         String instrucao = new String();
         instrucao = 
@@ -106,7 +106,7 @@ public class SQLiteTableManager
     /* 
      * Esse método utiliza o where para selecionar atributos com uma condição
      */
-    public static String selectAtributos(String tabela, String atributos, String condicao)
+    public static String select(String tabela, String atributos, String condicao)
     {
         String instrucao = new String();
         instrucao = 
