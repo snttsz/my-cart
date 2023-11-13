@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
 import sistema.Tag;
@@ -23,7 +24,7 @@ public class Tag_has_Produto extends DAOMTM<sistema.Tag, Produto>
 
         String instrucao = SQLiteTableManager.delete(nomeTabela, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class Tag_has_Produto extends DAOMTM<sistema.Tag, Produto>
 
         String instrucao = SQLiteTableManager.insertTo(Tag_has_Produto.nomeTabela, colunas, valores);
         
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);        
+        SQLiteConnectionManager.enviarQuery(instrucao);        
     }
 
     /* 

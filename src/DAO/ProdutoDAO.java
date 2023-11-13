@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
 import sistema.ProdutoAlimento;
@@ -31,7 +32,7 @@ public class ProdutoDAO extends DAO<Produto>
         
         String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), "*", condicao);
 
-        ResultSet resultSet = DAO.SQLiteConnectionManager.receberQuery(instrucao);
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
         try
         {
@@ -73,7 +74,7 @@ public class ProdutoDAO extends DAO<Produto>
         }
         finally
         {
-            DAO.SQLiteConnectionManager.fecharResultSet(resultSet);
+            bancodedados.SQLiteConnectionManager.desconectar();
         }
 
     return null;
@@ -154,9 +155,9 @@ public class ProdutoDAO extends DAO<Produto>
         StringManager.montarString(valoresIntegerNormalizados) + ", " +
         StringManager.montarString(valoresDoubleNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(produto.getNomeTabela(), colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Produto.getNomeTabela(), colunas, valores);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -169,11 +170,11 @@ public class ProdutoDAO extends DAO<Produto>
 
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId())); 
 
-        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Produto.getNomeTabela(), colunas_valores, condicao);
 
         System.out.println(instrucao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -184,9 +185,9 @@ public class ProdutoDAO extends DAO<Produto>
 
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId())); 
 
-        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Produto.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
     @Override
@@ -196,10 +197,10 @@ public class ProdutoDAO extends DAO<Produto>
 
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId()));
 
-        String instrucao = SQLiteTableManager.update(produto.getNomeTabela(), colunas_valores, condicao);
+        String instrucao = SQLiteTableManager.update(Produto.getNomeTabela(), colunas_valores, condicao);
 
         
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
     @Override
@@ -207,9 +208,9 @@ public class ProdutoDAO extends DAO<Produto>
     {
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId())); 
 
-        String instrucao = SQLiteTableManager.delete(produto.getNomeTabela(), condicao);
+        String instrucao = SQLiteTableManager.delete(Produto.getNomeTabela(), condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
     public Produto montarProduto(Map<String,String> produto, String categoria)

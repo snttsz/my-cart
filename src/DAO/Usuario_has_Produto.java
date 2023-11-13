@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
 import sistema.Usuario;
@@ -51,7 +52,7 @@ public class Usuario_has_Produto extends DAOMTM<Usuario, Produto>
 
         String instrucao = SQLiteTableManager.insertTo(Usuario_has_Produto.nomeTabela, colunas, valores);
         
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
         
@@ -68,7 +69,7 @@ public class Usuario_has_Produto extends DAOMTM<Usuario, Produto>
 
         System.out.println(instrucao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 

@@ -26,7 +26,7 @@ public class SQLiteConnectionManager
     /* 
      * Método responsável por criar uma conexão com o banco de dados
      */
-    public boolean conectar()
+    public static void conectar()
     {
         try
         {
@@ -34,17 +34,15 @@ public class SQLiteConnectionManager
             
             String url = "jdbc:sqlite:database/banco_sqlite.db";   
 
-            conexao = DriverManager.getConnection(url);
+            SQLiteConnectionManager.conexao = DriverManager.getConnection(url);
 
             System.out.println("Conectado com sucesso!");
 
-            return true;
         }
         catch(ClassNotFoundException | SQLException e)
         {
             System.err.println("Falha na conexão! " + e.getMessage());
 
-            return false;
         }
 
     } 
@@ -52,24 +50,41 @@ public class SQLiteConnectionManager
     /* 
      * Método responsável por desconectar a aplicação do banco de dados
      */
-    public boolean desconectar()
+    public static void desconectar()
     {
         try
         {
-            if(conexao.isClosed() == false)
+            if(SQLiteConnectionManager.conexao != null)
             {
-                conexao.close();
+                if(!SQLiteConnectionManager.conexao.isClosed())
+                {
+                    SQLiteConnectionManager.conexao.close();
+                }
+            }
+
+            if(SQLiteConnectionManager.statement != null)
+            {
+                if(!SQLiteConnectionManager.statement.isClosed())
+                {
+                    SQLiteConnectionManager.statement.close();
+                }
+            }
+
+            if(SQLiteConnectionManager.resultSet != null)
+            {
+                if(!SQLiteConnectionManager.resultSet.isClosed())
+                {
+                    SQLiteConnectionManager.resultSet.close();
+                }
             }
     
             System.out.println("Desconectado com sucesso!");
             
-            return true;
         }
         catch(SQLException e)
         {
             System.err.println(e.getMessage());
 
-            return false;
         }
     }
 
@@ -77,11 +92,11 @@ public class SQLiteConnectionManager
      * Método responsável por criar e retornar um statement
      * Statement é uma instrução que você envia para o banco de dados para ser executada
      */
-    public Statement criarStatement()
+    private static Statement criarStatement()
     {
         try
         {
-            return conexao.createStatement();
+            return SQLiteConnectionManager.conexao.createStatement();
 
         }
         catch(SQLException e)
@@ -96,15 +111,13 @@ public class SQLiteConnectionManager
      * IMPORTANTE lembrar que, por algum motivo o banco de dados só recebe um comando por vez.
      * Portanto, se for criar duas tabelas, primeiro mande um create table, depois mande o outro, jamais os dois de vez.
      */
-    public void enviarQuery(String instrucao)
+    public static void enviarQuery(String instrucao)
     {
-
-        boolean conectou = false;
         try
         {
-            conectou = conectar();
+            SQLiteConnectionManager.conectar();
 
-            Statement statement = criarStatement();
+            Statement statement = SQLiteConnectionManager.criarStatement();
 
             statement.execute(instrucao);
 
@@ -116,23 +129,19 @@ public class SQLiteConnectionManager
         }
         finally
         {
-            if(conectou)
-            {
-                desconectar();
-            }
+            SQLiteConnectionManager.desconectar();
         }
     }
 
-    public ResultSet receberQuery(String instrucao)
+    public static ResultSet receberQuery(String instrucao)
     {
         ResultSet resultSet = null;
 
         Statement statement = null;
 
-        boolean conectou = false;
         try
         {
-            conectou = conectar();
+            SQLiteConnectionManager.conectar();
 
             statement = criarStatement();
 
@@ -146,46 +155,14 @@ public class SQLiteConnectionManager
         {
             System.out.println("Erro no recebimento da mensagem vinda do banco: " + e.getMessage());
         }
-        finally
-        {
-            //fecharStatement(statement);
-        }
 
         return resultSet;
     }
 
-    public void fecharResultSet(ResultSet resultSet)
-    {
-        try
-        {
-            resultSet.close();
-        }
-        catch(SQLException e)
-        {
-            System.out.println("Erro ao fechar as conexões: " + e.getMessage());
-        }
-    }
-
-      public void fecharStatement(Statement statement)
-    {
-        try
-        {
-            statement.close();
-        }
-        catch(SQLException e)
-        {
-            System.out.println("Erro ao fechar as conexões: " + e.getMessage());
-        }
-    }
-
-    /* GETTERS E SETTERS */
-    public Connection getConexao() 
-    {
-        return conexao;
-    }
-
     /* ATRIBUTOS */
     private static Connection conexao;
+    private static Statement statement;
+    private static ResultSet resultSet;
 
 
 

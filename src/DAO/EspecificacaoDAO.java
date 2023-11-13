@@ -1,8 +1,8 @@
 package DAO;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import utils.StringManager;
@@ -55,7 +55,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String instrucao = SQLiteTableManager.insertTo(especificacao.getNomeTabela(), colunas, valores);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -66,7 +66,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String instrucao = SQLiteTableManager.delete(especificacao.getNomeTabela(), condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -81,7 +81,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -95,7 +95,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
     
     @Override
@@ -107,7 +107,7 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         String instrucao = SQLiteTableManager.update(especificacao.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
     

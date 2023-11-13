@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Produto;
@@ -22,7 +23,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
 
         String instrucao = SQLiteTableManager.delete(nomeTabela, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
 
         String instrucao = SQLiteTableManager.insertTo(Especificacao_has_Produto.nomeTabela, colunas, valores);
         
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);        
+        SQLiteConnectionManager.enviarQuery(instrucao);        
     }
 
     /* 

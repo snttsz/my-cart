@@ -1,8 +1,8 @@
 package DAO;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Loja;
 import sistema.Tag;
@@ -18,7 +18,7 @@ public class TagDAO extends DAO<Tag>
 
         String instrucao = SQLiteTableManager.delete(tag.getNomeTabela(), condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -70,7 +70,7 @@ public class TagDAO extends DAO<Tag>
 
         String instrucao = SQLiteTableManager.insertTo(tag.getNomeTabela(), colunas, valores);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -86,7 +86,7 @@ public class TagDAO extends DAO<Tag>
 
         String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -100,7 +100,7 @@ public class TagDAO extends DAO<Tag>
 
         String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
     
     @Override
@@ -112,7 +112,7 @@ public class TagDAO extends DAO<Tag>
 
         String instrucao = SQLiteTableManager.update(tag.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 

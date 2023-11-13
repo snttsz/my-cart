@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.ArrayList;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Usuario;
 import utils.StringManager;
@@ -16,7 +17,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String instrucao = SQLiteTableManager.delete(usuario.getNomeTabela(), condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -55,7 +56,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String instrucao = SQLiteTableManager.insertTo(usuario.getNomeTabela(), colunas, valores);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -70,7 +71,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -84,7 +85,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
     
     @Override
@@ -96,7 +97,7 @@ public class UsuariosDAO extends DAO<Usuario>
 
         String instrucao = SQLiteTableManager.update(usuario.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 

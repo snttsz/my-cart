@@ -39,7 +39,7 @@ public class SQLiteTableManager
         
         for(String instrucao : instrucoes)
         {   
-            SQLiteTableManager.SQLiteConnectionManager.enviarQuery(instrucao);
+            SQLiteConnectionManager.enviarQuery(instrucao);
         }
 
 
@@ -116,12 +116,7 @@ public class SQLiteTableManager
     }
     
     /* ATRIBUTOS */
-    private static final SQLiteConnectionManager SQLiteConnectionManager = new SQLiteConnectionManager();
     private String scriptPath;
     
-    public static SQLiteConnectionManager getSqliteconnectionmanager() 
-    {
-        return SQLiteConnectionManager;
-    }
 
 }

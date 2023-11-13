@@ -2,8 +2,6 @@ package testes.testesSQL;
 
 
 import DAO.ProdutoDAO;
-import DAO.Usuario_has_Produto;
-import DAO.UsuariosDAO;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
 import sistema.ProdutoEletronico;

@@ -1,9 +1,8 @@
 package DAO;
 
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Loja;
 import utils.StringManager;
@@ -57,7 +56,7 @@ public class LojaDAO extends DAO<Loja>
 
         String instrucao = SQLiteTableManager.insertTo(loja.getNomeTabela(), colunas, valores);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -68,7 +67,7 @@ public class LojaDAO extends DAO<Loja>
 
         String instrucao = SQLiteTableManager.delete(loja.getNomeTabela(), condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
@@ -83,7 +82,7 @@ public class LojaDAO extends DAO<Loja>
 
         String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
 
@@ -97,7 +96,7 @@ public class LojaDAO extends DAO<Loja>
 
         String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
     }
     
     @Override
@@ -109,7 +108,7 @@ public class LojaDAO extends DAO<Loja>
 
         String instrucao = SQLiteTableManager.update(loja.getNomeTabela(), colunas_valores, condicao);
 
-        DAO.SQLiteConnectionManager.enviarQuery(instrucao);
+        SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
 
