@@ -9,7 +9,7 @@ public class TesteScreen extends Application
     @Override
     public void start(Stage stage) 
     {
-        ScreenLogged minhaTela = new ScreenLogged("MyCart", "ScreenLogged.fxml", "Bigodao");
+        ScreenLogged minhaTela = new ScreenLogged("MyCart", "ScreenLogged.fxml", "Helano");
 
         minhaTela.start(stage);
     }

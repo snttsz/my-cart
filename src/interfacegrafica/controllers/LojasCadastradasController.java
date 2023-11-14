@@ -132,7 +132,8 @@ public class LojasCadastradasController extends ControllerLogged
     {
         this.carregarNovaScene("ScreenLojasCadastradas.fxml");
     }
-
+    
+    // TODO: inves de criar um novo painel, deixar os painéis prontos e só editar os atributos
     private Pane clonarPaneDefaultProduto(String imagePath, String novoNomeDoProduto, double valorProduto, double novoArrecadado)
     {
         Pane result = new Pane();
