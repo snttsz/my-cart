@@ -81,7 +81,7 @@ public class Tag_has_Produto extends DAOMTM<Tag, Produto>
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDTAG.getNomeColuna();
+        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDProduto.getNomeColuna();
         String valorDireitaIgualdade = Integer.toString(produto.getId());
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
@@ -179,7 +179,7 @@ public class Tag_has_Produto extends DAOMTM<Tag, Produto>
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDTAG.getNomeColuna();
         String valorDireitaIgualdade = Integer.toString(tag.getId());
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
@@ -194,12 +194,12 @@ public class Tag_has_Produto extends DAOMTM<Tag, Produto>
          ArrayList<Produto> produtosMontados = new ArrayList<>();
          try
          {
-             while (resultSet.next()) 
-             {
-                 produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
-             }
- 
-             return produtosMontados;
+            while (resultSet.next()) 
+            {
+            produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
+            }
+
+            return produtosMontados;
          }
          catch(SQLException e) 
          {

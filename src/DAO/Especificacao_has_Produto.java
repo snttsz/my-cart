@@ -80,7 +80,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
+        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
         String valorDireitaIgualdade = Integer.toString(produto.getId());
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
@@ -130,7 +130,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
         String valorDireitaIgualdade = Integer.toString(especificacao.getId());
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 

@@ -4,6 +4,7 @@ package testes.testesSQL;
 import java.util.ArrayList;
 
 import DAO.EspecificacaoDAO;
+import DAO.Especificacao_has_Produto;
 import DAO.LojaDAO;
 import DAO.ProdutoDAO;
 import DAO.TagDAO;
@@ -152,10 +153,36 @@ public class TesteSQLite
             }
         }
 
-        /* 
-         * TODO testar especificacao has produtos
-         * e testar o selectbyid de todas as tabelas
-         */
+        /* Testando especificacoes de cada produto */
+        System.out.println("\n");
+        System.out.println("Testando especificações de cada produto");
+
+        Especificacao_has_Produto especificacao_has_Produto = new Especificacao_has_Produto();
+        ArrayList<Especificacao> especificacoeshas = new ArrayList<>();
+
+        for(Produto p : produtos)
+        {
+            System.out.println("Produto: " + produtoDAO.selectById(p.getId()).getNome());
+            especificacoeshas = especificacao_has_Produto.selectTodasEspecificacoesDoProduto(p);
+            for(Especificacao e : especificacoeshas)
+            {
+                Especificacao.printarEspecificacao(e);
+            }
+        }
+
+        /* Testando produto de cada especificação - embora não seja o correto haver isso */
+        System.out.println("\n");
+        System.out.println("Testando especificações de cada produto");
+
+        for(Especificacao e : especificacoes)
+        {
+            System.out.println("Especificação :" + especificacaoDAO.selectById(e.getId()).getNome());
+            produtoshas = especificacao_has_Produto.selectTodosProdutosDaEspecificacao(e);
+            for(Produto p: produtoshas)
+            {
+                Produto.printarProduto(p);
+            }
+        }
 
     }
 }
