@@ -27,6 +27,13 @@ public class Tag
         tagDAO.insert(this);
     }
     
+    /* Funções gerais */
+    public static void printarTag(Tag tag)
+    {
+        System.out.println("ID: " + tag.getId());
+        System.out.println("Nome: " + tag.getNome());
+        System.out.println("\n");
+    }
     /* Getters e Setters */
 
     public static String getNomeTabela() 

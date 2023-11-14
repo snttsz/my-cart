@@ -114,6 +114,18 @@ public class SQLiteTableManager
 
         return instrucao;
     }
+
+    /* 
+     * Método que utiliza o Join para mesclar tabelas e seleciona todos os dados a partir dessa tabela com uma condição
+     */
+    public static String selectAllJoin(String tabelaDeRetorno, String tabelaMesclada, String comparacaoDeAtributos,  String condicao)
+    {
+        String instrucao =
+        "SELECT " + tabelaDeRetorno + ".* " + " FROM " + tabelaDeRetorno + " JOIN " + tabelaMesclada +
+        " ON " + comparacaoDeAtributos + " WHERE " + condicao + ";";
+
+        return instrucao;
+    }
     
     /* ATRIBUTOS */
     private String scriptPath;

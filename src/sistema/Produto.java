@@ -59,7 +59,26 @@ public abstract class Produto
         this.tags = tags;
     }
     
-    
+    /* 
+     * Funções gerais
+     */
+    public static void printarProduto(Produto produto)
+    {
+        System.out.println("ID: " + produto.getId());
+        System.out.println("Nome: "+ produto.getNome());
+        System.out.println("Categoria: " + produto.getCategoria());
+        System.out.println("Preço: " + produto.getPreco());
+        System.out.println("Valor frete: " + produto.getValorFrete());
+        System.out.println("Disponibilidade: " + produto.getDisponibilidade());
+        System.out.println("Prioridade: " + produto.getPrioridade());
+        System.out.println("Marca: " + produto.getMarca());
+        System.out.println("Descricao: " + produto.getDescricao());
+        System.out.println("Link: " + produto.getLink());
+        System.out.println("Url_foto: " + produto.getUrl_foto());
+        System.out.println("Data de adição: " + produto.getData_de_adicao());
+        System.out.println("Valor arrecadado: " + produto.getValorArrecadado());
+        System.out.println("\n");
+    }
     /* Getters e setters */
 
     protected void setValores(String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)
@@ -313,12 +332,12 @@ public abstract class Produto
      */
     public enum Categorias
     {
-        ELETRONICO("eletronico"),
-        ALIMENTICIO("alimenticio"),
-        FERRAMENTA("ferramenta"),
-        LIVRO("livro"),
-        MOBILIA("mobilia"),
-        ROUPA("roupa");
+        ELETRONICO("Eletrônico"),
+        ALIMENTICIO("Alimentício"),
+        FERRAMENTA("Ferramenta"),
+        LIVRO("Livro"),
+        MOBILIA("Mobília"),
+        ROUPA("Roupa");
 
         private final String categoria;
 
@@ -337,17 +356,17 @@ public abstract class Produto
 
     private int id;
     private int disponibilidade;
+    private int prioridade;
     private String descricao;
     private String nome;
-    private double preco;
     private String link;
     private String url_foto;
     private String marca;
     private String data_de_adicao;
-    private int prioridade;
+    private String categoria;
+    private double preco;
     private double valorArrecadado;
     private double valorFrete; 
-    private String categoria;
     private ArrayList<Especificacao> especificacoes;
     private ArrayList<String> tags;
     private static ProdutoDAO produtoDAO = new ProdutoDAO();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
+import sistema.Produto;
 import sistema.Usuario;
 import utils.StringManager;
 
@@ -150,7 +151,9 @@ public class UsuariosDAO extends DAO<Usuario>
          * Montando instrucao
          */
 
-        String instrucao = SQLiteTableManager.selectAll(Usuario.getNomeTabela());
+        String condicao = StringManager.inserirIgualdade(Usuario.Coluna.ID.getNomeColuna(), Integer.toString(id));
+        
+        String instrucao = SQLiteTableManager.select(Usuario.getNomeTabela(), "*", condicao);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 

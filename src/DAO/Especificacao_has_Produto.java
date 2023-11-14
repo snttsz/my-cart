@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
@@ -64,6 +66,101 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         String instrucao = SQLiteTableManager.insertTo(Especificacao_has_Produto.nomeTabela, colunas, valores);
         
         SQLiteConnectionManager.enviarQuery(instrucao);        
+    }
+
+    public ArrayList<Especificacao> selectTodasEspecificacoesDoProduto(Produto produto)
+    {
+        /* 
+        * Montando Comparação entre atributos de duas tabelas diferentes 
+         */
+        String atributo1 = Especificacao.getNomeTabela() + "." + Especificacao.Coluna.ID.getNomeColuna();
+        String atributo2 = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
+        String comparacaoAtributos = StringManager.inserirIgualdade(atributo1, atributo2);
+        
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(produto.getId());
+        String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
+
+        String instrucao = SQLiteTableManager.selectAllJoin(Especificacao.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando Especificacoes
+         */
+        ArrayList<Especificacao> especificacoes = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                int idEspecificacao = resultSet.getInt(Especificacao.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
+                String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
+
+                Especificacao especificacao = new Especificacao(idEspecificacao,nome,valor);
+
+                especificacoes.add(especificacao);
+            }
+            
+            return especificacoes;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
+    public ArrayList<Produto> selectTodosProdutosDaEspecificacao(Especificacao especificacao)
+    {
+        /* 
+         * Montando Comparação entre atributos de duas tabelas diferentes 
+         */
+        String atributo1 = Produto.getNomeTabela() + "." + Produto.Coluna.ID.getNomeColuna();
+        String atributo2 = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String comparacaoAtributos = StringManager.inserirIgualdade(atributo1, atributo2);
+        
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(especificacao.getId());
+        String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
+
+        String instrucao = SQLiteTableManager.selectAllJoin(Produto.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando produtos
+         */
+
+         ArrayList<Produto> produtosMontados = new ArrayList<>();
+         try
+         {
+             while (resultSet.next()) 
+             {
+                 produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
+             }
+ 
+             return produtosMontados;
+         }
+         catch(SQLException e) 
+         {
+             e.printStackTrace(); 
+             throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+         }
+         finally
+         {
+             SQLiteConnectionManager.desconectar();
+         }
     }
 
     /* 

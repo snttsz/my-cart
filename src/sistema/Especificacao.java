@@ -30,6 +30,15 @@ public class Especificacao
         especificacaoDAO.insert(this);
     }
 
+    /* Funções gerais */
+    public static void printarEspecificacao(Especificacao especificacao)
+    {
+        System.out.println("ID: " + especificacao.getId());
+        System.out.println("Nome: " + especificacao.getNome());
+        System.out.println("Valor: " + especificacao.getValor());
+        System.out.println("\n");
+    }
+
     /* Getters e Setters */
 
     public void setValores(String nome, String valor)
@@ -93,7 +102,7 @@ public class Especificacao
      */
     public enum Coluna
     {
-        ID("idProduto"),
+        ID("idEspecificacao"),
         NOME("nome"),
         VALOR("valor");
 

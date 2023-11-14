@@ -165,7 +165,7 @@ public class StringManager
     /* 
      * Método responsável por receber um array de condições e adicionar um AND entre elas
      */
-    public static String inserirIgualdade(ArrayList<String> condicoes)
+    public static String inserirAnd(ArrayList<String> condicoes)
     {
         String instrucao = new String();
         for(int i = 0 ; i <condicoes.size()-1; i++)
@@ -177,6 +177,7 @@ public class StringManager
 
         return instrucao;
     }
+    
 
 
 }

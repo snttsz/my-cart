@@ -46,49 +46,17 @@ public class ProdutoDAO extends DAO<Produto>
         /* 
          * Montando produto
          */
-        try
+        if(resultSet != null)
         {
-            if(resultSet != null) 
-            {
-                Map<String,String> produto = new HashMap<>();
+            Produto produto = montarProduto(resultSet);
 
-                /* Inteiros */
-                produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
-                produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
-                produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
-
-
-                /* Strings */
-                produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
-                produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
-                produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
-                produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
-                produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
-                produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
-                produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
-
-
-                /* Doubles */
-                produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
-                produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
-                produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
-
-                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
-
-                return montarProduto(produto, categoria);
-            }
-            
-        } 
-        catch (SQLException e) 
-        {
-            e.printStackTrace(); 
-            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
-        }
-        finally
-        {
             SQLiteConnectionManager.desconectar();
+
+            return produto;
         }
 
+        SQLiteConnectionManager.desconectar();
+        
         return null;
     }
 
@@ -106,41 +74,13 @@ public class ProdutoDAO extends DAO<Produto>
         /* 
          * Montando produtos
          */
-        Map<String,String> produto = new HashMap<>();
 
         ArrayList<Produto> produtosMontados = new ArrayList<>();
         try
         {
             while (resultSet.next()) 
             {
-                /* Inteiros */
-                produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
-                produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
-                produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
-
-
-                /* Strings */
-                produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
-                produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
-                produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
-                produto.    public void getProdutoById(int idProduto)
-                {
-                    
-                }put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
-                produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
-                produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
-                produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
-
-
-                /* Doubles */
-                produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
-                produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
-                produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
-
-                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
-
-                produtosMontados.add(montarProduto(produto, categoria));
-
+                produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
             }
 
             return produtosMontados;
@@ -277,10 +217,9 @@ public class ProdutoDAO extends DAO<Produto>
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
-    public Produto montarProduto(Map<String,String> produto, String categoria)
+    public static Produto instanciarProduto(Map<String,String> produto, String categoria)
     {
         int id = Integer.parseInt(produto.get(Produto.Coluna.ID.getNomeColuna()));
-        System.out.println("ID: " + id);
         int prioridade = Integer.parseInt(produto.get(Produto.Coluna.PRIORIDADE.getNomeColuna()));
         int disponibilidade = Integer.parseInt(produto.get(Produto.Coluna.DISPONIBILIDADE.getNomeColuna()));
 
@@ -359,5 +298,52 @@ public class ProdutoDAO extends DAO<Produto>
             
             return null;
         }
+    }
+
+    public static Produto montarProduto(ResultSet resultSet)
+    {
+         /* 
+         * Montando produtos
+         */
+        Map<String,String> produto = new HashMap<>();
+        try
+        {
+
+            if(resultSet != null)
+            {
+                /* Inteiros */
+                produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
+                produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
+                produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
+    
+    
+                /* Strings */
+                produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
+                produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
+                produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
+                produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
+                produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
+                produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
+                produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
+    
+    
+                /* Doubles */
+                produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
+
+                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
+
+                return instanciarProduto(produto, categoria);
+    
+            }
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+
+        return null;
     }
 }

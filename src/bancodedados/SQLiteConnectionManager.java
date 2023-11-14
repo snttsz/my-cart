@@ -36,7 +36,7 @@ public class SQLiteConnectionManager
 
             SQLiteConnectionManager.conexao = DriverManager.getConnection(url);
 
-            System.out.println("Conectado com sucesso!");
+            //System.out.println("Conectado com sucesso!");
 
         }
         catch(ClassNotFoundException | SQLException e)
@@ -78,7 +78,7 @@ public class SQLiteConnectionManager
                 }
             }
     
-            System.out.println("Desconectado com sucesso!");
+            //System.out.println("Desconectado com sucesso!");
             
         }
         catch(SQLException e)
@@ -121,7 +121,7 @@ public class SQLiteConnectionManager
 
             statement.execute(instrucao);
 
-            System.out.println("O Query foi realizado com sucesso!");
+            //System.out.println("O Query foi realizado com sucesso!");
         }
         catch(SQLException e)
         {
@@ -147,7 +147,7 @@ public class SQLiteConnectionManager
 
             resultSet = statement.executeQuery(instrucao);
             
-            System.out.println("O Query foi realizado com sucesso!");
+            //System.out.println("O Query foi realizado com sucesso!");
 
 
         }

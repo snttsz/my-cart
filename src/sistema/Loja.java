@@ -30,6 +30,14 @@ public class Loja
         lojaDAO.insert(this);
     }
 
+    /* Funções gerais */
+    public static void printarLoja(Loja loja)
+    {
+        System.out.println("ID: " + loja.getId());
+        System.out.println("Nome: " + loja.getNome());
+        System.out.println("Url: " + loja.getUrl());
+        System.out.println("\n");
+    }
     /* Getters e Setters */
 
     public void setValores(String nome, String url)

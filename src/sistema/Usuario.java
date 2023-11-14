@@ -37,6 +37,17 @@ public class Usuario {
         usuarioDAO.insert(this);
     }
 
+    /* Funções gerais */
+    public static void printarUsuario(Usuario usuario)
+    {
+        System.out.println("ID: " + usuario.getId());
+        System.out.println("Nome:" + usuario.getNome());
+        System.out.println("Login: " + usuario.getLogin());
+        System.out.println("E-mail: " + usuario.getEmail());
+        System.out.println("Senha: " + usuario.getSenha());
+        System.out.println("\n");
+    }
+
     /* Getters e Setters */
 
     public void setValores(String nome, String login, String senha, String email, ArrayList<Produto> produtos)
@@ -151,8 +162,6 @@ public class Usuario {
     {
         
     }
-
-    public void 
     
     /* Atributos */
 

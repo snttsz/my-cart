@@ -24,7 +24,6 @@ public class TagDAO extends DAO<Tag>
     }
 
 
-
     @Override
     public ArrayList<Tag> selectAll() 
     {

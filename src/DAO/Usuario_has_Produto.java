@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
@@ -17,12 +19,21 @@ public class Usuario_has_Produto extends DAOMTM<Usuario, Produto>
 
     @Override
     public void insert(Usuario usuario, Produto produto) 
-    {
+    {   
+        
         /* 
-         * TODO puxar o produto do BD, se existir prossegue, se não eu crio ele antes de inserir na tabela User_has_Produto
-         * 
-         * O usuário não precisa pasasr por isso, pois ele sempre terá sido criado anteriormente
+         * TODO VER SE ISSO É REALMENTE NECESSARIO
          */
+        /* 
+         * Verificando se o produto já existe no banco de dados
+         */
+/*         ProdutoDAO produtoDAO = new ProdutoDAO();
+        if((produtoDAO.selectById(produto.getId()) != null))
+        {
+            System.out.println("Erro na tentativa de inserir o produto: O produto já existe");
+            return;
+        }
+ */
         ArrayList<Integer> valoresInteger = new ArrayList<Integer>();
 
         ArrayList<String> arrayColunas = new ArrayList<String>();
@@ -67,11 +78,55 @@ public class Usuario_has_Produto extends DAOMTM<Usuario, Produto>
 
         String instrucao = SQLiteTableManager.delete(nomeTabela, condicao);
 
-        System.out.println(instrucao);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
+
+    public ArrayList<Produto> selectTodosProdutosDoUsuario(int idUsuario)
+    {
+        /* 
+         * Montando Comparação entre atributos de duas tabelas diferentes 
+         */
+        String atributo1 = Produto.getNomeTabela() + "." + Produto.Coluna.ID.getNomeColuna();
+        String atributo2 = Usuario_has_Produto.nomeTabela + "." + Usuario_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String comparacaoAtributos = StringManager.inserirIgualdade(atributo1, atributo2);
+        
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Usuario_has_Produto.nomeTabela + "." + Usuario_has_Produto.Coluna.IDUsuario.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(idUsuario);
+        String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
+
+        String instrucao = SQLiteTableManager.selectAllJoin(Produto.getNomeTabela(), Usuario_has_Produto.nomeTabela, comparacaoAtributos, condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+         /* 
+         * Montando produtos
+         */
+
+         ArrayList<Produto> produtosMontados = new ArrayList<>();
+         try
+         {
+             while (resultSet.next()) 
+             {
+                 produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
+             }
+ 
+             return produtosMontados;
+         }
+         catch(SQLException e) 
+         {
+             e.printStackTrace(); 
+             throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+         }
+         finally
+         {
+             SQLiteConnectionManager.desconectar();
+         }
+    }   
+
 
     /* 
      * Enum com o nome das tabelas
