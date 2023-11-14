@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
-import sistema.Produto;
 import sistema.Usuario;
 import utils.StringManager;
 

@@ -15,6 +15,7 @@ import sistema.ProdutoFerramenta;
 import sistema.ProdutoLivro;
 import sistema.ProdutoMobilia;
 import sistema.ProdutoRoupa;
+import sistema.Usuario;
 import utils.StringManager;
 
 public class ProdutoDAO extends DAO<Produto> 
@@ -346,4 +347,36 @@ public class ProdutoDAO extends DAO<Produto>
 
         return null;
     }
+
+    public ArrayList<Produto> selectTodosProdutosDoUsuario(Usuario usuario)
+    {
+        /* 
+         * Montando condição
+         */
+        String condicao = StringManager.inserirIgualdade(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(usuario.getId()));
+
+        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), "*", condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Produto> produtos = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                produtos.add(montarProduto(resultSet));
+            }
+
+            return produtos;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    } 
 }

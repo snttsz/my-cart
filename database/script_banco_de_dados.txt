@@ -1,15 +1,25 @@
 PRAGMA foreign_keys=off;
 
+-- -----------------------------------------------------
 -- Schema mydb
+-- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS Loja (
-  idLoja INTEGER PRIMARY KEY AUTOINCREMENT,
+  idLoja INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   nome TEXT NOT NULL,
   url TEXT
 );
 
+CREATE TABLE IF NOT EXISTS Usuario (
+  idUsuario INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  nome TEXT NOT NULL,
+  login TEXT NOT NULL,
+  senha TEXT NOT NULL,
+  "email" TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Produto (
-  idProduto INTEGER PRIMARY KEY AUTOINCREMENT,
+  idProduto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   nome TEXT NOT NULL,
   valor REAL NOT NULL,
   url TEXT,
@@ -32,34 +42,20 @@ CREATE TABLE IF NOT EXISTS Produto (
   largura TEXT,
   altura TEXT,
   Loja_idLoja INTEGER,
-  FOREIGN KEY (Loja_idLoja) REFERENCES Loja (idLoja) ON DELETE NO ACTION ON UPDATE NO ACTION
+  Usuario_idUsuario INTEGER NOT NULL,
+  FOREIGN KEY (Loja_idLoja) REFERENCES Loja (idLoja) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE IF NOT EXISTS Tag (
-  idTag INTEGER PRIMARY KEY AUTOINCREMENT,
+  idTag INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   nome TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Usuario (
-  idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome TEXT NOT NULL,
-  login TEXT NOT NULL,
-  senha TEXT NOT NULL,
-  "email" TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Especificacao (
-  idEspecificacao INTEGER PRIMARY KEY AUTOINCREMENT,
+  idEspecificacao INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   valor TEXT NOT NULL,
   nome TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Usuario_has_Produto (
-  Usuario_idUsuario INTEGER NOT NULL,
-  Produto_idProduto INTEGER NOT NULL,
-  PRIMARY KEY (Usuario_idUsuario, Produto_idProduto),
-  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  FOREIGN KEY (Produto_idProduto) REFERENCES Produto (idProduto) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE IF NOT EXISTS Especificacao_has_Produto (

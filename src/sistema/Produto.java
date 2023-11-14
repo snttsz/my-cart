@@ -312,7 +312,8 @@ public abstract class Produto
         VALOR_ARRECADADO("valor_arrecadado"),
         DESCRICAO("descricao"),
         CATEGORIA("categoria"),
-        VALOR_FRETE("valor_frete");
+        VALOR_FRETE("valor_frete"),
+        IDUSUARIO("Usuario_idUsuario");
 
         private final String nomeColuna;
 

@@ -9,7 +9,6 @@ import DAO.LojaDAO;
 import DAO.ProdutoDAO;
 import DAO.TagDAO;
 import DAO.Tag_has_Produto;
-import DAO.Usuario_has_Produto;
 import DAO.UsuariosDAO;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
@@ -17,7 +16,6 @@ import sistema.Loja;
 import sistema.Produto;
 import sistema.Tag;
 import sistema.Usuario;
-
 
 
 public class TesteSQLite 
@@ -108,14 +106,13 @@ public class TesteSQLite
         System.out.println("\n");
         System.out.println("Testando produtos de cada usuário");
 
-        Usuario_has_Produto usuario_has_Produto = new Usuario_has_Produto();
         ArrayList<Produto> produtoshas = new ArrayList<>();
 
         for(Usuario u: usuarios)
         {
 
             System.out.println("Usuário: " + usuarioDAO.selectById(u.getId()).getNome());
-            produtoshas = usuario_has_Produto.selectTodosProdutosDoUsuario(u.getId());
+            produtoshas = produtoDAO.selectTodosProdutosDoUsuario(u);
             for(Produto p : produtoshas)
             {
                 Produto.printarProduto(p);
