@@ -3,6 +3,7 @@ package interfacegrafica.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// JavaFX libraries
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,12 +14,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+// Java libraries
+import java.util.Stack;
+
+import interfacegrafica.models.PaginaLoja;
+// Local Libraries
+import interfacegrafica.models.PainelLoja;
+import interfacegrafica.models.PainelProduto;
+
 public class LojasCadastradasController extends ControllerLogged
 {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
         super.initialize(location, resources);
+
+        this.pilhaLojas = new Stack<PainelLoja>();
         
         // Aguarda até que o processo de inicialização seja finalizado para executar
         // o comando.
@@ -35,31 +46,6 @@ public class LojasCadastradasController extends ControllerLogged
              * desproporcionais na página.
              */
             int quantidadeDeLojas = 2;
-
-            double alturaPane = this.mainPane.getHeight();
-            if (quantidadeDeLojas > 1)
-            {
-                // Criando uma nova loja teste
-
-                Pane testePane = clonarPaneDefaultProduto(
-                    "img/memoria-ram-test.png",
-                    "TESTE",
-                    123.05,
-                    100
-                );
-                testePane.setLayoutX(this.defaultProdutoLoja.getLayoutX() + paneProdutoDiferencaX);
-                testePane.setLayoutY(this.defaultProdutoLoja.getLayoutY());
-
-
-                double defaultLojaPaneHeight = this.defaultLojaPane.getHeight();
-                alturaPane += (defaultLojaPaneHeight * quantidadeDeLojas); 
-                alturaPane += (this.diferencaPanesLojasY * quantidadeDeLojas);
-
-                this.mainPane.getChildren().add(testePane);
-            }
-
-            this.mainPane.setPrefHeight(alturaPane);
-            // =======================
         }
         );
     }
@@ -132,109 +118,26 @@ public class LojasCadastradasController extends ControllerLogged
     {
         this.carregarNovaScene("ScreenLojasCadastradas.fxml");
     }
-    
-    // TODO: inves de criar um novo painel, deixar os painéis prontos e só editar os atributos
-    private Pane clonarPaneDefaultProduto(String imagePath, String novoNomeDoProduto, double valorProduto, double novoArrecadado)
+
+    // TODO: pra criar as pilhas de página, não vou precisar armazenar atributos
+    // do modulo do javafx, só atributos comuns como nome da loja, caminho da imagem, etc.
+    // coisas que vem do banco de dados. Daí quando for mudar a página eu só vou alterando
+    // os atributos do javafx com os atributos do banco.
+
+    // TODO: talvez essa função tenha que ir pra classe pai controller
+    private PainelProduto criarPainelProduto(String nomeDoProduto, double valorProduto, double valorArrecadado)
     {
-        Pane result = new Pane();
 
-        result.setStyle(this.defaultProdutoLoja.getStyle());
-        result.setPrefSize(this.defaultProdutoLoja.getWidth(), this.defaultProdutoLoja.getHeight());
+    }
 
-        /* 
-         * Deep copy do texto "valor arrecadado"
-         */
-        Text arrecadado = new Text();
-        arrecadado.setStyle(this.arrecadadoPaneDefault.getStyle());
-        arrecadado.setLayoutX(this.arrecadadoPaneDefault.getLayoutX());
-        arrecadado.setLayoutY(this.arrecadadoPaneDefault.getLayoutY());
+    private PainelLoja criarPainelLoja(int idLoja, String nomeDaLoja, String caminhoImagem, PainelProduto produto1, PainelProduto produto2)
+    {
 
-        /* 
-         * Deep copy do texto "preço"
-         */
-        Text preco = new Text();
-        preco.setStyle(this.precoProdutoPaneDefault.getStyle());
-        preco.setLayoutX(this.precoProdutoPaneDefault.getLayoutX());
-        preco.setLayoutY(this.precoProdutoPaneDefault.getLayoutY());
+    }
 
-        /* 
-         * Deep copy do texto com nome do produto
-         */
-        Text nome = new Text();
-        nome.setStyle(this.nomeProdutoPaneDefault.getStyle());
-        nome.setLayoutX(this.nomeProdutoPaneDefault.getLayoutX());
-        nome.setLayoutY(this.nomeProdutoPaneDefault.getLayoutY());
-        nome.setText(novoNomeDoProduto);
+    private PaginaLoja criarPaginaLoja()
+    {
 
-        /* 
-         * Deep copy do texto "faltam"
-         */
-        Text faltam = new Text();
-        faltam.setStyle(this.faltamPaneDefault.getStyle());
-        faltam.setLayoutX(this.faltamPaneDefault.getLayoutX());
-        faltam.setLayoutY(this.faltamPaneDefault.getLayoutY());
-
-        /* 
-         * Deep copy do texto do preço de "faltam"
-         */
-        Text precoFaltam = new Text();
-        precoFaltam.setStyle(this.precoFaltam.getStyle());
-        precoFaltam.setLayoutX(this.precoFaltam.getLayoutX());
-        precoFaltam.setLayoutY(this.precoFaltam.getLayoutY());
-        
-        double diferenca = valorProduto - novoArrecadado;
-
-        if (diferenca < 0)
-        {
-            precoFaltam.setText("R$ 0,0");
-        }
-        else
-        {
-            precoFaltam.setText("R$ " + String.valueOf(diferenca));
-        }
-
-        /* 
-         * Deep copy do texto do preço de "arrecadado"
-         */
-        Text precoArrecadado = new Text();
-        precoArrecadado.setStyle(this.precoArrecadado.getStyle());
-        precoArrecadado.setLayoutX(this.precoArrecadado.getLayoutX());
-        precoArrecadado.setLayoutY(this.precoArrecadado.getLayoutY());
-        precoArrecadado.setText("R$ " + String.valueOf(novoArrecadado));
-
-        /* 
-         * Deep copy do texto do preço de "arrecadado"
-         */
-        Text precoProduto = new Text();
-        precoProduto.setStyle(this.precoProduto.getStyle());
-        precoProduto.setLayoutX(this.precoProduto.getLayoutX());
-        precoProduto.setLayoutY(this.precoProduto.getLayoutY());
-        precoProduto.setText("R$ " + String.valueOf(valorProduto));
-
-        /* 
-         * Deep copy das propriedades da imagem do produto
-         */
-        ImageView fotoPane = new ImageView();
-        // Image image = new Image(imagePath);
-        // fotoPane.setImage(image);
-        fotoPane.setStyle(this.fotoPaneDefault.getStyle());
-        fotoPane.setLayoutX(this.fotoPaneDefault.getLayoutX());
-        fotoPane.setLayoutY(this.fotoPaneDefault.getLayoutY());
-        
-        
-        /* 
-         * Adicionando os nodes dentro do Pane
-         */
-        result.getChildren().add(arrecadado);
-        result.getChildren().add(preco);
-        result.getChildren().add(nome);
-        result.getChildren().add(faltam);
-        result.getChildren().add(fotoPane);
-        result.getChildren().add(precoFaltam);
-        result.getChildren().add(precoArrecadado);
-        result.getChildren().add(precoProduto);
-
-        return result;
     }
     
     /* 
@@ -296,16 +199,150 @@ public class LojasCadastradasController extends ControllerLogged
     private ImageView fotoPaneDefault;
 
     /* 
+     *    
+     *      Painéis das lojas
+     *  
+     */
+
+    /* 
+    * Pane loja 1 
+    */
+
+    @FXML
+    private AnchorPane paneLoja1;
+
+    @FXML
+    private Text nomeLoja1;
+
+    @FXML
+    private ImageView fotoLoja1;
+
+    @FXML 
+    private Button maisProdutosLoja1;
+
+    // primeiro produto
+
+    @FXML
+    private Pane produtoLoja1;
+
+    @FXML 
+    private Text valorPrecoProduto;
+
+    @FXML 
+    private Text valorArrecadadoProduto;
+
+    @FXML
+    private Text valorFaltamProduto;
+
+    @FXML
+    private ImageView fotoProduto;
+
+    // segundo produto
+
+    @FXML 
+    private Pane produtoLoja2;
+
+    @FXML 
+    private Text valorPrecoProduto2;
+
+    @FXML 
+    private Text valorArrecadadoProduto2;
+
+    @FXML
+    private Text valorFaltamProduto2;
+
+    @FXML
+    private ImageView fotoProduto2;
+
+    // terceiro produto
+
+    @FXML 
+    private Pane produtoLoja3;
+
+    @FXML 
+    private Text valorPrecoProduto3;
+
+    @FXML 
+    private Text valorArrecadadoProduto3;
+
+    @FXML
+    private Text valorFaltamProduto3;
+
+    @FXML
+    private ImageView fotoProduto3;
+
+    /* 
+    * Pane loja 2
+    */
+
+    @FXML
+    private AnchorPane paneLoja2;
+
+    @FXML
+    private Text nomeLoja2;
+
+    @FXML
+    private ImageView fotoLoja2;
+
+    @FXML 
+    private Button maisProdutosLoja2;
+
+    // primeiro produto
+
+    @FXML
+    private Pane produtoLoja1_2;
+
+    @FXML 
+    private Text valorPrecoProduto1_2;
+
+    @FXML 
+    private Text valorArrecadadoProduto1_2;
+
+    @FXML
+    private Text valorFaltamProduto1_2;
+
+    @FXML
+    private ImageView fotoProduto1_2;
+
+    // segundo produto
+
+    @FXML 
+    private Pane produtoLoja2_2;
+
+    @FXML 
+    private Text valorPrecoProduto2_2;
+
+    @FXML 
+    private Text valorArrecadadoProduto2_2;
+
+    @FXML
+    private Text valorFaltamProduto2_2;
+
+    @FXML
+    private ImageView fotoProduto2_2;
+
+    // terceiro produto
+
+    @FXML 
+    private Pane produtoLoja3_2;
+
+    @FXML 
+    private Text valorPrecoProduto3_2;
+
+    @FXML 
+    private Text valorArrecadadoProduto3_2;
+
+    @FXML
+    private Text valorFaltamProduto3_2;
+
+    @FXML
+    private ImageView fotoProduto3_2;
+
+    /* 
      * 
      *      ATRIBUTOS INTERNOS  
      * 
      */
 
-    // Constante com o espaço em pixels que separa um produto do outro
-    // na visualização do pane da loja.
-    private final double paneProdutoDiferencaX = 213;
-
-    // Constante com o espaço em pixels que separa um Pane de uma loja 
-    // de outro.
-    private final double diferencaPanesLojasY = 50;
+    Stack<PaginaLoja> pilhaLojas;
 }
