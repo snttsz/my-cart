@@ -29,7 +29,7 @@ public class LojasCadastradasController extends ControllerLogged
     {
         super.initialize(location, resources);
 
-        this.pilhaLojas = new Stack<PainelLoja>();
+        this.pilhaLojas = new Stack<PaginaLoja>();
         
         // Aguarda até que o processo de inicialização seja finalizado para executar
         // o comando.
@@ -45,7 +45,7 @@ public class LojasCadastradasController extends ControllerLogged
              * qual será a altura do pane e não deixar espaços em branco
              * desproporcionais na página.
              */
-            int quantidadeDeLojas = 2;
+            // int quantidadeDeLojas = 2;
         }
         );
     }
