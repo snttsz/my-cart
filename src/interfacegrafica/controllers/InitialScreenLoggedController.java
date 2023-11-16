@@ -47,34 +47,16 @@ public class InitialScreenLoggedController extends ControllerLogged
 
         if (botao.getId() == this.lojasCadastradas.getId())
         {
-            this.mudarSceneLojasCadastradas();
+            this.mudarScene("ScreenLojasCadastradas.fxml");
         }
         else if (botao.getId() == this.categorias.getId())
         {
-            this.mudarSceneCategorias();
+            // this.mudarSceneCategorias();
         }
         else if (botao.getId() == this.inicio.getId())
         {
-            this.mudarSceneInicio();
+            this.mudarScene("ScreenLogged.fxml");;
         }
-    }
-
-    @Override
-    public void mudarSceneInicio()
-    {
-        this.carregarNovaScene("ScreenLogged.fxml");
-    }
-
-    @Override
-    public void mudarSceneCategorias()
-    {   
-
-    }
-
-    @Override 
-    public void mudarSceneLojasCadastradas()
-    {
-        this.carregarNovaScene("ScreenLojasCadastradas.fxml");
     }
 
     /* 

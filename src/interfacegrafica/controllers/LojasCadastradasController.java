@@ -17,10 +17,9 @@ import javafx.scene.text.Text;
 // Java libraries
 import java.util.Stack;
 
+// Local libraries
 import interfacegrafica.models.PaginaLoja;
-// Local Libraries
-import interfacegrafica.models.PainelLoja;
-import interfacegrafica.models.PainelProduto;
+
 
 public class LojasCadastradasController extends ControllerLogged
 {
@@ -88,56 +87,16 @@ public class LojasCadastradasController extends ControllerLogged
 
         if (botao.getId() == this.lojasCadastradas.getId())
         {
-            this.mudarSceneLojasCadastradas();
+            this.mudarScene("ScreenLojasCadastradas.fxml");
         }
         else if (botao.getId() == this.categorias.getId())
         {
-            this.mudarSceneCategorias();
+            // this.mudarSceneCategorias();
         }
         else if (botao.getId() == this.inicio.getId())
         {
-            this.mudarSceneInicio();
+            this.mudarScene("ScreenLogged.fxml");;
         }
-    }
-
-    
-    @Override
-    public void mudarSceneInicio()
-    {
-        this.carregarNovaScene("ScreenLogged.fxml");
-    }
-
-    @Override
-    public void mudarSceneCategorias()
-    {   
-        
-    }
-
-    @Override 
-    public void mudarSceneLojasCadastradas()
-    {
-        this.carregarNovaScene("ScreenLojasCadastradas.fxml");
-    }
-
-    // TODO: pra criar as pilhas de página, não vou precisar armazenar atributos
-    // do modulo do javafx, só atributos comuns como nome da loja, caminho da imagem, etc.
-    // coisas que vem do banco de dados. Daí quando for mudar a página eu só vou alterando
-    // os atributos do javafx com os atributos do banco.
-
-    // TODO: talvez essa função tenha que ir pra classe pai controller
-    private PainelProduto criarPainelProduto(String nomeDoProduto, double valorProduto, double valorArrecadado)
-    {
-
-    }
-
-    private PainelLoja criarPainelLoja(int idLoja, String nomeDaLoja, String caminhoImagem, PainelProduto produto1, PainelProduto produto2)
-    {
-
-    }
-
-    private PaginaLoja criarPaginaLoja()
-    {
-
     }
     
     /* 

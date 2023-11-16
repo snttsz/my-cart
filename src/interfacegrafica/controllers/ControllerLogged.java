@@ -219,10 +219,10 @@ public abstract class ControllerLogged implements Initializable
         }
     }
 
-    // TODO: checar se essas funções serão realmente abstratas
-    protected abstract void mudarSceneLojasCadastradas();
-    protected abstract void mudarSceneCategorias();
-    protected abstract void mudarSceneInicio();
+    protected void mudarScene(String fxmlName)
+    {
+        this.carregarNovaScene(fxmlName);
+    }
 
     /* 
      * 
