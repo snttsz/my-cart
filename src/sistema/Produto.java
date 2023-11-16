@@ -11,12 +11,13 @@ public abstract class Produto
 
     public Produto(){};
     
+    
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
     public Produto(int id, int disponibilidade, String descricao, String nome, double preco, String link,
     String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario) 
     {
         this.disponibilidade = disponibilidade;
         this.descricao = descricao;
@@ -33,15 +34,16 @@ public abstract class Produto
         this.especificacoes = especificacoes;
         this.tags = tags;
         this.id = id;
+        this.idUsuario = idUsuario;
     }
-
-        
+    
+    
     /* 
-     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
-     */
+    * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+    */
     public Produto(int disponibilidade, String descricao, String nome, double preco, String link,
     String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario) 
     {
         this.disponibilidade = disponibilidade;
         this.descricao = descricao;
@@ -57,11 +59,12 @@ public abstract class Produto
         this.categoria = categoria;
         this.especificacoes = especificacoes;
         this.tags = tags;
+        this.idUsuario = idUsuario;
     }
     
     /* 
-     * Funções gerais
-     */
+    * Funções gerais
+    */
     public static void printarProduto(Produto produto)
     {
         System.out.println("ID: " + produto.getId());
@@ -109,17 +112,27 @@ public abstract class Produto
         this.setDisponibilidade(disponibilidade);
         this.setDescricao(descricao);
     }
-
+    
     public static String getNomeTabela() 
     {
         return Produto.nomeTabela;
     }
 
+    public int getIdUsuario() 
+    {
+        return this.idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) 
+    {
+        this.idUsuario = idUsuario;
+    }
+    
     public String getDescricao() 
     {
         return this.descricao;
     } 
-
+    
     public void setDescricao(String descricao) 
     {
         this.descricao = descricao;
@@ -358,6 +371,7 @@ public abstract class Produto
     private int id;
     private int disponibilidade;
     private int prioridade;
+    private int idUsuario;
     private String descricao;
     private String nome;
     private String link;

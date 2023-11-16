@@ -14,15 +14,18 @@ import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Loja;
 import sistema.Produto;
+import sistema.ProdutoEletronico;
 import sistema.Tag;
 import sistema.Usuario;
 
 
 public class TesteSQLite 
 {
-       public static void main(String args[])
+    public static void main(String args[])
     {
         SQLiteTableManager sqLiteTableManager = new SQLiteTableManager();
+
+        ProdutoDAO produtoDAO = new ProdutoDAO();
 
         /* PRODUTOS */
         System.out.println("\n");
@@ -30,7 +33,6 @@ public class TesteSQLite
         
         ArrayList<Produto> produtos = new ArrayList<>();
         
-        ProdutoDAO produtoDAO = new ProdutoDAO();
 
         produtos = produtoDAO.selectAll();
 
@@ -181,5 +183,14 @@ public class TesteSQLite
             }
         }
 
+        /* Testando a contagem de produtos de cada usuário */
+        System.out.println("\n");
+        System.out.println("Testando a contagem de produtos de cada usuário");
+
+        System.out.println("O usuário" + usuarioDAO.selectById(1000).getNome() + "possui: " + produtoDAO.contarProdutosCategorizadosDoUsuario(1000,Produto.Categorias.ELETRONICO.getCategoria()) + " produtos eletrônicos");
+
+
     }
+
 }
+

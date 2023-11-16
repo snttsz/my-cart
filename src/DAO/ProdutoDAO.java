@@ -30,6 +30,9 @@ public class ProdutoDAO extends DAO<Produto>
      * Métodos gerais
      */
 
+    /* 
+     * Método responsável por retornar um produto do banco com base no id dele
+     */
     @Override
     public Produto selectById(int id)
     {
@@ -61,6 +64,9 @@ public class ProdutoDAO extends DAO<Produto>
         return null;
     }
 
+    /* 
+     * Método responsável por retornar um ArrayList contendo todos os produtos do bando de dados
+     */
     @Override
     public ArrayList<Produto> selectAll() 
     {
@@ -98,6 +104,9 @@ public class ProdutoDAO extends DAO<Produto>
 
     }
 
+    /* 
+     * Método responsável por inserir um produto no banco de dados
+     */
     public void insert(Produto produto) 
     {
         ArrayList<String> valoresString = new ArrayList<String>();
@@ -123,6 +132,7 @@ public class ProdutoDAO extends DAO<Produto>
         arrayColunas.add(Produto.Coluna.PRECO.getNomeColuna()); 
         arrayColunas.add(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.VALOR_FRETE.getNomeColuna());
+        arrayColunas.add(Produto.Coluna.IDUSUARIO.getNomeColuna());
 
         /* 
          * Montando os valores referente a cada coluna
@@ -141,6 +151,7 @@ public class ProdutoDAO extends DAO<Produto>
         /* Valores do tipo Integer */
         valoresInteger.add(produto.getPrioridade());
         valoresInteger.add(produto.getDisponibilidade());
+        valoresInteger.add(produto.getIdUsuario());
         
         ArrayList<String> valoresIntegerNormalizados = StringManager.formatarInt(valoresInteger);
 
@@ -152,7 +163,6 @@ public class ProdutoDAO extends DAO<Produto>
         ArrayList<String> valoresDoubleNormalizados = StringManager.formatarDouble(valoresDouble);
 
         /* Montando string com a tabela, coluna e valores */
-
         String colunas = StringManager.montarString(arrayColunas);
 
         String valores = 
@@ -166,6 +176,9 @@ public class ProdutoDAO extends DAO<Produto>
 
     }
 
+    /* 
+     * Método responsável por atualizar um atributo string de um produto
+     */
     @Override
     public void updateString(Produto produto, String coluna, String novoValor)
     {
@@ -183,6 +196,9 @@ public class ProdutoDAO extends DAO<Produto>
 
     }
 
+    /* 
+     * Método responsável por atualizar um atributo inteiro de um produto
+     */
     @Override
     public void updateInt(Produto produto, String coluna, int novoValor) 
     {
@@ -195,6 +211,9 @@ public class ProdutoDAO extends DAO<Produto>
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
+    /* 
+     * Método responsável por alterar um atributo double de um produto
+     */
     @Override
     public void updateDouble(Produto produto, String coluna, double novoValor) 
     {
@@ -208,9 +227,15 @@ public class ProdutoDAO extends DAO<Produto>
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
+    /* 
+     * Método responsável por deletar um produto da tabela
+     */
     @Override
     public void delete(Produto produto) 
     {
+        /* 
+         * TODO deletar o produto das demais tabelas( as tabelas has)
+         */
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId())); 
 
         String instrucao = SQLiteTableManager.delete(Produto.getNomeTabela(), condicao);
@@ -218,11 +243,16 @@ public class ProdutoDAO extends DAO<Produto>
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
+    /* 
+     * Método responsável por receber um Map , sendo que a chave é o nome da coluna e o valor é o conteúdo daquela coluna
+     * e instanciar um produto com base na categoria passada
+     */
     public static Produto instanciarProduto(Map<String,String> produto, String categoria)
     {
         int id = Integer.parseInt(produto.get(Produto.Coluna.ID.getNomeColuna()));
         int prioridade = Integer.parseInt(produto.get(Produto.Coluna.PRIORIDADE.getNomeColuna()));
         int disponibilidade = Integer.parseInt(produto.get(Produto.Coluna.DISPONIBILIDADE.getNomeColuna()));
+        int idUsuario = Integer.parseInt(produto.get(Produto.Coluna.IDUSUARIO.getNomeColuna()));
 
         double preco = Double.parseDouble(produto.get(Produto.Coluna.PRECO.getNomeColuna()));
         double valorFrete = Double.parseDouble(produto.get(Produto.Coluna.VALOR_FRETE.getNomeColuna()));
@@ -238,14 +268,14 @@ public class ProdutoDAO extends DAO<Produto>
         if(categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
         {
             ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null);
+            valorFrete, categoria, null, null, idUsuario);
             
             return produtoEletronico;
         }
         else if(categoria.equals(Produto.Categorias.ALIMENTICIO.getCategoria()))
         {
             ProdutoAlimento produtoAlimento = new ProdutoAlimento(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null);
+            valorFrete, categoria, null, null, idUsuario);
 
             return produtoAlimento;
 
@@ -253,7 +283,7 @@ public class ProdutoDAO extends DAO<Produto>
         else if(categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
         {
             ProdutoFerramenta produtoFerramenta = new ProdutoFerramenta(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null);
+            valorFrete, categoria, null, null, idUsuario);
 
             return produtoFerramenta;
         }
@@ -263,7 +293,7 @@ public class ProdutoDAO extends DAO<Produto>
             String genero = produto.get(ProdutoLivro.Coluna.GENERO.getNomeColuna());
 
             ProdutoLivro produtoLivro = new ProdutoLivro(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null, autor, genero);
+            valorFrete, categoria, null, null, autor, genero, idUsuario);
             
             return produtoLivro;
         }
@@ -278,7 +308,7 @@ public class ProdutoDAO extends DAO<Produto>
              double comprimento = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna()));
 
              ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null, material, cor, altura, largura, comprimento );
+            valorFrete, categoria, null, null, material, cor, altura, largura, comprimento, idUsuario );
 
             return produtoMobilia;
         }
@@ -289,7 +319,7 @@ public class ProdutoDAO extends DAO<Produto>
             String material = produto.get(ProdutoRoupa.Coluna.MATERIAL.getNomeColuna());
 
             ProdutoRoupa produtoRoupa = new ProdutoRoupa(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-            valorFrete, categoria, null, null, tamanho, cor, material);
+            valorFrete, categoria, null, null, tamanho, cor, material, idUsuario);
 
             return produtoRoupa;
         }
@@ -301,6 +331,9 @@ public class ProdutoDAO extends DAO<Produto>
         }
     }
 
+    /* 
+     * Método responsável por receber um resultSet(informação vinda do banco de dados) e montar um produto
+     */
     public static Produto montarProduto(ResultSet resultSet)
     {
          /* 
@@ -316,6 +349,7 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
                 produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
                 produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
+                produto.put(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDUSUARIO.getNomeColuna())));
     
     
                 /* Strings */
@@ -348,6 +382,9 @@ public class ProdutoDAO extends DAO<Produto>
         return null;
     }
 
+    /* 
+     * Este método retorna um ArrayList contendo todos os produtos de um usuário passado por parâmetro
+     */
     public ArrayList<Produto> selectTodosProdutosDoUsuario(Usuario usuario)
     {
         /* 
@@ -378,5 +415,135 @@ public class ProdutoDAO extends DAO<Produto>
         {
             SQLiteConnectionManager.desconectar();
         }
-    } 
+    }
+    
+    /* 
+     * Método responsável por contar todos os produtos de um usuário passado por parâmetro
+     */
+    public int contarProdutosDoUsuario(Usuario usuario)
+    {
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Produto.getNomeTabela() + "." + Produto.Coluna.IDUSUARIO.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(usuario.getId()); 
+        String condicao =  StringManager.inserirIgualdade(valorEsquerdaIgualdade,valorDireitaIgualdade);
+
+        String instrucao =SQLiteTableManager.count(Produto.getNomeTabela(), condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int resultado = 0;
+
+        try
+        {   
+            if(resultSet != null)
+            {
+                resultado = resultSet.getInt(1);
+
+                return resultado;
+            }
+
+            return resultado;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
+    /* 
+     * Método responsável por contar todos os produtos de um usuário, com base no id do usario passado por parâmetro
+     */
+    public int contarProdutosDoUsuario(int idUsuario)
+    {
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Produto.getNomeTabela() + "." + Produto.Coluna.IDUSUARIO.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(idUsuario); 
+        String condicao =  StringManager.inserirIgualdade(valorEsquerdaIgualdade,valorDireitaIgualdade);
+
+        String instrucao =SQLiteTableManager.count(Produto.getNomeTabela(), condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int resultado = 0;
+
+        try
+        {   
+            if(resultSet != null)
+            {
+                resultado = resultSet.getInt(1);
+
+                return resultado;
+            }
+
+            return resultado;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
+    /* 
+     * Método responsável por contar todos os produtos de determinada categoria de um usuário, cujo id 
+     * é passado por parâmetro
+     */
+    public int contarProdutosCategorizadosDoUsuario(int idUsuario, String categoria)
+    {
+        /* 
+         * Montando condição
+         */
+        String valorEsquerdaIgualdade = Produto.getNomeTabela() + "." + Produto.Coluna.IDUSUARIO.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(idUsuario); 
+        String condicao1 =  StringManager.inserirIgualdade(valorEsquerdaIgualdade,valorDireitaIgualdade);
+        
+        valorEsquerdaIgualdade = Produto.getNomeTabela() + "." + Produto.Coluna.CATEGORIA.getNomeColuna();
+        valorDireitaIgualdade = StringManager.formatarString(categoria);
+        String condicao2 = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
+
+        String condicao = StringManager.inserirAnd(condicao1, condicao2);
+
+        String instrucao =SQLiteTableManager.count(Produto.getNomeTabela(), condicao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int resultado = 0;
+
+        try
+        {   
+            if(resultSet != null)
+            {
+                resultado = resultSet.getInt(1);
+
+                return resultado;
+            }
+
+            return resultado;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
 }
+
+

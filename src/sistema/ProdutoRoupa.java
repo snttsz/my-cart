@@ -17,11 +17,11 @@ public class ProdutoRoupa extends Produto
     public ProdutoRoupa(int id, int disponibilidade, String descricao, String nome, double preco, String link,
         String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
-        String tamanho, String cor, String material) 
+        String tamanho, String cor, String material, int idUsuario) 
     {
 
         super(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-        valorFrete, categoria, especificacoes, tags);
+        valorFrete, categoria, especificacoes, tags, idUsuario);
         this.tamanho = tamanho;
         this.cor = cor;
         this.material = material;
@@ -34,11 +34,11 @@ public class ProdutoRoupa extends Produto
     public ProdutoRoupa(int disponibilidade, String descricao, String nome, double preco, String link,
         String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
-        String tamanho, String cor, String material) 
+        String tamanho, String cor, String material, int idUsuario) 
     {
 
         super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
-        valorFrete, categoria, especificacoes, tags);
+        valorFrete, categoria, especificacoes, tags, idUsuario);
         this.tamanho = tamanho;
         this.cor = cor;
         this.material = material;

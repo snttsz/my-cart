@@ -126,6 +126,33 @@ public class SQLiteTableManager
 
         return instrucao;
     }
+
+    /* 
+     * Método responsável por contar todos os elementos de uma tabela
+     */
+    public static String count(String tabela)
+    {
+        String instrucao =
+        "SELECT COUNT (*) FROM " + tabela + ";";
+
+        return instrucao;
+    }
+    
+
+    /* 
+    * Método responsável por contar determinados elementos de uma tabela
+    * 
+    * Exemplo:
+    * Contar todos os produtos de um usuário
+    */
+    public static String count(String tabela, String condicao)
+    {
+        String instrucao =
+        "SELECT COUNT (*) FROM " + tabela + " WHERE " + condicao + ";" ;
+
+        return instrucao;
+    }
+    
     
     /* ATRIBUTOS */
     private String scriptPath;
