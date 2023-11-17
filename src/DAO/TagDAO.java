@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
+import sistema.Produto;
 import sistema.Tag;
+import sistema.Usuario;
 import utils.StringManager;
 
 public class TagDAO extends DAO<Tag>
@@ -182,6 +184,64 @@ public class TagDAO extends DAO<Tag>
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
+
+     /* 
+      * Método responsável por contar quantas tags um usuário possui, atavés do ID do usuário passado por parâmetro
+    */
+    public int contarTagsDoUsuario(int idUsuario)
+    {
+        /* 
+         * Motando condição
+         */
+        
+        String condicao = StringManager.inserirIgualdade(Usuario.getNomeTabela() + "." + Usuario.Coluna.ID.getNomeColuna(), Integer.toString(idUsuario)); 
+
+        /* 
+         * Montando join
+         */
+
+        /* 
+         * JOIN Produto ON Tag_has_Produto.Produto_idProduto = Produto.idProduto
+         */
+        String coluna1 = Tag_has_Produto.getNomeTabela() + "." + Tag_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String coluna2 = Produto.getNomeTabela() + "." + Produto.Coluna.ID.getNomeColuna();
+        String join1 = StringManager.formatarJoin(Produto.getNomeTabela(),coluna1 , coluna2);
+
+        /* 
+         * JOIN Usuario ON Produto.Usuario_idUsuario = Usuario.idUsuario
+         */
+        coluna1 = Produto.getNomeTabela() + "." + Produto.Coluna.IDUSUARIO.getNomeColuna();
+        coluna2 = Usuario.getNomeTabela() + "." + Usuario.Coluna.ID.getNomeColuna();
+        String join2 = StringManager.formatarJoin(Usuario.getNomeTabela(), coluna1, coluna2);
+
+        String join = join1 + " " + join2;
+        String instrucao = SQLiteTableManager.count(Tag_has_Produto.getNomeTabela(), condicao,  Tag_has_Produto.Coluna.IDTAG.getNomeColuna(), join);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int resultado = 0;
+
+        try
+        {
+            if(resultSet != null)
+            {
+                resultado = resultSet.getInt(1);
+            }
+
+            return resultado;
+        }
+        catch(SQLException e) 
+         {
+             e.printStackTrace(); 
+             throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+         }
+         finally
+         {
+             SQLiteConnectionManager.desconectar();
+         }
+
+    }
+
 
     
 }

@@ -1,6 +1,7 @@
 package testes.testesSQL;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import DAO.EspecificacaoDAO;
@@ -114,7 +115,7 @@ public class TesteSQLite
         {
 
             System.out.println("Usuário: " + usuarioDAO.selectById(u.getId()).getNome());
-            produtoshas = produtoDAO.selectTodosProdutosDoUsuario(u);
+            produtoshas = produtoDAO.selectTodosProdutosDoUsuario(u.getId());
             for(Produto p : produtoshas)
             {
                 Produto.printarProduto(p);
@@ -131,7 +132,7 @@ public class TesteSQLite
         for(Produto p: produtos)
         {
             System.out.println("Produto: " + produtoDAO.selectById(p.getId()).getNome());
-            tagsHas = tag_has_Produto.selectTodasTagsDoProduto(p);
+            tagsHas = tag_has_Produto.selectTodasTagsDoProduto(p.getId());
             for(Tag t : tagsHas)
             {
                 Tag.printarTag(t);
@@ -145,7 +146,7 @@ public class TesteSQLite
         for(Tag t : tags)
         {
             System.out.println("Tag: " + tagDAO.selectById(t.getId()).getNome());
-            produtoshas = tag_has_Produto.selectTodosProdutosDaTag(t);
+            produtoshas = tag_has_Produto.selectTodosProdutosDaTag(t.getId());
             for(Produto p : produtoshas)
             {
                 Produto.printarProduto(p);
@@ -188,6 +189,53 @@ public class TesteSQLite
         System.out.println("Testando a contagem de produtos de cada usuário");
 
         System.out.println("O usuário" + usuarioDAO.selectById(1000).getNome() + "possui: " + produtoDAO.contarProdutosCategorizadosDoUsuario(1000,Produto.Categorias.ELETRONICO.getCategoria()) + " produtos eletrônicos");
+
+        
+        /* Testando a contagem de tags de cada usuário */
+        System.out.println("\n");
+        System.out.println("Testando a contagem de tags de cada usuário");
+
+        System.out.println("O usuário " + usuarioDAO.selectById(1).getNome() + " possui: " + tagDAO.contarTagsDoUsuario(1) + " tags");
+
+        /* Testando a contagem de tags de um determinado produto */
+        System.out.println("\n");
+        System.out.println("Testando a contagem de tags de um produto específico");
+
+        System.out.println("O produto " + produtoDAO.selectById(1).getNome() + " possui: " + tag_has_Produto.contarTagsDoProduto(1) + "tags");
+
+        /* Testando a contagem de especificações de determinado produto */
+        System.out.println("\n");
+        System.out.println("Testando a contade de especificações de determinado produto");
+
+        System.out.println("O produto " + produtoDAO.selectById(1).getNome() + " possui: " + especificacao_has_Produto.contarEspecificacoesDoProduto(1) + " especificações");
+
+        /* Testando a contagem de todas as lojas de um usuário */
+        System.out.println("\n");
+        System.out.println("Testando a conatgem de lojas de um usuário");
+
+        System.out.println("O usuário " + usuarioDAO.selectById(1).getNome() + " possui: " + lojaDAO.contarLojasDoUsuario(1) + " lojas cadastradas");
+
+        /* Teste para contar todos os produtos cadastrados em uma loja */
+        System.out.println("\n");
+        System.out.println("Teste para contar todos os produtos cadastrados em uma loja");
+
+        System.out.println("A loja " +  lojaDAO.selectById(1 ).getNome()+ " possui: " + lojaDAO.contarProdutosDaLoja(1) + " produtos cadastrados");
+
+        /* Teste para contar todos os produtos cadastrados em uma loja */
+        System.out.println("\n");
+        System.out.println("Teste de todos os produtos cadastrados em uma loja");
+         
+        for(Loja l : lojas)
+        {
+            System.out.println("A loja: " + l.getNome() + " possui os seguintes produtos:");
+            produtos = lojaDAO.selectTodosProdutosCadastradosNaLoja(l.getId());
+            for(Produto p :produtos)
+            {
+                Produto.printarProduto(p);
+            }
+        }
+
+
 
 
     }

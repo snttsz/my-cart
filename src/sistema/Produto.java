@@ -17,7 +17,7 @@ public abstract class Produto
      */
     public Produto(int id, int disponibilidade, String descricao, String nome, double preco, String link,
     String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
         this.disponibilidade = disponibilidade;
         this.descricao = descricao;
@@ -35,6 +35,7 @@ public abstract class Produto
         this.tags = tags;
         this.id = id;
         this.idUsuario = idUsuario;
+        this.idLoja = idLoja;
     }
     
     
@@ -43,7 +44,7 @@ public abstract class Produto
     */
     public Produto(int disponibilidade, String descricao, String nome, double preco, String link,
     String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
         this.disponibilidade = disponibilidade;
         this.descricao = descricao;
@@ -60,6 +61,7 @@ public abstract class Produto
         this.especificacoes = especificacoes;
         this.tags = tags;
         this.idUsuario = idUsuario;
+        this.idLoja = idLoja;
     }
     
     /* 
@@ -237,6 +239,18 @@ public abstract class Produto
         produtoDAO.updateDouble(this, Coluna.VALOR_FRETE.getNomeColuna(), this.valorFrete);
     }
 
+    public int getIdLoja() 
+    {
+        return this.idLoja;
+    }
+
+
+    public void setIdLoja(int idLoja) 
+    {
+        this.idLoja = idLoja;
+    }
+
+
     public String getCategoria() 
     {
         return this.categoria;
@@ -326,7 +340,8 @@ public abstract class Produto
         DESCRICAO("descricao"),
         CATEGORIA("categoria"),
         VALOR_FRETE("valor_frete"),
-        IDUSUARIO("Usuario_idUsuario");
+        IDUSUARIO("Usuario_idUsuario"),
+        IDLOJA("Loja_idLoja");
 
         private final String nomeColuna;
 
@@ -382,6 +397,7 @@ public abstract class Produto
     private double preco;
     private double valorArrecadado;
     private double valorFrete; 
+    private int idLoja;
     private ArrayList<Especificacao> especificacoes;
     private ArrayList<String> tags;
     private static ProdutoDAO produtoDAO = new ProdutoDAO();

@@ -31,11 +31,6 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     @Override
     public void insert(Especificacao especificacao, Produto produto) 
     {
-        /* 
-        * TODO puxar o produto do BD, se existir prossegue, se não eu crio ele antes de inserir na tabela User_has_Produto
-        * 
-        * O usuário não precisa pasasr por isso, pois ele sempre terá sido criado anteriormente
-        */
         ArrayList<Integer> valoresInteger = new ArrayList<Integer>();
 
         ArrayList<String> arrayColunas = new ArrayList<String>();
@@ -68,6 +63,9 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         SQLiteConnectionManager.enviarQuery(instrucao);        
     }
 
+    /* 
+     * Método responsável por retornar todas as especificações de um produto passado por parâmetro
+     */
     public ArrayList<Especificacao> selectTodasEspecificacoesDoProduto(Produto produto)
     {
         /* 
@@ -118,6 +116,9 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         }
     }
 
+    /* 
+     * Método responsável por retornar todos os produtos que possuem uma especificação passada por parâmetro
+     */
     public ArrayList<Produto> selectTodosProdutosDaEspecificacao(Especificacao especificacao)
     {
         /* 
@@ -164,6 +165,42 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     }
 
     /* 
+     * Método responsável por contar quantas especificações um produto possui a partir do id do produto passado por parâmetro
+     */
+    public int contarEspecificacoesDoProduto(int idProduto)
+    {
+        /* 
+         * Motando condição
+         */
+        String condicao = StringManager.inserirIgualdade(Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna(), Integer.toString(idProduto)); 
+        
+        String instrucao = SQLiteTableManager.count(Especificacao_has_Produto.nomeTabela, condicao, Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna());
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int resultado = 0;
+
+        try
+        { 
+            if(resultSet != null)
+            {
+                resultado = resultSet.getInt(1);
+            }
+
+            return resultado;
+        }
+        catch(SQLException e) 
+         {
+             e.printStackTrace(); 
+             throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+         }
+         finally
+         {
+             SQLiteConnectionManager.desconectar();
+         }
+    }
+
+    /* 
      * Enum com o nome das tabelas
      */
     public enum Coluna
@@ -183,6 +220,12 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
             return this.nomeColuna;
         }
     }
+
+    public static String getNomeTabela()
+    {
+        return nomeTabela;
+    }
+
     private static final String nomeTabela = "Especificacao_has_Produto";
     
 }

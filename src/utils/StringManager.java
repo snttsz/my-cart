@@ -2,7 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 
-/* Essa classe é responsável por montar e formatar strings para envio e recebimento de querys */
+/* Essa classe é responsável por montar e formatar strings para envio e recebimento de instruções vindas e indas para o banco de dados */
 public class StringManager 
 {
 
@@ -177,7 +177,26 @@ public class StringManager
 
         return instrucao;
     }
-    
+
+    /* 
+     * Método responsável por receber uma Tabela e duas colunas e retorna a instrução de um join
+     * 
+     * Exemplo:
+     * Tabela: produto
+     * Coluna1 = Tag_has_Produto.Produto_idProduto
+     * Coluna2 = Produto.idProduto
+     * 
+     * retorno = JOIN Produto ON Tag_has_Produto.Produto_idProduto = Produto.idProduto
+     */
+    public static String formatarJoin(String tabela, String coluna1, String coluna2)
+    {
+        String igualdade = StringManager.inserirIgualdade(coluna1, coluna2);
+
+        String instrucao =
+        " JOIN " + tabela + " ON " + igualdade;
+        
+        return instrucao;
+    }    
 
 
 }

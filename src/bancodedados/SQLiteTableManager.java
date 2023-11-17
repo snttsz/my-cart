@@ -145,10 +145,22 @@ public class SQLiteTableManager
     * Exemplo:
     * Contar todos os produtos de um usuário
     */
-    public static String count(String tabela, String condicao)
+    public static String count(String tabela, String condicao, String colunaContada)
     {
         String instrucao =
-        "SELECT COUNT (*) FROM " + tabela + " WHERE " + condicao + ";" ;
+        "SELECT COUNT (" + colunaContada + ")" +  " FROM " + tabela + " WHERE " + condicao + ";" ;
+
+        return instrucao;
+    }
+    
+    /* 
+     * Método responsável por contar quantas linhas de uma especificada coluna há em uma determinada tabela, utilizando
+     * o join para mesclar várias tabelas
+     */
+    public static String count(String tabela, String condicao, String colunaContada, String join)
+    {
+        String instrucao =
+        "SELECT COUNT (" + colunaContada + ")" +  " FROM " + tabela + join + " WHERE " + condicao + ";" ;
 
         return instrucao;
     }

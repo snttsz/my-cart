@@ -141,7 +141,7 @@ public class Usuario {
         NOME("nome"),
         LOGIN("login"),
         SENHA("senha"),
-        EMAIL("email"),;
+        EMAIL("email");
 
         public final String nomeColuna;
 
