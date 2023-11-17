@@ -3,50 +3,35 @@ package sistema;
 import java.util.ArrayList;
 
 public class ProdutoEletronico extends Produto
-{   
-    public ProdutoEletronico(double preco, String nome, int codigo, Categoria categoria, String marca) 
+{
+
+    /* Construtores */
+
+    public ProdutoEletronico(){};
+
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public ProdutoEletronico(int id, int disponibilidade, String descricao, String nome, double preco, String link,
+    String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
-        super(preco, nome, codigo, categoria);
-        this.marca = marca;
-        this.especificacoes = new ArrayList<Especificacao>();
+        super(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+        valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
+ 
     }
 
-    public ProdutoEletronico(double preco, String nome, int codigo, Categoria categoria, int valorArrecadado, String marca) 
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
+    public ProdutoEletronico(int disponibilidade, String descricao, String nome, double preco, String link,
+    String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado,
+    double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
-        super(preco, nome, codigo, categoria, valorArrecadado);
-        this.marca = marca;
-        this.especificacoes = new ArrayList<Especificacao>();
+        super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade,
+        valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
+
+        super.getProdutoDAO().insert(this);
     }
 
-    public String getMarca() 
-    {
-        return this.marca;
-    }
-
-    public void setMarca(String marca) 
-    {
-        this.marca = marca;
-    }
-
-    // Isso pode ser usado na interface --> Se um usuário quiser adicionar uma especificação pro produto
-    // ex: Memória Ram
-    // Seria criado um objeto especificação (com nome da especificação e o valor)
-    // ex: nome: capacidade / valor: 8GB
-    // ex: nome: tipo / valor: DDR4
-    // No banco de dados teria uma tabela com 0 ou muitas especificações onde a gente guardaria essas
-    // informações, na hora de mostrar o produto seria só puxar elas pra esse vetor
-    // É uma ideia inicial, pode ser desenvolvida ou descartada. A gente pode criar especificações 
-    // padrões também, mas seria mais difícil pela variedade de produtos que podem existir.
-    public ArrayList<Especificacao> getEspecificacoes() 
-    {
-        return especificacoes;
-    }
-
-    public void setEspecificacoes(ArrayList<Especificacao> especificacoes) 
-    {
-        this.especificacoes = especificacoes;
-    }
-
-    private String marca;
-    private ArrayList<Especificacao> especificacoes;
 }
