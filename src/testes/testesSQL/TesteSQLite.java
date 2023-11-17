@@ -1,7 +1,5 @@
 package testes.testesSQL;
 
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import DAO.EspecificacaoDAO;
@@ -15,7 +13,6 @@ import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Loja;
 import sistema.Produto;
-import sistema.ProdutoEletronico;
 import sistema.Tag;
 import sistema.Usuario;
 
@@ -235,7 +232,17 @@ public class TesteSQLite
             }
         }
 
+        /* Testando lista uma quantidade x de produtos com base na data de adição */
+        System.out.println("\n");
+        System.out.println("Testando lista uma quantidade x de produtos com base na data de adição");
 
+        produtos = produtoDAO.selectProdutosCadastradosRecentemente(3);
+
+        System.out.println("Os seguintes produtos foram cadastrados recentemente: ");
+        for(Produto p : produtos)
+        {
+            System.out.println("NOME: " + p.getNome() + " Data de adição: " + p.getData_de_adicao());
+        }
 
 
     }

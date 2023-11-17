@@ -165,6 +165,16 @@ public class SQLiteTableManager
         return instrucao;
     }
     
+    /* 
+     * Método responsável por retornar um comando select com order by e limit para retornar uma quantidade x de elemento ordenados em ordem decrescente
+     */
+    public static String selectOrderByLimitDec(String tabela,  String atributo, String qtdDeProdutos)
+    {
+        String instrucao = 
+        "SELECT * FROM " + tabela + " ORDER BY " + atributo +  " DESC LIMIT " + qtdDeProdutos + ";";
+
+        return instrucao;
+    }
     
     /* ATRIBUTOS */
     private String scriptPath;

@@ -493,6 +493,40 @@ public class ProdutoDAO extends DAO<Produto>
         }
     }
 
+    /* 
+     * Método responsável por retornar os x produtos cadastrados mais recentemente no banco de dados
+     */
+    public ArrayList<Produto> selectProdutosCadastradosRecentemente(int qtdProdutosCadastrados)
+    {
+     
+        /* SELECT * FROM Produto ORDER BY data_de_adicao DESC LIMIT X; */
+        String qtd = Integer.toString(qtdProdutosCadastrados);
+
+        String instrucao = SQLiteTableManager.selectOrderByLimitDec(Produto.getNomeTabela(), Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), qtd);
+        System.out.println(instrucao);
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Produto> produtos = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                produtos.add(montarProduto(resultSet));
+            }
+
+            return produtos;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
 }
 
 

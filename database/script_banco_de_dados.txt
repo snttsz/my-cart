@@ -24,7 +24,7 @@
     valor REAL NOT NULL,
     url TEXT,
     marca TEXT,
-    data_de_adicao DATE NOT NULL,
+    data_de_adicao TEXT NOT NULL,
     disponibilidade INTEGER NOT NULL,
     prioridade INTEGER,
     url_foto TEXT,
