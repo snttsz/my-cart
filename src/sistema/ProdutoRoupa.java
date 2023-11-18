@@ -16,7 +16,7 @@ public class ProdutoRoupa extends Produto
      */
     public ProdutoRoupa(int id, int disponibilidade, String descricao, String nome, double preco, String link,
         String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
     {
 
@@ -32,18 +32,18 @@ public class ProdutoRoupa extends Produto
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
     public ProdutoRoupa(int disponibilidade, String descricao, String nome, double preco, String link,
-        String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String url_foto, String marca, int prioridade, double valorArrecadado, double valorFrete, 
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
     {
 
-        super(disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+        super(disponibilidade, descricao, nome, preco, link, url_foto, marca, prioridade, valorArrecadado, 
         valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
         this.tamanho = tamanho;
         this.cor = cor;
         this.material = material;
         
-        super.getProdutoDAO().insert(this);
+        super.insert();
     }
 
     /* Getters e Setters */

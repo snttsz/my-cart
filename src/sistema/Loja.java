@@ -1,5 +1,7 @@
 package sistema;
 
+import java.util.ArrayList;
+
 import DAO.LojaDAO;
 
 public class Loja 
@@ -104,12 +106,37 @@ public class Loja
             return this.nomeColuna;
         }
     }
+
+    /* Funções */
+
+    public static ArrayList<Loja> allLojas()
+    {
+        return lojaDAO.selectAll();
+    }
+
+    public ArrayList<Produto> produtosRelacionados()
+    {
+        return lojaDAO.selectTodosProdutosCadastradosNaLoja(this.getId());
+    }
+
+    public void delete()
+    {
+        // Deletando da tabela de loja
+        lojaDAO.delete(this);
+    }
+
+    public void insert()
+    {
+        // Adicionando da tabela de tag
+        lojaDAO.insert(this);
+    }
+
     /* Atributos */
     
     private String nome;
     private String url;
     private int id;
-    private LojaDAO lojaDAO = new LojaDAO();
+    private static LojaDAO lojaDAO = new LojaDAO();
     private static final String nomeTabela = "Loja";
 
 }

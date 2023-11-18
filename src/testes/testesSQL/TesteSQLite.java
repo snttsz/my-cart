@@ -160,7 +160,7 @@ public class TesteSQLite
         for(Produto p : produtos)
         {
             System.out.println("Produto: " + produtoDAO.selectById(p.getId()).getNome());
-            especificacoeshas = especificacao_has_Produto.selectTodasEspecificacoesDoProduto(p);
+            especificacoeshas = especificacao_has_Produto.selectTodasEspecificacoesDoProduto(p.getId());
             for(Especificacao e : especificacoeshas)
             {
                 Especificacao.printarEspecificacao(e);
@@ -174,7 +174,7 @@ public class TesteSQLite
         for(Especificacao e : especificacoes)
         {
             System.out.println("Especificação :" + especificacaoDAO.selectById(e.getId()).getNome());
-            produtoshas = especificacao_has_Produto.selectTodosProdutosDaEspecificacao(e);
+            produtoshas = especificacao_has_Produto.selectTodosProdutosDaEspecificacao(e.getId());
             for(Produto p: produtoshas)
             {
                 Produto.printarProduto(p);

@@ -1,6 +1,9 @@
 package sistema;
 
+import java.util.ArrayList;
+
 import DAO.EspecificacaoDAO;
+import DAO.Especificacao_has_Produto;
 
 public class Especificacao 
 {
@@ -85,18 +88,6 @@ public class Especificacao
         especificacaoDAO.updateString(this, Coluna.VALOR.getNomeColuna(), this.valor);
     }
 
-    /* FUNÇÕES */
-
-    public void deletar()
-    {
-        especificacaoDAO.delete(this);
-    }
-
-    public void adicionar()
-    {
-        especificacaoDAO.insert(this);
-    }
-
     /* 
      * Enum com as tabelas da classe
      */
@@ -118,11 +109,40 @@ public class Especificacao
             return this.nomeColuna;
         }
     }
+
+    /* Funções */
+
+    public ArrayList<Produto> produtosRelacionados()
+    {
+        return especificacao_has_Produto_DAO.selectTodosProdutosDaEspecificacao(this.getId());
+    }
+
+    public void delete()
+    {
+        // Deletando da tabela de especificacao_has_produto
+        ArrayList<Produto> produtos = this.produtosRelacionados();
+        for (Produto produto : produtos) 
+        {
+            especificacao_has_Produto_DAO.delete(this, produto);
+        }
+
+        // Deletando da tabela de especificacao
+        especificacaoDAO.delete(this);
+    }
+
+    public void insert()
+    {
+        //Adicionando na tabela de especificacao
+        especificacaoDAO.insert(this);
+    }
+
+    /* Atributos */
     
     private int id;
     private String nome;
     private String valor;
     private EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
+    private Especificacao_has_Produto especificacao_has_Produto_DAO = new Especificacao_has_Produto();
     private static final String nomeTabela = "Especificacao";
 
 }

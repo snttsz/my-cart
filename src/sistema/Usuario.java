@@ -3,6 +3,7 @@ package sistema;
 import java.util.ArrayList;
 
 import DAO.UsuariosDAO;
+import DAO.ProdutoDAO;
 
 public class Usuario {
     
@@ -34,7 +35,7 @@ public class Usuario {
         this.email = email;
         this.produtos = new ArrayList<Produto>();
 
-        usuarioDAO.insert(this);
+        this.insert();
     }
 
     /* Funções gerais */
@@ -56,7 +57,6 @@ public class Usuario {
         this.setLogin(login);
         this.setSenha(senha);
         this.setEmail(email);
-        this.setProdutos(produtos);
     }
 
     public static String getNomeTabela() 
@@ -66,17 +66,13 @@ public class Usuario {
 
     public int getId() 
     {
+        this.id = usuarioDAO.selectById(this.id).id;
         return this.id;
-    }
-
-    public void setId(int id) 
-    {
-        this.id = id;
-        usuarioDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getNome() 
     {
+        this.nome = usuarioDAO.selectById(this.id).nome;
         return this.nome;
     }
 
@@ -88,6 +84,7 @@ public class Usuario {
 
     public String getLogin() 
     {
+        this.login = usuarioDAO.selectById(this.id).login;
         return this.login;
     }
 
@@ -99,6 +96,7 @@ public class Usuario {
 
     public String getSenha() 
     {
+        this.senha = usuarioDAO.selectById(this.id).senha;
         return this.senha;
     }
 
@@ -110,6 +108,7 @@ public class Usuario {
 
     public String getEmail() 
     {
+        this.nome = usuarioDAO.selectById(this.id).email;
         return this.email;
     }
 
@@ -121,15 +120,13 @@ public class Usuario {
 
     public ArrayList<Produto> getProdutos() 
     {
+        this.produtos = produtosDAO.selectTodosProdutosDoUsuario(this.id);
         return this.produtos;
     }
 
-    public void setProdutos(ArrayList<Produto> produtos) 
+    public void setProdutos(ArrayList<Produto> produtos)
     {
         this.produtos = produtos;
-        this.produtos.forEach(produto -> {
-            //Produtos
-        });
     }
 
     /* 
@@ -158,11 +155,40 @@ public class Usuario {
 
     /* Funções */
 
-    public void getProdutoById(int idProduto)
+    public static ArrayList<Usuario> allUsuarios()
     {
-        
+        return usuarioDAO.selectAll();
     }
-    
+
+    public int qntDeProdutosCadastrados()
+    {
+        return produtosDAO.contarProdutosDoUsuario(this.getId());
+    }
+
+    public int qntDeProdutosCategorizadosCadastrados(String categoria)
+    {
+        return produtosDAO.contarProdutosCategorizadosDoUsuario(this.getId(), categoria);
+    }
+
+    public void delete()
+    {
+        // Deletando produtos do usuario
+        ArrayList<Produto> produtos = getProdutos();
+        for (Produto produto : produtos) 
+        {
+            produto.delete();
+        }
+
+        // Deletando usuario
+        usuarioDAO.delete(this);
+    }
+
+    public void insert()
+    {
+        // Adicionando usuario
+        usuarioDAO.insert(this);
+    }
+
     /* Atributos */
 
     private int id;
@@ -170,7 +196,8 @@ public class Usuario {
     private String login;
     private String senha;
     private String email;
-    private UsuariosDAO usuarioDAO = new UsuariosDAO();
+    private static UsuariosDAO usuarioDAO = new UsuariosDAO();
+    private static ProdutoDAO produtosDAO = new ProdutoDAO();
     private static final String nomeTabela = "Usuario";
     private ArrayList<Produto> produtos;
 
