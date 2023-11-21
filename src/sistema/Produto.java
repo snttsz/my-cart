@@ -103,15 +103,15 @@ public abstract class Produto
         this.setPreco(preco);
         this.setLink(link);
         this.setUrl_foto(url_foto);
-        this.setMarca(marca);
-        this.setPrioridade(prioridade);
-        this.setData_de_adicao(data_de_adicao);
+        this.setMarca(marca); // isso nao é necessario
+        this.setPrioridade(prioridade); // isso pode ser q nao de tempo de botar na interface
+        this.setData_de_adicao(data_de_adicao); // isso nao é necessario
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
         this.setCategoria(categoria);
         this.setEspecificacoes(especificacoes);
         this.setTags(tags);
-        this.setDisponibilidade(disponibilidade);
+        this.setDisponibilidade(disponibilidade); // isso nao é necessario
         this.setDescricao(descricao);
     }
     

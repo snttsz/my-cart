@@ -20,9 +20,6 @@ public class ProdutoFerramenta extends Produto
         valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
     }
 
-
-    int test;
-
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */

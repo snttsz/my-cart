@@ -75,6 +75,15 @@ public class LojasCadastradasController extends ControllerLogged
         source.setOpacity(0.3);
 
         this.cursorNormal(mouse);
+
+        if (source.getId() == adicionarProduto.getId())
+        {   
+            this.mudarScene("ScreenAdicionarProduto.fxml");
+        }   
+        else if (source.getId() == adicionarLoja.getId())
+        {
+            
+        }
     }
 
     @FXML

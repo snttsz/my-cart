@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.CadastrarUsuarioController">
+   <children>
+      <Pane prefHeight="575.0" prefWidth="595.0" style="-fx-background-color: #101010;">
+         <children>
+            <ImageView fitHeight="341.0" fitWidth="354.0" layoutX="117.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/myCart.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Text layoutX="660.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:">
+         <font>
+            <Font name="KacstDecorative" size="20.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nome" layoutX="660.0" layoutY="115.0" prefHeight="44.0" prefWidth="367.0" promptText="Digite seu nome">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Text layoutX="660.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário:">
+         <font>
+            <Font name="KacstDecorative" size="20.0" />
+         </font>
+      </Text>
+      <TextField fx:id="usuario" layoutX="660.0" layoutY="217.0" prefHeight="44.0" prefWidth="367.0" promptText="Digite um nome de usuário">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Text layoutX="660.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha:">
+         <font>
+            <Font name="KacstDecorative" size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="631.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="KacstDecorative" size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="659.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirme a senha:">
+         <font>
+            <Font name="KacstDecorative" size="20.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="senha" layoutX="660.0" layoutY="327.0" prefHeight="44.0" prefWidth="367.0" promptText="Digite uma senha">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </PasswordField>
+      <PasswordField fx:id="confirmacaoSenha" layoutX="658.0" layoutY="448.0" prefHeight="44.0" prefWidth="367.0" promptText="Repita a senha">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="cadastrar" layoutX="850.0" layoutY="522.0" mnemonicParsing="false" onAction="#cadastrarUsuario" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Cadastrar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Text layoutX="740.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CADASTRO">
+         <font>
+            <Font name="KacstDecorative" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="660.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Não utilize espaços">
+         <font>
+            <Font name="KacstDecorative" size="12.0" />
+         </font>
+      </Text>
+      <Button fx:id="voltar" layoutX="659.0" layoutY="522.0" mnemonicParsing="false" onAction="#voltarParaInicio" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Voltar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle fx:id="retanguloSenha" arcHeight="5.0" arcWidth="5.0" fill="#e0e0e1" height="34.0" layoutX="660.0" layoutY="378.0" stroke="#ffffff00" strokeType="INSIDE" width="17.0" />
+      <Text fx:id="alertaErro" fill="RED" layoutX="660.0" layoutY="509.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Revise as informações e tente novamente">
+         <font>
+            <Font name="KacstDecorative" size="12.0" />
+         </font>
+      </Text>
+      <Text fx:id="senhaResultado" layoutX="687.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="KacstDecorative" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

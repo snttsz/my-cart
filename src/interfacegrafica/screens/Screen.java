@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * @author Glenda
  * 
  */
-public abstract class Screen extends Application
+public class Screen extends Application
 {
     /**
      * Construtor padrão da classe Screen.
