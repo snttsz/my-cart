@@ -67,7 +67,7 @@
             <Font size="15.0" />
          </font>
       </PasswordField>
-      <Button fx:id="cadastrar" layoutX="850.0" layoutY="522.0" mnemonicParsing="false" onAction="#cadastrarUsuario" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Cadastrar" textFill="WHITE">
+      <Button fx:id="continuar" layoutX="850.0" layoutY="522.0" mnemonicParsing="false" onAction="#checarDadosUsuario" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Continuar" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

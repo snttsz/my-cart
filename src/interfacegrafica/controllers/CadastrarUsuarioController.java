@@ -42,7 +42,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      * Objeto ActionEvent com informações sobre o evento e entidade
      * que causou a chamada da função.
      */
-    public void cadastrarUsuario(ActionEvent action)
+    public void checarDadosUsuario(ActionEvent action)
     {
         String nomeDoUsuario = this.nome.getText();
         String usuario = this.usuario.getText();
@@ -76,8 +76,13 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
             // aqui chamar a função que irá cadastrar o usário
             
             /* Entrando na tela de usuário logado */
-            this.carregarNovaScene("ScreenLogged.fxml");
+            this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml");
         }
+    }
+
+    public void cadastrarUsuario(ActionEvent action)
+    {
+        this.carregarNovaScene("ScreenLogged.fxml");
     }
 
     /* 
@@ -91,10 +96,13 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
 
     @FXML
-    private Button cadastrar;
+    private Button continuar;
 
     @FXML
     private Button voltar;
+
+    @FXML
+    private Button cadastrar;
 
     /* 
      *  TextFields
