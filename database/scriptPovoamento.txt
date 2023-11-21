@@ -1,0 +1,157 @@
+--Povoando loja
+INSERT INTO Loja (nome, url) VALUES ('ABC', NULL);
+INSERT INTO Loja (nome, url) VALUES ('XYZ', 'http://www.xyz.com');
+INSERT INTO Loja (nome, url) VALUES ('123 Loja', NULL);
+INSERT INTO Loja (nome, url) VALUES ('Loja Virtual', 'http://www.lojavirtual.com');
+INSERT INTO Loja (nome, url) VALUES ('Super Lojas', NULL);
+INSERT INTO Loja (nome, url) VALUES ('MegaStore Online', 'http://www.megastore.com');
+INSERT INTO Loja (nome, url) VALUES ('Eletrônicos Express', NULL);
+INSERT INTO Loja (nome, url) VALUES ('Fashion Outlet', 'http://www.fashionoutlet.com');
+INSERT INTO Loja (nome, url) VALUES ('Brinquedos Mundo Encantado', NULL);
+INSERT INTO Loja (nome, url) VALUES ('Tech Haven', 'http://www.techhaven.com');
+
+--Povoando usuários
+INSERT INTO Usuario (nome, login, senha, email) VALUES ('João Silva', 'Joao123', 'senha123', 'joao@email.com');
+INSERT INTO Usuario (nome, login, senha, email) VALUES ('Maria Oliveira', 'Maria789', 'senha456', 'maria@email.com');
+INSERT INTO Usuario (nome, login, senha, email) VALUES ('Carlos Pereira', 'Carlos456', 'senha789', 'carlos@email.com');
+
+--Povoando tags
+INSERT INTO Tag (nome) VALUES ('Tecnologia');
+INSERT INTO Tag (nome) VALUES ('Moda');
+INSERT INTO Tag (nome) VALUES ('Esportes');
+INSERT INTO Tag (nome) VALUES ('Entretenimento');
+INSERT INTO Tag (nome) VALUES ('Saúde');
+INSERT INTO Tag (nome) VALUES ('Viagens');
+
+--Povoando especificações
+INSERT INTO Especificacao (valor, nome) VALUES ('Full HD', 'Resolução');
+INSERT INTO Especificacao (valor, nome) VALUES ('Feminino', 'Gênero');
+INSERT INTO Especificacao (valor, nome) VALUES ('150cm', 'Altura');
+INSERT INTO Especificacao (valor, nome) VALUES ('2.5kg', 'Peso');
+INSERT INTO Especificacao (valor, nome) VALUES ('Moderno', 'Estilo');
+INSERT INTO Especificacao (valor, nome) VALUES ('500GB', 'Capacidade');
+INSERT INTO Especificacao (valor, nome) VALUES ('16GB', 'DDR4 RGB');
+INSERT INTO Especificacao (valor, nome) VALUES ('8GB', 'DDR3');
+
+
+--Povoando produtos
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, Loja_idLoja, Usuario_idUsuario, valor_arrecadado) 
+VALUES ('Smartphone Avançado', 799.99, '2023-11-20', 1, 'Um smartphone avançado com tela Full HD e 500GB de capacidade.', 'Eletrônico', 'Samsung', 'url_foto_smartphone.jpg', 1, 1, 200.0);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, Loja_idLoja, Usuario_idUsuario, valor_arrecadado) 
+VALUES ('Notebook Avançado', 1299.99, '2023-11-20', 1, 'Notebook avançado com tela Full HD, 500GB de capacidade e 16GB de memória DDR4 RGB.', 'Eletrônico', 'MarcaB', 'url_foto_notebook.jpg', 1, 1, 500.0);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, tamanho, cor, material, marca, url_foto, Loja_idLoja, Usuario_idUsuario, valor_arrecadado)
+VALUES ('Camiseta Casual', 29.99, '2023-11-21', 1, 'Camiseta casual em algodão, disponível no tamanho M e na cor azul.', 'Roupa', 'M', 'Azul', 'Algodão', 'MarcaX', 'url_foto_camiseta.jpg', 3, 2, 5.0);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, tamanho, cor, material, marca, url_foto, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Calça Jeans Slim', 49.99, '2023-11-21', 0, 'Calça jeans slim em denim, disponível no tamanho 30 e na cor preta.', 'Roupa', '30', 'Preto', 'Denim', 'MarcaY', 'url_foto_calca.jpg', 4, 2);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, tamanho, cor, material, marca, url_foto, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Blusa de Inverno', 79.99, '2023-11-22', 1, 'Blusa de inverno quente em lã, disponível no tamanho P e na cor cinza.', 'Roupa', 'P', 'Cinza', 'Lã', 'MarcaZ', 'url_foto_blusa.jpg', 2, 1);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, material, cor, altura, largura, comprimento, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Sofá Moderno', 599.99, '2023-11-23', 0, 'Sofá moderno com design elegante, estofado em tecido resistente.', 'Mobília', 'MarcaS', 'url_foto_sofa.jpg', 'Tecido', 'Cinza', 80.0, 180.0, 100.0, 1, 3);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, material, cor, altura, largura, comprimento, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Mesa de Jantar', 299.99, '2023-11-23', 1, 'Mesa de jantar retangular em madeira maciça, ideal para ambientes modernos.', 'Mobília', 'MarcaT', 'url_foto_mesa.jpg', 'Madeira Maciça', 'Marrom', 75.0, 150.0, 90.0, 5, 1);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, material, cor, altura, largura, comprimento, Loja_idLoja, Usuario_idUsuario, valor_arrecadado)
+VALUES ('Estante Modular', 449.99, '2023-11-23', 1, 'Estante modular com prateleiras ajustáveis, perfeita para organizar livros e decorações.', 'Mobília', 'MarcaU', 'url_foto_estante.jpg', 'MDF', 'Branco', 200.0, 120.0, 30.0, 1, 2, 227.0);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, autor, genero,  valor_arrecadado, valor_frete, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Aventuras Fantásticas', 29.99, '2023-11-24', 1, 'Um emocionante livro de aventuras no gênero de fantasia.', 'Livro', 'EditoraX', 'url_foto_livro_aventuras.jpg', 'AutorA', 'Fantasia', 0.0, 5.0, 1, 3);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, autor, genero, valor_arrecadado, valor_frete, Loja_idLoja, Usuario_idUsuario)
+VALUES ('Romance Contemporâneo', 19.99, '2023-11-24', 12, 'Um envolvente romance contemporâneo que explora os desafios do amor moderno.', 'Livro', 'EditoraY', 'url_foto_livro_romance.jpg', 'AutorB', 'Romance',  0.0, 3.0, 1, 10);
+
+INSERT INTO Produto (nome, valor, data_de_adicao, disponibilidade, descricao, categoria, marca, url_foto, valor_frete, Loja_idLoja, Usuario_idUsuario, valor_arrecadado)
+VALUES ('Furadeira Elétrica Profissional', 129.99, '2023-11-25', 0, 'Furadeira elétrica profissional para trabalhos de perfuração precisos.', 'Ferramenta', 'MarcaZ', 'url_foto_furadeira.jpg', 10.0, 7, 2, 55.0);
+
+--Povoando a tabela Especificacao_has_Produto
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (1, 1); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (1, 5); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (1, 6); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (2, 1); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (2, 5); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (2, 6); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (2, 7); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (3, 2); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (3, 3); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (3, 4);  
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (3, 5); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (4, 2); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (4, 3); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (4, 4);  
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (4, 5); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 5); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 9); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 10); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 11); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 12); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (5, 13); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (6, 9); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (6, 10); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (6, 11); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (6, 12); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (6, 13); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (7, 9); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (7, 10); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (7, 11); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (7, 13); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (7, 14); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (8, 2); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (8, 3); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (8, 4); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (8, 5); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (9, 2); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (9, 3); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (9, 4); 
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (9, 5); 
+
+INSERT INTO Especificacao_has_Produto(Produto_idProduto, Especificacao_idEspecificacao) VALUES (10, 8); 
+
+
+--Povoando a tabela Produto_has_tags
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (1, 1); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (1, 2); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (2, 3); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (2, 4); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (4, 5); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (4, 6); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (4, 7); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (5, 8); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (3, 9); 
+
+INSERT INTO Tag_has_Produto (Tag_idTag, Produto_idProduto) VALUES (1, 10); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

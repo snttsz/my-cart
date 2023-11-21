@@ -137,9 +137,9 @@ public class ProdutoMobilia extends Produto
     
     private String material; 
     private String cor;
-    private double altura; // Em metros
-    private double largura; // Em metros
-    private double comprimento; // Em metros
+    private double altura; 
+    private double largura; 
+    private double comprimento; 
     private ProdutoDAO produtoDAO = new ProdutoDAO();
 
 }

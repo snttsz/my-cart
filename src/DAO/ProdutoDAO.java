@@ -184,8 +184,6 @@ public class ProdutoDAO extends DAO<Produto>
 
         String instrucao = SQLiteTableManager.update(Produto.getNomeTabela(), colunas_valores, condicao);
 
-        System.out.println(instrucao);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
 
     }
@@ -234,7 +232,7 @@ public class ProdutoDAO extends DAO<Produto>
      * e instanciar um produto com base na categoria passada
      */
     public static Produto instanciarProduto(Map<String,String> produto, String categoria)
-    {
+    {        
         int id = Integer.parseInt(produto.get(Produto.Coluna.ID.getNomeColuna()));
         int prioridade = Integer.parseInt(produto.get(Produto.Coluna.PRIORIDADE.getNomeColuna()));
         int disponibilidade = Integer.parseInt(produto.get(Produto.Coluna.DISPONIBILIDADE.getNomeColuna()));
@@ -287,14 +285,14 @@ public class ProdutoDAO extends DAO<Produto>
         else if(categoria.equals(Produto.Categorias.MOBILIA.getCategoria()))
         {
                 
-             String material = produto.get(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()); 
-             String cor = produto.get(ProdutoMobilia.Coluna.COR.getNomeColuna());
+            String material = produto.get(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()); 
+            String cor = produto.get(ProdutoMobilia.Coluna.COR.getNomeColuna());
+            double altura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.ALTURA.getNomeColuna()));
+            double largura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.LARGURA.getNomeColuna())); 
+            double comprimento = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna()));
 
-             double altura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.ALTURA.getNomeColuna()));
-             double largura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.LARGURA.getNomeColuna())); 
-             double comprimento = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna()));
 
-             ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
             valorFrete, categoria, null, null, material, cor, altura, largura, comprimento, idUsuario, idLoja );
 
             return produtoMobilia;
@@ -348,12 +346,19 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
                 produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
                 produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
+                produto.put(ProdutoLivro.Coluna.AUTOR.getNomeColuna(), resultSet.getString(ProdutoLivro.Coluna.AUTOR.getNomeColuna()));
+                produto.put(ProdutoLivro.Coluna.GENERO.getNomeColuna(), resultSet.getString(ProdutoLivro.Coluna.GENERO.getNomeColuna()));
+                produto.put(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna(), resultSet.getString(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()));       
+                produto.put(ProdutoMobilia.Coluna.COR.getNomeColuna(), resultSet.getString(ProdutoMobilia.Coluna.COR.getNomeColuna()));
     
     
                 /* Doubles */
                 produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
                 produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
                 produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
+                produto.put(ProdutoMobilia.Coluna.ALTURA.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.ALTURA.getNomeColuna())));
+                produto.put(ProdutoMobilia.Coluna.LARGURA.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.LARGURA.getNomeColuna())));
+                produto.put(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna())));
 
                 String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
 
@@ -503,7 +508,7 @@ public class ProdutoDAO extends DAO<Produto>
         String qtd = Integer.toString(qtdProdutosCadastrados);
 
         String instrucao = SQLiteTableManager.selectOrderByLimitDec(Produto.getNomeTabela(), Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), qtd);
-        System.out.println(instrucao);
+        
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
         ArrayList<Produto> produtos = new ArrayList<>();
