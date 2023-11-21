@@ -9,19 +9,24 @@ import DAO.ProdutoDAO;
 import DAO.TagDAO;
 import DAO.Tag_has_Produto;
 import DAO.UsuariosDAO;
+import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Loja;
 import sistema.Produto;
 import sistema.Tag;
 import sistema.Usuario;
+import utils.ParserArquivo;
 
 
 public class TesteSQLite 
 {
+
     public static void main(String args[])
     {
         SQLiteTableManager sqLiteTableManager = new SQLiteTableManager();
+
+        //TesteSQLite.povoarBanco();
 
         ProdutoDAO produtoDAO = new ProdutoDAO();
 
@@ -241,9 +246,23 @@ public class TesteSQLite
         System.out.println("Os seguintes produtos foram cadastrados recentemente: ");
         for(Produto p : produtos)
         {
-            System.out.println("NOME: " + p.getNome() + " Data de adição: " + p.getData_de_adicao());
+            System.out.println("NOME: " + p.getNome());
         }
 
+
+    }
+
+    public static void povoarBanco()
+    {
+        String scriptPath = "database/scriptPovoamento.txt";
+
+        ArrayList<String> instrucoes = new ArrayList<String>();
+        instrucoes = ParserArquivo.lerScriptSQL(scriptPath);
+        
+        for(String instrucao : instrucoes)
+        {   
+            SQLiteConnectionManager.enviarQuery(instrucao);
+        }
 
     }
 
