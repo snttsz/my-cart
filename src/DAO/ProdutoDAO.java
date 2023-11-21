@@ -516,6 +516,43 @@ public class ProdutoDAO extends DAO<Produto>
         }
     }
 
+    /* 
+     * Método responsável por buscar produto pelo nome
+     */
+    public ArrayList<Produto> selectProdutosPorNome(String nome, int quantidadeRetornada)
+    {
+        nome = StringManager.formatarString(nome);
+        
+        String condicao = StringManager.inserirIgualdade(Produto.Coluna.NOME.getNomeColuna(), nome);
+
+        /* SELECT * FROM Produto WHERE nome = 'nome' LIMIT X; */
+
+        String instrucao = SQLiteTableManager.selectLimit(Produto.getNomeTabela(), "*", condicao, Integer.toString(quantidadeRetornada));
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Produto> produtos = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                produtos.add(montarProduto(resultSet));
+            }
+
+            return produtos;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+
+    }
+
 }
 
 

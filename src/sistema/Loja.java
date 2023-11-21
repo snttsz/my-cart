@@ -12,20 +12,23 @@ public class Loja
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public Loja(int id, String nome, String url) 
+    public Loja(int id, String nome, String url, String url_foto) 
     {
         this.id = id;
         this.nome = nome;
         this.url = url;
+        this.url_foto = url_foto;
     }
 
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public Loja(String nome, String url) 
+    public Loja(String nome, String url, String url_foto) 
     {
         this.nome = nome;
         this.url = url;
+        this.url_foto = url_foto;
+
 
         lojaDAO.insert(this);
     }
@@ -36,6 +39,7 @@ public class Loja
         System.out.println("ID: " + loja.getId());
         System.out.println("Nome: " + loja.getNome());
         System.out.println("Url: " + loja.getUrl());
+        System.out.println("Url_foto: " + loja.url_foto);
         System.out.println("\n");
     }
     /* Getters e Setters */
@@ -82,6 +86,17 @@ public class Loja
         this.url = url;
         lojaDAO.updateString(this, Coluna.URL.getNomeColuna(), this.url);
     }
+    
+    public String getUrl_foto() 
+    {
+        return this.url_foto;
+    }
+
+    public void setUrl_foto(String url_foto) 
+    {
+        this.url_foto = url_foto;
+        lojaDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
+    }
 
     /* 
      * Enum com as tabelas da classe
@@ -90,7 +105,8 @@ public class Loja
     {
         ID("idLoja"),
         NOME("nome"),
-        URL("url");
+        URL("url"),
+        URL_FOTO("url_foto");
 
         private final String nomeColuna;
 
@@ -105,9 +121,9 @@ public class Loja
         }
     }
     /* Atributos */
-    
     private String nome;
     private String url;
+    private String url_foto;
     private int id;
     private LojaDAO lojaDAO = new LojaDAO();
     private static final String nomeTabela = "Loja";

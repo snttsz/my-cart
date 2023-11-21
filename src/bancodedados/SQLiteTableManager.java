@@ -175,6 +175,19 @@ public class SQLiteTableManager
 
         return instrucao;
     }
+
+    /* 
+     * Método responsável por retornar um comando select com limit, para limitar a quantidade de linhas vindas do banco 
+     */
+    public static String selectLimit(String tabela, String atributos, String condicao, String qtdDeProdutos)
+    {
+        String instrucao = new String();
+        instrucao = 
+        "SELECT " + atributos + " FROM " + tabela + " WHERE " + condicao + " LIMIT " + qtdDeProdutos + ";";
+
+        return instrucao;
+    }
+
     
     /* ATRIBUTOS */
     private String scriptPath;

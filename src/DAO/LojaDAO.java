@@ -36,8 +36,10 @@ public class LojaDAO extends DAO<Loja>
                 int idLoja = resultSet.getInt(Loja.Coluna.ID.getNomeColuna());
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
+                String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
 
-                Loja loja = new Loja(idLoja, nome, url);
+
+                Loja loja = new Loja(idLoja, nome, url, url_foto);
 
                 lojas.add(loja);
             }
@@ -79,8 +81,9 @@ public class LojaDAO extends DAO<Loja>
                 int idLoja = resultSet.getInt(Loja.Coluna.ID.getNomeColuna());
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
+                String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
 
-                Loja loja = new Loja(idLoja, nome, url);
+                Loja loja = new Loja(idLoja, nome, url, url_foto);
 
                 return loja;
             }
@@ -110,6 +113,8 @@ public class LojaDAO extends DAO<Loja>
         */
         arrayColunas.add(Loja.Coluna.NOME.getNomeColuna());
         arrayColunas.add(Loja.Coluna.URL.getNomeColuna());
+        arrayColunas.add(Loja.Coluna.URL_FOTO.getNomeColuna());
+
 
 
         /* 
@@ -117,6 +122,8 @@ public class LojaDAO extends DAO<Loja>
          */
         valoresString.add(loja.getNome());
         valoresString.add(loja.getUrl());
+        valoresString.add(loja.getUrl_foto());
+
 
         ArrayList<String> valoresStringNormalizados = StringManager.formatarString(valoresString);
 
@@ -312,6 +319,54 @@ public class LojaDAO extends DAO<Loja>
             {
                 SQLiteConnectionManager.desconectar();
             }
+
+    }
+
+    /* 
+     * Método responsável por buscar lojas pelo nome
+     */
+    public ArrayList<Loja> selectLojaPorNome(String nomeLoja, int quantidadeRetornada)
+    {
+
+        nomeLoja = StringManager.formatarString(nomeLoja);
+
+        String condicao = StringManager.inserirIgualdade(Loja.Coluna.NOME.getNomeColuna(), nomeLoja);
+
+        /* SELECT * FROM Loja WHERE nome = 'nomeLoja' LIMIT X; */
+
+        String instrucao = SQLiteTableManager.selectLimit(Loja.getNomeTabela(), "*", condicao, Integer.toString(quantidadeRetornada));
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        /* 
+         * Montando lojas
+         */
+        ArrayList<Loja> lojas = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                int idLoja = resultSet.getInt(Loja.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
+                String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
+                String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
+
+
+                Loja loja = new Loja(idLoja, nome, url, url_foto);
+
+                lojas.add(loja);
+            }
+            return lojas;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
 
     }
 
