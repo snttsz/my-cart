@@ -15,19 +15,16 @@ public abstract class Produto
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public Produto(int id, int disponibilidade, String descricao, String nome, double preco, String link,
-    String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
+    public Produto(int id, String descricao, String nome, double preco, String link,
+    String url_foto, String data_de_adicao, double valorArrecadado, double valorFrete, 
     String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
-        this.disponibilidade = disponibilidade;
         this.descricao = descricao;
         this.nome = nome;
         this.preco = preco;
         this.link = link;
         this.url_foto = url_foto;
-        this.marca = marca;
         this.data_de_adicao = data_de_adicao;
-        this.prioridade = prioridade;
         this.valorArrecadado = valorArrecadado;
         this.valorFrete = valorFrete;
         this.categoria = categoria;
@@ -42,19 +39,16 @@ public abstract class Produto
     /* 
     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
     */
-    public Produto(int disponibilidade, String descricao, String nome, double preco, String link,
-    String url_foto, String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, 
+    public Produto(String descricao, String nome, double preco, String link,
+    String url_foto, String data_de_adicao, double valorArrecadado, double valorFrete, 
     String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
-        this.disponibilidade = disponibilidade;
         this.descricao = descricao;
         this.nome = nome;
         this.preco = preco;
         this.link = link;
         this.url_foto = url_foto;
-        this.marca = marca;
         this.data_de_adicao = data_de_adicao;
-        this.prioridade = prioridade;
         this.valorArrecadado = valorArrecadado;
         this.valorFrete = valorFrete;
         this.categoria = categoria;
@@ -74,9 +68,6 @@ public abstract class Produto
         System.out.println("Categoria: " + produto.getCategoria());
         System.out.println("Preço: " + produto.getPreco());
         System.out.println("Valor frete: " + produto.getValorFrete());
-        System.out.println("Disponibilidade: " + produto.getDisponibilidade());
-        System.out.println("Prioridade: " + produto.getPrioridade());
-        System.out.println("Marca: " + produto.getMarca());
         System.out.println("Descricao: " + produto.getDescricao());
         System.out.println("Link: " + produto.getLink());
         System.out.println("Url_foto: " + produto.getUrl_foto());
@@ -103,21 +94,23 @@ public abstract class Produto
         this.setPreco(preco);
         this.setLink(link);
         this.setUrl_foto(url_foto);
-        this.setMarca(marca);
-        this.setPrioridade(prioridade);
         this.setData_de_adicao(data_de_adicao);
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
         this.setCategoria(categoria);
         this.setEspecificacoes(especificacoes);
         this.setTags(tags);
-        this.setDisponibilidade(disponibilidade);
         this.setDescricao(descricao);
     }
     
     public static String getNomeTabela() 
     {
         return Produto.nomeTabela;
+    }
+
+    public void setEspecificacoes(ArrayList<Especificacao> especificacoes)
+    {
+        ;
     }
 
     public int getIdUsuario() 
@@ -139,17 +132,6 @@ public abstract class Produto
     {
         this.descricao = descricao;
         produtoDAO.updateString(this, Coluna.DESCRICAO.getNomeColuna(), this.descricao);
-    }
-
-    public int getDisponibilidade() 
-    {
-        return this.disponibilidade;
-    }
-
-    public void setDisponibilidade(int disponibilidade) 
-    {
-        this.disponibilidade = disponibilidade;
-        produtoDAO.updateInt(this, Coluna.DISPONIBILIDADE.getNomeColuna(), this.disponibilidade);
     }
 
     public double getPreco() 
@@ -196,17 +178,7 @@ public abstract class Produto
         produtoDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
 
-    public String getMarca() 
-    {
-        return this.marca;
-    }
-
-    public void setMarca(String marca) 
-    {
-        this.marca = marca;
-        produtoDAO.updateString(this, Coluna.MARCA.getNomeColuna(), this.marca);
-    }
-
+ 
     public String getData_de_adicao() 
     {
         return this.data_de_adicao;
@@ -217,16 +189,6 @@ public abstract class Produto
         produtoDAO.updateString(this, Coluna.DATA_DE_ADICAO.getNomeColuna(), this.data_de_adicao);
     }
 
-    public int getPrioridade() 
-    {
-        return this.prioridade;
-    }
-
-    public void setPrioridade(int prioridade) 
-    {
-        this.prioridade = prioridade;
-        produtoDAO.updateInt(this, Coluna.PRIORIDADE.getNomeColuna(), this.prioridade);
-    }
 
     public double getValorFrete() 
     {
@@ -265,23 +227,6 @@ public abstract class Produto
     public ArrayList<Especificacao> getEspecificacoes() 
     {
         return this.especificacoes;
-    }
-
-    public void setEspecificacoes(ArrayList<Especificacao> especificacoes) 
-    {
-        /*
-        ArrayList<Especificacao> especificacoes_antigas = this.especificacoes;
-
-        especificacoes_antigas.forEach(especificacao -> {
-            especificacao.deletar();
-        });
-
-        this.especificacoes = especificacoes;
-
-        this.especificacoes.forEach(especificacao -> {
-            especificacao.adicionar();
-        });
-        */
     }
 
     public ArrayList<String> getTags() 
@@ -331,10 +276,7 @@ public abstract class Produto
         NOME("nome"),
         PRECO("valor"),
         LINK("url"),
-        MARCA("marca"),
         DATA_DE_ADICAO("data_de_adicao"),
-        DISPONIBILIDADE("disponibilidade"),
-        PRIORIDADE("prioridade"),
         URL_FOTO("url_foto"),
         VALOR_ARRECADADO("valor_arrecadado"),
         DESCRICAO("descricao"),
@@ -365,8 +307,8 @@ public abstract class Produto
         ALIMENTICIO("Alimentício"),
         FERRAMENTA("Ferramenta"),
         LIVRO("Livro"),
-        MOBILIA("Mobília"),
-        ROUPA("Roupa");
+        ROUPA("Roupa"),
+        MOBILIA("Mobília");
 
         private final String categoria;
 
@@ -384,14 +326,11 @@ public abstract class Produto
     /* Atributos */
 
     private int id;
-    private int disponibilidade;
-    private int prioridade;
     private int idUsuario;
     private String descricao;
     private String nome;
     private String link;
     private String url_foto;
-    private String marca;
     private String data_de_adicao;
     private String categoria;
     private double preco;

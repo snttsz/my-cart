@@ -118,14 +118,11 @@ public class ProdutoDAO extends DAO<Produto>
         /* Importante seguir a ordem abaixo */
         arrayColunas.add(Produto.Coluna.NOME.getNomeColuna());
         arrayColunas.add(Produto.Coluna.LINK.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.MARCA.getNomeColuna());
         arrayColunas.add(Produto.Coluna.DESCRICAO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.URL_FOTO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.CATEGORIA.getNomeColuna());
         /* loja */
-        arrayColunas.add(Produto.Coluna.PRIORIDADE.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.DISPONIBILIDADE.getNomeColuna());
         arrayColunas.add(Produto.Coluna.PRECO.getNomeColuna()); 
         arrayColunas.add(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.VALOR_FRETE.getNomeColuna());
@@ -137,7 +134,6 @@ public class ProdutoDAO extends DAO<Produto>
         /* Valores do tipo TEXT */
         valoresString.add(produto.getNome());
         valoresString.add(produto.getLink());
-        valoresString.add(produto.getMarca());
         valoresString.add(produto.getDescricao());
         valoresString.add(produto.getUrl_foto());
         valoresString.add(produto.getData_de_adicao());
@@ -146,8 +142,6 @@ public class ProdutoDAO extends DAO<Produto>
         ArrayList<String> valoresStringNormalizados = StringManager.formatarString(valoresString);
 
         /* Valores do tipo Integer */
-        valoresInteger.add(produto.getPrioridade());
-        valoresInteger.add(produto.getDisponibilidade());
         valoresInteger.add(produto.getIdUsuario());
         
         ArrayList<String> valoresIntegerNormalizados = StringManager.formatarInt(valoresInteger);
@@ -234,8 +228,6 @@ public class ProdutoDAO extends DAO<Produto>
     public static Produto instanciarProduto(Map<String,String> produto, String categoria)
     {        
         int id = Integer.parseInt(produto.get(Produto.Coluna.ID.getNomeColuna()));
-        int prioridade = Integer.parseInt(produto.get(Produto.Coluna.PRIORIDADE.getNomeColuna()));
-        int disponibilidade = Integer.parseInt(produto.get(Produto.Coluna.DISPONIBILIDADE.getNomeColuna()));
         int idUsuario = Integer.parseInt(produto.get(Produto.Coluna.IDUSUARIO.getNomeColuna()));
         int idLoja = Integer.parseInt(produto.get(Produto.Coluna.IDLOJA.getNomeColuna()));
 
@@ -245,21 +237,20 @@ public class ProdutoDAO extends DAO<Produto>
 
         String nome = produto.get(Produto.Coluna.NOME.getNomeColuna());
         String link = produto.get(Produto.Coluna.LINK.getNomeColuna());
-        String marca = produto.get(Produto.Coluna.MARCA.getNomeColuna());
         String data_de_adicao = produto.get(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna());
         String url_foto = produto.get(Produto.Coluna.URL_FOTO.getNomeColuna());
         String descricao = produto.get(Produto.Coluna.DESCRICAO.getNomeColuna());
 
         if(categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
         {
-            ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, idUsuario, idLoja);
             
             return produtoEletronico;
         }
         else if(categoria.equals(Produto.Categorias.ALIMENTICIO.getCategoria()))
         {
-            ProdutoAlimento produtoAlimento = new ProdutoAlimento(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoAlimento produtoAlimento = new ProdutoAlimento(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, idUsuario, idLoja);
 
             return produtoAlimento;
@@ -267,7 +258,7 @@ public class ProdutoDAO extends DAO<Produto>
         }
         else if(categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
         {
-            ProdutoFerramenta produtoFerramenta = new ProdutoFerramenta(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoFerramenta produtoFerramenta = new ProdutoFerramenta(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, idUsuario, idLoja);
 
             return produtoFerramenta;
@@ -277,7 +268,7 @@ public class ProdutoDAO extends DAO<Produto>
             String autor = produto.get(ProdutoLivro.Coluna.AUTOR.getNomeColuna());
             String genero = produto.get(ProdutoLivro.Coluna.GENERO.getNomeColuna());
 
-            ProdutoLivro produtoLivro = new ProdutoLivro(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoLivro produtoLivro = new ProdutoLivro(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, autor, genero, idUsuario, idLoja);
             
             return produtoLivro;
@@ -292,7 +283,7 @@ public class ProdutoDAO extends DAO<Produto>
             double comprimento = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna()));
 
 
-            ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, material, cor, altura, largura, comprimento, idUsuario, idLoja );
 
             return produtoMobilia;
@@ -303,7 +294,7 @@ public class ProdutoDAO extends DAO<Produto>
             String cor = produto.get(ProdutoRoupa.Coluna.COR.getNomeColuna());
             String material = produto.get(ProdutoRoupa.Coluna.MATERIAL.getNomeColuna());
 
-            ProdutoRoupa produtoRoupa = new ProdutoRoupa(id, disponibilidade, descricao, nome, preco, link, url_foto, marca, data_de_adicao, prioridade, valorArrecadado, 
+            ProdutoRoupa produtoRoupa = new ProdutoRoupa(id, descricao, nome, preco, link, url_foto, data_de_adicao, valorArrecadado, 
             valorFrete, categoria, null, null, tamanho, cor, material, idUsuario, idLoja);
 
             return produtoRoupa;
@@ -332,8 +323,6 @@ public class ProdutoDAO extends DAO<Produto>
             {
                 /* Inteiros */
                 produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
-                produto.put(Produto.Coluna.DISPONIBILIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.DISPONIBILIDADE.getNomeColuna())));
-                produto.put(Produto.Coluna.PRIORIDADE.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.PRIORIDADE.getNomeColuna())));
                 produto.put(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDUSUARIO.getNomeColuna())));
                 produto.put(Produto.Coluna.IDLOJA.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDLOJA.getNomeColuna())));
     
@@ -343,7 +332,6 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
                 produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
                 produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
-                produto.put(Produto.Coluna.MARCA.getNomeColuna(), resultSet.getString(Produto.Coluna.MARCA.getNomeColuna()));
                 produto.put(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DATA_DE_ADICAO.getNomeColuna()));
                 produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
                 produto.put(ProdutoLivro.Coluna.AUTOR.getNomeColuna(), resultSet.getString(ProdutoLivro.Coluna.AUTOR.getNomeColuna()));
