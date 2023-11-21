@@ -16,7 +16,7 @@ public abstract class Produto
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
     public Produto(int id, String descricao, String nome, double preco, String link,
-    String url_foto, String data_de_adicao, double valorArrecadado, double valorFrete, 
+    String url_foto, double valorArrecadado, double valorFrete, 
     String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
@@ -24,7 +24,6 @@ public abstract class Produto
         this.preco = preco;
         this.link = link;
         this.url_foto = url_foto;
-        this.data_de_adicao = data_de_adicao;
         this.valorArrecadado = valorArrecadado;
         this.valorFrete = valorFrete;
         this.categoria = categoria;
@@ -40,7 +39,7 @@ public abstract class Produto
     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
     */
     public Produto(String descricao, String nome, double preco, String link,
-    String url_foto, String data_de_adicao, double valorArrecadado, double valorFrete, 
+    String url_foto,  double valorArrecadado, double valorFrete, 
     String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
@@ -48,7 +47,6 @@ public abstract class Produto
         this.preco = preco;
         this.link = link;
         this.url_foto = url_foto;
-        this.data_de_adicao = data_de_adicao;
         this.valorArrecadado = valorArrecadado;
         this.valorFrete = valorFrete;
         this.categoria = categoria;
@@ -71,30 +69,27 @@ public abstract class Produto
         System.out.println("Descricao: " + produto.getDescricao());
         System.out.println("Link: " + produto.getLink());
         System.out.println("Url_foto: " + produto.getUrl_foto());
-        System.out.println("Data de adição: " + produto.getData_de_adicao());
         System.out.println("Valor arrecadado: " + produto.getValorArrecadado());
         System.out.println("\n");
     }
     /* Getters e setters */
 
-    protected void setValores(String nome, double preco, String data_de_adicao, double valorArrecadado, double valorFrete)
+    protected void setValores(String nome, double preco,  double valorArrecadado, double valorFrete)
     {
         this.setNome(nome);
         this.setPreco(preco);
-        this.setData_de_adicao(data_de_adicao);
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
     }
     
     protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, 
-    String marca, String data_de_adicao, int prioridade, double valorArrecadado, double valorFrete, String categoria, 
+    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria, 
     ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
     {
         this.setNome(nome);
         this.setPreco(preco);
         this.setLink(link);
         this.setUrl_foto(url_foto);
-        this.setData_de_adicao(data_de_adicao);
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
         this.setCategoria(categoria);
@@ -177,18 +172,6 @@ public abstract class Produto
         this.url_foto = url_foto;
         produtoDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
-
- 
-    public String getData_de_adicao() 
-    {
-        return this.data_de_adicao;
-    }
-
-    public void setData_de_adicao(String data_de_adicao) 
-    {
-        produtoDAO.updateString(this, Coluna.DATA_DE_ADICAO.getNomeColuna(), this.data_de_adicao);
-    }
-
 
     public double getValorFrete() 
     {
@@ -276,7 +259,6 @@ public abstract class Produto
         NOME("nome"),
         PRECO("valor"),
         LINK("url"),
-        DATA_DE_ADICAO("data_de_adicao"),
         URL_FOTO("url_foto"),
         VALOR_ARRECADADO("valor_arrecadado"),
         DESCRICAO("descricao"),
@@ -331,7 +313,6 @@ public abstract class Produto
     private String nome;
     private String link;
     private String url_foto;
-    private String data_de_adicao;
     private String categoria;
     private double preco;
     private double valorArrecadado;

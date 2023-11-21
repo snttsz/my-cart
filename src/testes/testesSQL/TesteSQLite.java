@@ -26,7 +26,7 @@ public class TesteSQLite
     {
         SQLiteTableManager sqLiteTableManager = new SQLiteTableManager();
 
-        TesteSQLite.povoarBanco();
+        //TesteSQLite.povoarBanco();
 
         ProdutoDAO produtoDAO = new ProdutoDAO();
 
@@ -246,7 +246,7 @@ public class TesteSQLite
         System.out.println("Os seguintes produtos foram cadastrados recentemente: ");
         for(Produto p : produtos)
         {
-            System.out.println("NOME: " + p.getNome() + " Data de adição: " + p.getData_de_adicao());
+            System.out.println("NOME: " + p.getNome());
         }
 
 

@@ -23,7 +23,6 @@
     nome TEXT NOT NULL,
     valor REAL NOT NULL,
     url TEXT,
-    data_de_adicao TEXT NOT NULL,
     url_foto TEXT,
     valor_arrecadado REAL,
     descricao TEXT,

@@ -15,11 +15,11 @@ public class ProdutoMobilia extends Produto
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
     public ProdutoMobilia(int id,  String descricao, String nome, double preco, String link,
-        String url_foto, String data_de_adicao,double valorArrecadado, double valorFrete, 
+        String url_foto, double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
         String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja)
     {
-        super(id, descricao, nome, preco, link, url_foto, data_de_adicao, 
+        super(id, descricao, nome, preco, link, url_foto,
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
             
         this.material = material;
@@ -33,12 +33,12 @@ public class ProdutoMobilia extends Produto
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
     public ProdutoMobilia( String descricao, String nome, double preco, String link,
-        String url_foto,  String data_de_adicao, double valorArrecadado,
+        String url_foto, double valorArrecadado,
         double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
         String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja) 
     {
 
-        super(descricao, nome, preco, link, url_foto,  data_de_adicao,
+        super(descricao, nome, preco, link, url_foto,
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
 
         this.material = material;
