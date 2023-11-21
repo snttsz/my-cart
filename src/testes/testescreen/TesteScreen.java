@@ -12,10 +12,6 @@ public class TesteScreen extends Application
         Screen minhaTela = new Screen("MyCart", "LoginScreen2.fxml");
 
         minhaTela.start(stage);
-
-        // ScreenLogged minhaTela = new ScreenLogged("MyCart", "LoginScreen2.fxml", "Glendaaaaaaaaaaaa");
-
-        // minhaTela.start(stage);
     }
 
     public static void main(String[] args) 

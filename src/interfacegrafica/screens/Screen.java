@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -41,7 +42,9 @@ public class Screen extends Application
         {   
             Parent root = FXMLLoader.load(getClass().getResource(pathResources + fxmlname));
             Scene scene = new Scene(root, larguraJanela, alturaJanela);
+            Image icon = new Image(getClass().getResourceAsStream("../../img/icon.png"));
             
+            stage.getIcons().add(icon);
             stage.setResizable(false);
             stage.setTitle(this.tituloJanela);
             stage.setScene(scene);
