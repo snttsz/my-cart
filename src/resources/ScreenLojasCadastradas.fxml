@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.LojasCadastradasController">
+   <children>
+      <SplitMenuButton fx:id="categoriasMenu" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="225.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="62.0" prefWidth="241.0" text="SplitMenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+      <ImageView fx:id="imgView" fitHeight="575.0" fitWidth="1142.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/layout1-padrao.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="inicio" layoutX="1.0" layoutY="161.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="categorias" layoutX="1.0" layoutY="226.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="lojasCadastradas" layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Button fx:id="adicionarProduto" layoutX="881.0" layoutY="166.0" mnemonicParsing="false" onMouseDragged="#cursorOn" onMouseEntered="#botaoAddMouseOn" onMouseExited="#botaoAddMouseOff" onMousePressed="#botaoAddClicked" onMouseReleased="#botaoAddMouseOn" opacity="0.0" prefHeight="30.0" prefWidth="206.0" style="-fx-background-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="pesquisar" layoutX="850.0" layoutY="59.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="33.0" prefWidth="31.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onMouseDragged="#cursorOn" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="logomarcaInicio" layoutX="57.0" layoutY="4.0" mnemonicParsing="false" onMouseDragged="#cursorOn" onMouseEntered="#cursorOn" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="102.0" prefWidth="179.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="56.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+      <ImageView fitHeight="112.0" fitWidth="121.0" layoutX="66.0" layoutY="376.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
+         <image>
+            <Image url="@../img/avatar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Circle fill="#1f93ff00" layoutX="122.0" layoutY="430.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="169.0" layoutY="358.0" stroke="BLACK" strokeType="INSIDE" width="42.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="169.0" layoutY="461.0" stroke="BLACK" strokeType="INSIDE" width="42.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="25.0" layoutY="472.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <ScrollPane fx:id="scrollPane" layoutX="242.0" layoutY="199.0" prefHeight="377.0" prefWidth="855.0">
+        <content>
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="873.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
+               <children>
+                  <AnchorPane fx:id="paneLoja1" layoutX="23.0" layoutY="18.0" prefHeight="334.0" prefWidth="801.0">
+                     <children>
+                        <Text fx:id="nomeLoja1" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <ImageView fx:id="fotoLoja1" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/aliexpress.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="produtoLoja1" layoutX="144.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="296.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
+                        <Pane fx:id="produtoLoja2" layoutX="357.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto2" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto2" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto2" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="produtoLoja3" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto3" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProdutoPaneDefault11" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto3" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto3" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto3" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="paneLoja2" layoutX="17.0" layoutY="390.0" prefHeight="334.0" prefWidth="801.0">
+                     <children>
+                        <Text fx:id="nomeLoja2" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <ImageView fx:id="fotoLoja2" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/aliexpress.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="produtoLoja1_2" layoutX="144.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto1_2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProduto1" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto1_2" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto1_2" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto1_2" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="296.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
+                        <Pane fx:id="produtoLoja2_2" layoutX="357.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto2_2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProduto21" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto2_2" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto2_2" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto2_2" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="produtoLoja3_2" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
+                           <children>
+                              <ImageView fx:id="fotoProduto3_2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/memoria-ram-test.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="nomeProdutoPaneDefault111" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Text fx:id="precoProduto1" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                              <Text fx:id="arrecadadoProduto1" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                              <Text fx:id="faltamProduto1" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                              <Text fx:id="valorPrecoProduto3_2" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorArrecadadoProduto3_2" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="valorFaltamProduto3_2" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+                  <Button layoutX="218.0" layoutY="809.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Página Anterior" textFill="WHITE">
+                     <font>
+                        <Font name="Khmer OS System" size="13.0" />
+                     </font></Button>
+                  <Button layoutX="458.0" layoutY="809.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Pŕoxima Página" textFill="WHITE">
+                     <font>
+                        <Font name="Khmer OS System" size="13.0" />
+                     </font>
+                  </Button>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5e5e" height="34.0" layoutX="380.0" layoutY="810.0" stroke="TRANSPARENT" strokeType="INSIDE" width="64.0" />
+                  <Text fill="WHITE" layoutX="380.0" layoutY="832.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="64.0">
+                     <font>
+                        <Font name="Khmer OS System" size="15.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="13.0" layoutX="250.0" layoutY="198.0" stroke="WHITE" strokeType="INSIDE" width="830.0" />
+      <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Text fx:id="username" fill="WHITE" layoutX="70.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="162.0">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Text>
+      <TextField layoutX="261.0" layoutY="166.0" prefHeight="22.0" prefWidth="278.0" promptText="Pesquisar uma loja" style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25; -fx-border-width: 2;">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <ImageView fitHeight="118.0" fitWidth="215.0" layoutX="658.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/addnovoproduto.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="adicionarLoja" layoutX="663.0" layoutY="165.0" mnemonicParsing="false" onMouseDragged="#cursorOn" onMouseEntered="#botaoAddMouseOn" onMouseExited="#botaoAddMouseOff" onMousePressed="#botaoAddClicked" onMouseReleased="#botaoAddMouseOn" opacity="0.0" prefHeight="30.0" prefWidth="206.0" style="-fx-background-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+
+</AnchorPane>
