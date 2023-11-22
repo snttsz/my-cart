@@ -1,10 +1,14 @@
 package interfacegrafica.controllers;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
@@ -29,7 +33,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml");
+        this.carregarNovaScene("LoginScreen2.fxml", false);
     }
 
     /**
@@ -52,12 +56,15 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
         boolean senhaOk = true;
         boolean userOk = true;
 
+        /* Checando se o nome de usuário contem espaços ou está vazio */
         if ((usuario.contains(" ") || usuario.isEmpty()) || nomeDoUsuario.isEmpty())
         {
             this.alertaErro.setOpacity(1);
+            this.alertaAbaixoUsuario.setText("*Não utilize espaços.");
             userOk = false;
         }
 
+        /* Checando se as senhas informadas são iguais */
         if (!senha.equals(confirmacaoSenha) || senha.isEmpty())
         {
             this.retanguloSenha.setFill(Color.RED);
@@ -71,23 +78,96 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
             this.senhaResultado.setText("Senha válida");
         }
 
+        /* 
+         * Se tudo estiver corretamente inserido, então chama as funções
+         * do banco de dados para checar a validade dos dados.
+         */
         if (userOk && senhaOk)
         {
-            // aqui chamar a função que irá cadastrar o usário
             // TODO: luis (variaveis criadas no inicio da função)
             
-            // setar isso aqui com o id do usuário criado:
-            // TODO: luis
-            int idUsuario = 1;
+            // chamar função pra checar se o nome de usuario já existe no banco de dados
+            boolean doesUserExistis = false;
 
-            /* Entrando na tela de usuário logado */
-            this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", idUsuario);
+            if (doesUserExistis)
+            {
+                this.alertaErro.setOpacity(1);
+                this.alertaAbaixoUsuario.setText("*Usuário já existe, tente outro nome de usuário!");
+            }
+            else
+            {
+                // aqui chamar a função que irá cadastrar o usário
+                // setar isso aqui com o id do usuário criado:
+                // TODO: luis
+                this.idUsuario = 1;
+    
+                /* Entrando na tela de usuário logado */
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true);
+            }
         }
     }
 
-    public void cadastrarUsuario(ActionEvent action)
+    /**
+     * Função acionada quando o botão "continuar" é clicado na tela de adicionar
+     * foto do novo usuário.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml");
+        this.carregarNovaScene("ScreenLogged.fxml", false);
+    }
+
+    /**
+     * Função acionada quando o botão para adicionar foto do usuário é
+     * clicado.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    public void cadastrarFotoUsuario(ActionEvent action)
+    {
+        String filepath = this.abrirFileChooser(action);
+
+        String caminhoPastaDestino = "src/img/users/";
+
+        String nomeDaImagem = null;
+
+        try
+        {
+            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, this.idUsuario, this.puxarNomeDoUsuario());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }    
+
+        String caminhoFinal = "../../img/users/" + nomeDaImagem;
+
+        Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+        this.fotoUsuario.setImage(image);
+
+        /* Cadastrar a foto no banco de dados */
+        this.setarFotoUsuarioNoBanco(caminhoFinal);
+    }
+
+    /**
+     * Função para cadastrar o caminho para a foto de perfil do usuário
+     * no banco de dados.
+     * 
+     * @param caminhoParaImagem
+     * Caminho relativo para a imagem de perfil do usuário.
+     */
+    public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
+    {
+        /* 
+         * TODO: luis
+         * setar a foto do usuario no banco de dados
+         * variavel com o id do usuario: this.userId
+         */
     }
 
     /* 
@@ -107,7 +187,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
     private Button voltar;
 
     @FXML
-    private Button cadastrar;
+    private Button continuarParaLogin;
 
     /* 
      *  TextFields
@@ -135,10 +215,20 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
     @FXML 
     private Text senhaResultado;
 
+    @FXML
+    private Text alertaAbaixoUsuario;
+
     /* 
      *  Figuras Geometricas
      */
 
     @FXML
     private Rectangle retanguloSenha;
+
+    /* 
+     *  ImageView
+     */
+
+    @FXML
+    private ImageView fotoUsuario;
 }

@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * 
  * @author Glenda
  */
-public abstract class ControllerLogged implements Initializable
+public abstract class ControllerLogged extends Controller implements Initializable
 {
     @Override
     public void initialize(URL location, ResourceBundle resources) 

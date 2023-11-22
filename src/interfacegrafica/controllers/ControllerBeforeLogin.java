@@ -18,50 +18,36 @@ import javafx.stage.Stage;
  * @author Glenda
  * 
  */
-public abstract class ControllerBeforeLogin 
+public abstract class ControllerBeforeLogin extends Controller
 {
     /**
      * Função padrão para mudar a screen.
      * 
-     * A função carregar um arquivo fxml e iniciar uma screen com as configurações
+     * A função irá carregar um arquivo fxml e iniciar uma screen com as configurações
      * contidas no arquivo.
      * 
      * @param fxmlName
      * Nome do arquivo fxml que será carregado.
+     * 
+     * @param idUsuario
+     * ID do usuário que será direcionado para a próxima scene.
      */
-    public void carregarNovaScene(String fxmlName, int idUsuario)
+    public void carregarNovaScene(String fxmlName, boolean setarNomeUsuario)
     {
         try 
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlName));
             Parent novoRoot = loader.load();
             
-            String nomeDoUsuario = this.puxarNomeDoUsuario(idUsuario);
-            
             Stage stage = (Stage) this.root.getScene().getWindow();
             Scene novaScene = new Scene(novoRoot);
-            
-            stage.setTitle("MyCart - " + nomeDoUsuario);
-            stage.setScene(novaScene);
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
 
-    public void carregarNovaScene(String fxmlName)
-    {
-        try 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlName));
-            Parent novoRoot = loader.load();
+            if (setarNomeUsuario)
+            {
+                String title = "MyCart - " + this.puxarNomeDoUsuario();
+                stage.setTitle(title);
+            }
             
-            Stage stage = (Stage) this.root.getScene().getWindow();
-            Scene novaScene = new Scene(novoRoot);
-            
-            stage.setTitle("MyCart");
             stage.setScene(novaScene);
             stage.show();
         } 
@@ -78,11 +64,12 @@ public abstract class ControllerBeforeLogin
      * O nome do usuário irá aparecer no título da janela e será importante
      * para que screens posteriores tenham o acesso ao dado.
      */
-    protected String puxarNomeDoUsuario(int idUsuario)
+    protected String puxarNomeDoUsuario()
     {
         // Chamar uma função integrada com o banco de dados para
         // puxar o nome do usuário que acabou de logar na conta
         // TODO: luis
+        // variavel com o id = this.idUsuario
         String nome = "Glenda";
 
         return nome;
@@ -130,4 +117,7 @@ public abstract class ControllerBeforeLogin
 
     // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
     protected final String pathResources = "../../resources/";
+
+    // ID do usuário
+    protected int idUsuario;
 }

@@ -24,7 +24,7 @@
             <Font name="KacstDecorative" size="20.0" />
          </font>
       </Text>
-      <Button fx:id="cadastrar" layoutX="850.0" layoutY="522.0" mnemonicParsing="false" onAction="#cadastrarUsuario" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Cadastrar" textFill="WHITE">
+      <Button fx:id="continuarParaLogin" layoutX="850.0" layoutY="522.0" mnemonicParsing="false" onAction="#continuarLogin" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #101010;" text="Continuar" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -55,7 +55,7 @@
             <Font name="KacstDecorative" size="12.0" />
          </font>
       </Text>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="759.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="fotoUsuario" fitHeight="150.0" fitWidth="200.0" layoutX="759.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/avatar.png" />
          </image>
@@ -65,7 +65,7 @@
             <Font name="KacstDecorative" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="741.0" layoutY="165.0" mnemonicParsing="false" opacity="0.0" prefHeight="150.0" prefWidth="187.0" text="Button">
+      <Button fx:id="botaoCadastrarFoto" layoutX="741.0" layoutY="165.0" mnemonicParsing="false" onAction="#cadastrarFotoUsuario" opacity="0.0" prefHeight="150.0" prefWidth="187.0" text="Button">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

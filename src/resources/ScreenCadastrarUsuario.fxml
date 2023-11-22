@@ -80,7 +80,7 @@
             <Font name="KacstDecorative" size="30.0" />
          </font>
       </Text>
-      <Text fill="RED" layoutX="660.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Não utilize espaços">
+      <Text fx:id="alertaAbaixoUsuario" fill="RED" layoutX="660.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Não utilize espaços">
          <font>
             <Font name="KacstDecorative" size="12.0" />
          </font>
