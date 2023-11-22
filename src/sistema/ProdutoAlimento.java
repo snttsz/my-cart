@@ -14,7 +14,7 @@ public class ProdutoAlimento extends Produto
      */
     public ProdutoAlimento(int id, String descricao, String nome, double preco, String link,
         String url_foto, double valorArrecadado,
-        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         super(id, descricao, nome, preco, link, url_foto,
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
@@ -25,7 +25,7 @@ public class ProdutoAlimento extends Produto
      */
     public ProdutoAlimento(String descricao, String nome, double preco, String link,
         String url_foto,  double valorArrecadado,
-        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         super(descricao, nome, preco, link, url_foto,
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);

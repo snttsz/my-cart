@@ -16,7 +16,7 @@ public class ProdutoRoupa extends Produto
      */
     public ProdutoRoupa(int id, String descricao, String nome, double preco, String link,
         String url_foto,  double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
     {
 
@@ -33,7 +33,7 @@ public class ProdutoRoupa extends Produto
      */
     public ProdutoRoupa( String descricao, String nome, double preco, String link,
         String url_foto,  double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
     {
 

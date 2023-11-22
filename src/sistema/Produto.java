@@ -1,8 +1,6 @@
 package sistema;
 
 import java.util.ArrayList;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import DAO.Especificacao_has_Produto;
 import DAO.ProdutoDAO;
@@ -21,7 +19,7 @@ public abstract class Produto
      */
     public Produto(int id, String descricao, String nome, double preco, String link,
     String url_foto, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
@@ -44,16 +42,13 @@ public abstract class Produto
     */
     public Produto(String descricao, String nome, double preco, String link,
     String url_foto,  double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
         this.preco = preco;
         this.link = link;
         this.url_foto = url_foto;
-        this.marca = marca;
-        this.data_de_adicao = data_de_adicao;
-        this.prioridade = prioridade;
         this.valorArrecadado = valorArrecadado;
         this.valorFrete = valorFrete;
         this.categoria = categoria;
@@ -61,10 +56,6 @@ public abstract class Produto
         this.tags = tags;
         this.idUsuario = idUsuario;
         this.idLoja = idLoja;
-
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.data_de_adicao = localDateTime.format(formatter);
     }
     
     /* 
@@ -94,8 +85,7 @@ public abstract class Produto
     }
     
     protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, 
-    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria, 
-    ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
+    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria) 
     {
         this.setNome(nome);
         this.setPreco(preco);
@@ -104,19 +94,12 @@ public abstract class Produto
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
         this.setCategoria(categoria);
-        this.setEspecificacoes(especificacoes);
-        this.setTags(tags);
         this.setDescricao(descricao);
     }
     
     public static String getNomeTabela() 
     {
         return Produto.nomeTabela;
-    }
-
-    public void setEspecificacoes(ArrayList<Especificacao> especificacoes)
-    {
-        ;
     }
 
     public int getIdUsuario() 
@@ -203,13 +186,11 @@ public abstract class Produto
         return this.idLoja;
     }
 
-
     public void setIdLoja(int idLoja) 
     {
         this.idLoja = idLoja;
         produtoDAO.updateInt(this, Coluna.IDLOJA.getNomeColuna(), this.idLoja);
     }
-
 
     public String getCategoria() 
     {

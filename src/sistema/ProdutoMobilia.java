@@ -16,7 +16,7 @@ public class ProdutoMobilia extends Produto
      */
     public ProdutoMobilia(int id,  String descricao, String nome, double preco, String link,
         String url_foto, double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja)
     {
         super(id, descricao, nome, preco, link, url_foto,
@@ -34,7 +34,7 @@ public class ProdutoMobilia extends Produto
      */
     public ProdutoMobilia( String descricao, String nome, double preco, String link,
         String url_foto, double valorArrecadado,
-        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags,
+        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja) 
     {
 
