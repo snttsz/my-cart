@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -23,7 +25,8 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
         String usuario = this.login.getText();
         String nome = this.nome.getText();
 
-        // função pra validar se o usuário e nome consta no banco de dados
+        // função pra validar se o usuário e nome constam no banco de dados
+        // TODO: luis
         
         boolean result = true;
 
@@ -50,7 +53,7 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
         else
         {
             this.retanguloResultado.setFill(Color.RED);
-            this.textoResultado.setText("Os dados inseridos são inválidos! Infelizmente, você não poderá modificar sua senha. para mais informações, entre em contato com kalvinalbuquerque5@gmail.com");
+            this.textoResultado.setText("Os dados inseridos são inválidos! Infelizmente, você não poderá modificar sua senha. Para mais informações, entre em contato com o e-mail kalvinalbuquerque5@gmail.com");
         }
     }
 
@@ -61,6 +64,7 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
 
         if (novasenha.equals(confirmacaoSenha) && !novasenha.isEmpty())
         {
+            // TODO: luis
             // chamar aqui função pra alterar a senha no banco de dados
             
             // seta a opacidade dos textos para 1
@@ -81,12 +85,12 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
             this.alterarSenha.setDisable(true);
 
             this.retanguloResultado.setFill(Color.GREEN);
-            this.textoResultado.setText("Senha alterada com sucesso! Você pode voltar para o início e logar novamente.");
+            this.textoResultado.setText("Senha alterada com sucesso! Você já pode voltar para o início e logar novamente :)");
         }
         else
         {
             this.retanguloResultado.setFill(Color.RED);
-            this.textoResultado.setText("Senhas não coincidem!");
+            this.textoResultado.setText("As senhas precisam coincidir e não estarem vazias! Tente novamente.");
         }
     }
 

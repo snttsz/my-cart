@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
 
@@ -30,22 +32,26 @@ public class LoginController extends ControllerBeforeLogin
     @FXML
     public void checarAutenticacao(ActionEvent action)
     {
-        String usuario = this.usuario.getText();
-        String password = this.password.getText();
+        this.checarDadosInseridos();
+    }
 
-        // Aqui deve ter uma função integrada com o banco de dados
-        // para checar se existe um usuario e uma senha cadastrados
-        // com os dados acima. Caso tenha, retorna true. Caso não retorna false.
-
-        boolean result = true;
-
-        if (result && !(usuario.isEmpty() || password.isEmpty()))
+    /**
+     * Função acionada quando o usuário estiver dentro dos campos
+     * usuario ou senha e pressionar "enter"
+     * 
+     * A função irá checar se os dados inseridos nos campos de textos
+     * são válidos para realizar um login.
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    public void entrarComEnter(KeyEvent key)
+    {
+        if (key.getCode() == KeyCode.ENTER)
         {
-            this.carregarNovaScene("ScreenLogged.fxml");
-        }
-        else
-        {
-            this.algoErrado.setOpacity(1);
+            this.checarDadosInseridos();
         }
     }
 
@@ -69,6 +75,31 @@ public class LoginController extends ControllerBeforeLogin
     public void cadastrarUsuario(ActionEvent action)
     {
         this.carregarNovaScene("ScreenCadastrarUsuario.fxml");
+    }
+
+    public void checarDadosInseridos()
+    {
+        String usuario = this.usuario.getText();
+        String password = this.password.getText();
+
+        // Aqui deve ter uma função integrada com o banco de dados
+        // para checar se existe um usuario e uma senha cadastrados
+        // com os dados acima. Caso tenha, retorna o id do usuario. Caso não, retorna 0.
+        // O id do usuario vai servir pra puxar o nome dele na função
+        // que o carregarNovaScene chama
+        // TODO: luis
+
+        int idUsuario = 1;
+        
+        /* O empty tem que sair */
+        if (idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
+        {
+            this.carregarNovaScene("ScreenLogged.fxml", idUsuario);
+        }
+        else
+        {
+            this.algoErrado.setOpacity(1);
+        }
     }
 
     /* 

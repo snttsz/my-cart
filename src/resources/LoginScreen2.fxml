@@ -21,11 +21,11 @@
                </image>
             </ImageView>
          </children></Pane>
-      <TextField fx:id="usuario" layoutX="652.0" layoutY="268.0" prefHeight="44.0" prefWidth="367.0" promptText="Usuário">
+      <TextField fx:id="usuario" layoutX="652.0" layoutY="268.0" onKeyPressed="#entrarComEnter" prefHeight="44.0" prefWidth="367.0" promptText="Usuário">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <PasswordField fx:id="password" layoutX="652.0" layoutY="333.0" prefHeight="44.0" prefWidth="367.0" promptText="Senha">
+      <PasswordField fx:id="password" layoutX="652.0" layoutY="333.0" onKeyPressed="#entrarComEnter" prefHeight="44.0" prefWidth="367.0" promptText="Senha">
          <font>
             <Font size="15.0" />
          </font></PasswordField>

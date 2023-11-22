@@ -29,6 +29,28 @@ public abstract class ControllerBeforeLogin
      * @param fxmlName
      * Nome do arquivo fxml que será carregado.
      */
+    public void carregarNovaScene(String fxmlName, int idUsuario)
+    {
+        try 
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlName));
+            Parent novoRoot = loader.load();
+            
+            String nomeDoUsuario = this.puxarNomeDoUsuario(idUsuario);
+            
+            Stage stage = (Stage) this.root.getScene().getWindow();
+            Scene novaScene = new Scene(novoRoot);
+            
+            stage.setTitle("MyCart - " + nomeDoUsuario);
+            stage.setScene(novaScene);
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+
     public void carregarNovaScene(String fxmlName)
     {
         try 
@@ -38,10 +60,9 @@ public abstract class ControllerBeforeLogin
             
             Stage stage = (Stage) this.root.getScene().getWindow();
             Scene novaScene = new Scene(novoRoot);
-
+            
+            stage.setTitle("MyCart");
             stage.setScene(novaScene);
-            this.puxarNomeDoUsuario();
-            stage.setTitle("MyCart - " + this.nomeDoUsuario);
             stage.show();
         } 
         catch (IOException e) 
@@ -57,13 +78,14 @@ public abstract class ControllerBeforeLogin
      * O nome do usuário irá aparecer no título da janela e será importante
      * para que screens posteriores tenham o acesso ao dado.
      */
-    protected void puxarNomeDoUsuario()
+    protected String puxarNomeDoUsuario(int idUsuario)
     {
         // Chamar uma função integrada com o banco de dados para
         // puxar o nome do usuário que acabou de logar na conta
+        // TODO: luis
         String nome = "Glenda";
 
-        this.nomeDoUsuario = nome;
+        return nome;
     }
 
     public void onButton(MouseEvent mouse)
@@ -108,7 +130,4 @@ public abstract class ControllerBeforeLogin
 
     // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
     protected final String pathResources = "../../resources/";
-
-    // Nome do usuário que está logando
-    protected String nomeDoUsuario;
 }

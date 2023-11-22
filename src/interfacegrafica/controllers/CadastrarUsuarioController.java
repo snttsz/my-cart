@@ -52,7 +52,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
         boolean senhaOk = true;
         boolean userOk = true;
 
-        if (usuario.contains(" ") || usuario.isEmpty())
+        if ((usuario.contains(" ") || usuario.isEmpty()) || nomeDoUsuario.isEmpty())
         {
             this.alertaErro.setOpacity(1);
             userOk = false;
@@ -61,7 +61,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
         if (!senha.equals(confirmacaoSenha) || senha.isEmpty())
         {
             this.retanguloSenha.setFill(Color.RED);
-            this.senhaResultado.setText("Senhas não coincidem!");
+            this.senhaResultado.setText("As senhas precisam coincidir e não estarem vazias!");
             this.alertaErro.setOpacity(1);
             senhaOk = false;
         }
@@ -74,9 +74,14 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
         if (userOk && senhaOk)
         {
             // aqui chamar a função que irá cadastrar o usário
+            // TODO: luis (variaveis criadas no inicio da função)
             
+            // setar isso aqui com o id do usuário criado:
+            // TODO: luis
+            int idUsuario = 1;
+
             /* Entrando na tela de usuário logado */
-            this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml");
+            this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", idUsuario);
         }
     }
 
