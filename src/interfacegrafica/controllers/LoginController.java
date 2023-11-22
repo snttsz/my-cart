@@ -88,7 +88,7 @@ public class LoginController extends ControllerBeforeLogin
         // O id do usuario vai servir pra puxar o nome dele na função
         // que o carregarNovaScene chama
         // TODO: luis
-
+        // a função deve setar a variável abaixo:
         this.idUsuario = 1;
         
         /* O empty tem que sair */
