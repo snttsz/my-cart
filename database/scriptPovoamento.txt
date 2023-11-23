@@ -11,9 +11,9 @@ INSERT INTO Loja (nome, url) VALUES ('Brinquedos Mundo Encantado', NULL);
 INSERT INTO Loja (nome, url) VALUES ('Tech Haven', 'http://www.techhaven.com');
 
 --Povoando usuários
-INSERT INTO Usuario (nome, login, senha, email) VALUES ('João Silva', 'Joao123', 'senha123', 'joao@email.com');
-INSERT INTO Usuario (nome, login, senha, email) VALUES ('Maria Oliveira', 'Maria789', 'senha456', 'maria@email.com');
-INSERT INTO Usuario (nome, login, senha, email) VALUES ('Carlos Pereira', 'Carlos456', 'senha789', 'carlos@email.com');
+INSERT INTO Usuario (nome, login, senha, email, url_foto) VALUES ('João Silva', 'Joao123', 'senha123', 'joao@email.com', 'acso/');
+INSERT INTO Usuario (nome, login, senha, email, url_foto) VALUES ('Maria Oliveira', 'Maria789', 'senha456', 'maria@email.com', 'nada/');
+INSERT INTO Usuario (nome, login, senha, email, url_foto) VALUES ('Carlos Pereira', 'Carlos456', 'senha789', 'carlos@email.com', null);
 
 --Povoando tags
 INSERT INTO Tag (nome) VALUES ('Tecnologia');

@@ -2,8 +2,6 @@ package sistema;
 
 import java.util.ArrayList;
 
-import DAO.ProdutoDAO;
-
 public abstract class Produto 
 {
 
@@ -17,7 +15,7 @@ public abstract class Produto
      */
     public Produto(int id, String descricao, String nome, double preco, String link,
     String url_foto, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
@@ -40,7 +38,7 @@ public abstract class Produto
     */
     public Produto(String descricao, String nome, double preco, String link,
     String url_foto,  double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
@@ -83,8 +81,7 @@ public abstract class Produto
     }
     
     protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, 
-    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria, 
-    ArrayList<Especificacao> especificacoes, ArrayList<String> tags) 
+    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria) 
     {
         this.setNome(nome);
         this.setPreco(preco);
@@ -93,8 +90,6 @@ public abstract class Produto
         this.setValorArrecadado(valorArrecadado);
         this.setValorFrete(valorFrete);
         this.setCategoria(categoria);
-        this.setEspecificacoes(especificacoes);
-        this.setTags(tags);
         this.setDescricao(descricao);
     }
     
@@ -103,19 +98,9 @@ public abstract class Produto
         return Produto.nomeTabela;
     }
 
-    public void setEspecificacoes(ArrayList<Especificacao> especificacoes)
-    {
-        ;
-    }
-
-    public int getIdUsuario() 
+    public int getIdUsuario()
     {
         return this.idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) 
-    {
-        this.idUsuario = idUsuario;
     }
     
     public String getDescricao() 
@@ -126,7 +111,6 @@ public abstract class Produto
     public void setDescricao(String descricao) 
     {
         this.descricao = descricao;
-        produtoDAO.updateString(this, Coluna.DESCRICAO.getNomeColuna(), this.descricao);
     }
 
     public double getPreco() 
@@ -137,7 +121,6 @@ public abstract class Produto
     public void setPreco(double preco) 
     {
         this.preco = preco;
-        produtoDAO.updateDouble(this, Coluna.PRECO.getNomeColuna(), this.preco);
     }
 
     public String getNome() 
@@ -148,7 +131,6 @@ public abstract class Produto
     public void setNome(String nome) 
     {
         this.nome = nome;
-        produtoDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getLink() 
@@ -159,7 +141,6 @@ public abstract class Produto
     public void setLink(String link) 
     {
         this.link = link;
-        produtoDAO.updateString(this, Coluna.LINK.getNomeColuna(), this.link);
     }
 
     public String getUrl_foto() 
@@ -170,7 +151,6 @@ public abstract class Produto
     public void setUrl_foto(String url_foto) 
     {
         this.url_foto = url_foto;
-        produtoDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
 
     public double getValorFrete() 
@@ -181,7 +161,6 @@ public abstract class Produto
     public void setValorFrete(double valorFrete) 
     {
         this.valorFrete = valorFrete;
-        produtoDAO.updateDouble(this, Coluna.VALOR_FRETE.getNomeColuna(), this.valorFrete);
     }
 
     public int getIdLoja() 
@@ -189,12 +168,10 @@ public abstract class Produto
         return this.idLoja;
     }
 
-
     public void setIdLoja(int idLoja) 
     {
         this.idLoja = idLoja;
     }
-
 
     public String getCategoria() 
     {
@@ -204,7 +181,6 @@ public abstract class Produto
     public void setCategoria(String categoria) 
     {
         this.categoria = categoria;
-        produtoDAO.updateString(this, Coluna.CATEGORIA.getNomeColuna(), this.categoria);
     }
 
     public ArrayList<Especificacao> getEspecificacoes() 
@@ -212,26 +188,14 @@ public abstract class Produto
         return this.especificacoes;
     }
 
-    public ArrayList<String> getTags() 
+    public ArrayList<Tag> getTags() 
     {
         return this.tags;
-    }
-
-    public void setTags(ArrayList<String> tags) 
-    {
-        /*
-        */
     }
 
     public int getId() 
     {
         return this.id;
-    }
-
-    public void setId(int id) 
-    {
-        this.id = id;
-        produtoDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
     
     public double getValorArrecadado() 
@@ -242,12 +206,6 @@ public abstract class Produto
     public void setValorArrecadado(double valorArrecadado) 
     {
         this.valorArrecadado = valorArrecadado;
-        produtoDAO.updateDouble(this, Coluna.VALOR_ARRECADADO.getNomeColuna(), this.valorArrecadado);
-    }
-
-    public ProdutoDAO getProdutoDAO() 
-    {
-        return Produto.produtoDAO;
     }
 
     /* 
@@ -319,8 +277,7 @@ public abstract class Produto
     private double valorFrete; 
     private int idLoja;
     private ArrayList<Especificacao> especificacoes;
-    private ArrayList<String> tags;
-    private static ProdutoDAO produtoDAO = new ProdutoDAO();
+    private ArrayList<Tag> tags;
     private static final String nomeTabela = "Produto";
 
 }

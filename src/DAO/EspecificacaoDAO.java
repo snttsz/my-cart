@@ -4,9 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DAO.DAOMTM.Especificacao_has_Produto;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
+import sistema.Produto;
 import utils.StringManager;
 
 public class EspecificacaoDAO extends DAO<Especificacao>
@@ -135,10 +137,15 @@ public class EspecificacaoDAO extends DAO<Especificacao>
     @Override
     public void delete(Especificacao especificacao) 
     {
+        // Deletando da tabela produto_has_especificacao
+        ArrayList<Produto> produtosRelacionados = especificacao_has_Produto_DAO.selectTodosProdutosDaEspecificacao(especificacao.getId());
+        produtosRelacionados.forEach(produto -> {
+            especificacao_has_Produto_DAO.delete(especificacao, produto);
+        });
+        
+        // Deletando da tabela especificacao
         String condicao = StringManager.inserirIgualdade(Especificacao.Coluna.ID.getNomeColuna(), Integer.toString(especificacao.getId())); 
-
         String instrucao = SQLiteTableManager.delete(Especificacao.getNomeTabela(), condicao);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
@@ -183,5 +190,25 @@ public class EspecificacaoDAO extends DAO<Especificacao>
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
+
+    /*
+     * Funções de update para cada atributo da classe especificacao
+     */
+
+    public void updateNome(Especificacao especificacao, String newNome)
+    {
+        this.updateString(especificacao, Especificacao.Coluna.NOME.getNomeColuna(), newNome);
+    }
+
+    public void updateValor(Especificacao especificacao, double newValor)
+    {
+        this.updateDouble(especificacao, Especificacao.Coluna.VALOR.getNomeColuna(), newValor);
+    }
+
+    /*
+     * Atributos
+     */
+
+    Especificacao_has_Produto especificacao_has_Produto_DAO = new Especificacao_has_Produto();
     
 }

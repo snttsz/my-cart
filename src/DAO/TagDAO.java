@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DAO.DAOMTM.Tag_has_Produto;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;
@@ -17,10 +18,15 @@ public class TagDAO extends DAO<Tag>
     @Override
     public void delete(Tag tag) 
     {
+        // Deletando elementos da tabela has
+        ArrayList<Produto> produtosRelacionados = tag_has_Produto_DAO.selectTodosProdutosDaTag(tag.getId());
+        produtosRelacionados.forEach(produto -> {
+            tag_has_Produto_DAO.delete(tag, produto);
+        });
+
+        // Deletando tag da tabela de tags
         String condicao = StringManager.inserirIgualdade(Tag.Coluna.ID.getNomeColuna(), Integer.toString(tag.getId())); 
-
         String instrucao = SQLiteTableManager.delete(Tag.getNomeTabela(), condicao);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
         
     }
@@ -242,6 +248,20 @@ public class TagDAO extends DAO<Tag>
 
     }
 
+    /*
+     * Funções de update para cada atributo da classe Tag
+     */
 
+    public void updateNome(Tag tag, String newNome)
+    {
+        this.updateString(tag, Tag.Coluna.NOME.getNomeColuna(), newNome);
+    }
+
+
+    /*
+     * Atributos
+     */
+
+    Tag_has_Produto tag_has_Produto_DAO = new Tag_has_Produto();
     
 }

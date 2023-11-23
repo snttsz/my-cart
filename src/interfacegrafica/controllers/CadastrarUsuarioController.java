@@ -1,7 +1,6 @@
 package interfacegrafica.controllers;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import sistema.Usuario;
 import javafx.scene.paint.Color;
 
 /**
@@ -33,7 +33,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", false);
+        this.carregarNovaScene("LoginScreen2.fxml", 0);
     }
 
     /**
@@ -84,10 +84,9 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
          */
         if (userOk && senhaOk)
         {
-            // TODO: luis (variaveis criadas no inicio da função)
-            
-            // chamar função pra checar se o nome de usuario já existe no banco de dados
-            boolean doesUserExistis = false;
+            // Verificando se o usuário já existe
+            Usuario newUsuario = new Usuario(nomeDoUsuario, usuario, senha, confirmacaoSenha, null);
+            boolean doesUserExistis = usuariosDAO.verificarExistenciaLoginUsuario(newUsuario.getLogin());
 
             if (doesUserExistis)
             {
@@ -96,13 +95,12 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
             }
             else
             {
-                // aqui chamar a função que irá cadastrar o usário
-                // setar isso aqui com o id do usuário criado:
-                // TODO: luis
-                this.idUsuario = 1;
+                /* Cadastrando usuário */
+                usuariosDAO.insert(newUsuario);
+                this.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
     
                 /* Entrando na tela de usuário logado */
-                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true);
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", this.idUsuario);
             }
         }
     }
@@ -117,7 +115,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml", false);
+        this.carregarNovaScene("ScreenLogged.fxml", 0);
     }
 
     /**
@@ -147,11 +145,23 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
 
         String caminhoFinal = "../../img/users/" + nomeDaImagem;
 
-        Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
-        this.fotoUsuario.setImage(image);
+        while(true)
+        {
+            try
+            {
+                Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                this.fotoUsuario.setImage(image);
+                break;
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
 
         /* Cadastrar a foto no banco de dados */
-        this.setarFotoUsuarioNoBanco(caminhoFinal);
+        // this.setarFotoUsuarioNoBanco(caminhoFinal);
     }
 
     /**
@@ -163,11 +173,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
     {
-        /* 
-         * TODO: luis
-         * setar a foto do usuario no banco de dados
-         * variavel com o id do usuario: this.idUsuario
-         */
+        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(this.idUsuario), caminhoParaImagem);
     }
 
     /* 
@@ -231,4 +237,5 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
 
     @FXML
     private ImageView fotoUsuario;
+
 }

@@ -3,12 +3,12 @@ package testes.testesSQL;
 import java.util.ArrayList;
 
 import DAO.EspecificacaoDAO;
-import DAO.Especificacao_has_Produto;
 import DAO.LojaDAO;
 import DAO.ProdutoDAO;
 import DAO.TagDAO;
-import DAO.Tag_has_Produto;
 import DAO.UsuariosDAO;
+import DAO.DAOMTM.Especificacao_has_Produto;
+import DAO.DAOMTM.Tag_has_Produto;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;

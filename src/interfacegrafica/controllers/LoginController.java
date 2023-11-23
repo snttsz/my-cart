@@ -56,7 +56,7 @@ public class LoginController extends ControllerBeforeLogin
 
     public void recuperarSenha(ActionEvent event)
     {
-        this.carregarNovaScene("ScreenRecuperarSenha.fxml", false);
+        this.carregarNovaScene("ScreenRecuperarSenha.fxml", 0);
     }
 
     /**
@@ -73,7 +73,7 @@ public class LoginController extends ControllerBeforeLogin
     @FXML
     public void cadastrarUsuario(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", false);
+        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", 0);
     }
 
     public void checarDadosInseridos()
@@ -81,19 +81,13 @@ public class LoginController extends ControllerBeforeLogin
         String usuario = this.usuario.getText();
         String password = this.password.getText();
 
-        // Aqui deve ter uma função integrada com o banco de dados
-        // para checar se existe um usuario e uma senha cadastrados
-        // com os dados acima. Caso tenha, retorna o id do usuario. Caso não, retorna 0.
-        // O id do usuario vai servir pra puxar o nome dele na função
-        // que o carregarNovaScene chama
-        // TODO: luis
-        // a função deve setar a variável abaixo:
-        this.idUsuario = 1;
+        /* Verificando id do usuário, se não existir retorna 0 */
+        this.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
         
         /* O empty tem que sair */
         if (this.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
         {
-            this.carregarNovaScene("ScreenLogged.fxml", true);
+            this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario);
         }
         else
         {
