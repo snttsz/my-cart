@@ -89,7 +89,7 @@ public abstract class Controller
     {
         Node source = (Node) mouse.getSource();
 
-        source.setOpacity(0.8);
+        source.setOpacity(0.9);
 
         source.setCursor(Cursor.HAND);
     }
@@ -105,8 +105,9 @@ public abstract class Controller
     {
         Node source = (Node) mouse.getSource();
 
-        source.setOpacity(0.3);
+        source.setOpacity(0.6);
 
         source.setCursor(Cursor.DEFAULT);
     }
+    
 }
