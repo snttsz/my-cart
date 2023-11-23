@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -73,31 +71,6 @@ public abstract class ControllerBeforeLogin extends Controller
         String nome = "Glenda";
 
         return nome;
-    }
-
-    public void onButton(MouseEvent mouse)
-    {
-        Node source = (Node) mouse.getSource();
-
-        source.setOpacity(0.8);
-
-        source.setCursor(Cursor.HAND);
-    }
-
-    public void offButton(MouseEvent mouse)
-    {
-        Node source = (Node) mouse.getSource();
-
-        source.setOpacity(1);
-    }
-
-    public void clickedButton(MouseEvent mouse)
-    {
-        Node source = (Node) mouse.getSource();
-
-        source.setOpacity(0.3);
-
-        source.setCursor(Cursor.DEFAULT);
     }
 
     /* 

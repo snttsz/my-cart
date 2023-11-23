@@ -9,7 +9,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
-
 /**
  * 
  * Classe responsável por definir as implementações da tela de login do usuário.
@@ -37,7 +36,7 @@ public class LoginController extends ControllerBeforeLogin
 
     /**
      * Função acionada quando o usuário estiver dentro dos campos
-     * usuario ou senha e pressionar "enter"
+     * usuario ou senha e pressionar "enter".
      * 
      * A função irá checar se os dados inseridos nos campos de textos
      * são válidos para realizar um login.

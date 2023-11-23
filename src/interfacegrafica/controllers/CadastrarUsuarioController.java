@@ -166,7 +166,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
         /* 
          * TODO: luis
          * setar a foto do usuario no banco de dados
-         * variavel com o id do usuario: this.userId
+         * variavel com o id do usuario: this.idUsuario
          */
     }
 

@@ -5,10 +5,19 @@ import java.io.IOException;
 import java.nio.file.*;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
-public class Controller 
+/**
+ * Classe abstrata responsável por definir as implementações padrões 
+ * disponíveis em todas as telas.
+ * 
+ * @author Glenda
+ */
+public abstract class Controller 
 {
     /**
      * Função responsável por abrir o navegador de arquivos para que o usuário
@@ -74,5 +83,30 @@ public class Controller
         int ultimoPonto = nomeDoArquivo.lastIndexOf(".");
 
         return nomeDoArquivo.substring(ultimoPonto);
+    }
+
+    public void onButton(MouseEvent mouse)
+    {
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(0.8);
+
+        source.setCursor(Cursor.HAND);
+    }
+
+    public void offButton(MouseEvent mouse)
+    {
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(1);
+    }
+
+    public void clickedButton(MouseEvent mouse)
+    {
+        Node source = (Node) mouse.getSource();
+
+        source.setOpacity(0.3);
+
+        source.setCursor(Cursor.DEFAULT);
     }
 }
