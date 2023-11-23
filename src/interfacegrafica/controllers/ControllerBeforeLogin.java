@@ -1,9 +1,15 @@
 package interfacegrafica.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import DAO.UsuariosDAO;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,8 +22,31 @@ import javafx.stage.Stage;
  * @author Glenda
  * 
  */
-public abstract class ControllerBeforeLogin extends Controller
+public abstract class ControllerBeforeLogin extends Controller implements Initializable
 {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) 
+    {
+        // Aguarda até que o processo de inicialização seja finalizado para executar
+        // o comando.
+        Platform.runLater(() -> 
+        {
+            Stage stage = (Stage) this.root.getScene().getWindow();
+            String title = stage.getTitle();
+
+            if (title.contains("_"))
+            {
+                int indexOf = title.lastIndexOf("_");
+
+                this.idUsuario = Integer.valueOf(title.substring(indexOf + 1, title.length()));
+                title = title.substring(0, indexOf);
+            }
+
+            stage.setTitle(title);
+        });
+    }
+
     /**
      * Função padrão para mudar a screen.
      * 
@@ -30,7 +59,7 @@ public abstract class ControllerBeforeLogin extends Controller
      * @param idUsuario
      * ID do usuário que será direcionado para a próxima scene.
      */
-    public void carregarNovaScene(String fxmlName, boolean setarNomeUsuario)
+    public void carregarNovaScene(String fxmlName, int idUsuario)
     {
         try 
         {
@@ -40,9 +69,9 @@ public abstract class ControllerBeforeLogin extends Controller
             Stage stage = (Stage) this.root.getScene().getWindow();
             Scene novaScene = new Scene(novoRoot);
 
-            if (setarNomeUsuario)
+            if (idUsuario != 0)
             {
-                String title = "MyCart - " + this.puxarNomeDoUsuario();
+                String title = "MyCart - " + this.puxarNomeDoUsuario() + "_" + String.valueOf(idUsuario);
                 stage.setTitle(title);
             }
             
@@ -64,11 +93,7 @@ public abstract class ControllerBeforeLogin extends Controller
      */
     protected String puxarNomeDoUsuario()
     {
-        // Chamar uma função integrada com o banco de dados para
-        // puxar o nome do usuário que acabou de logar na conta
-        // TODO: luis
-        // variavel com o id = this.idUsuario
-        String nome = "Glenda";
+        String nome = usuariosDAO.selectById(this.idUsuario).getNome();
 
         return nome;
     }
@@ -93,4 +118,5 @@ public abstract class ControllerBeforeLogin extends Controller
 
     // ID do usuário
     protected int idUsuario;
+    protected UsuariosDAO usuariosDAO = new UsuariosDAO();
 }

@@ -43,6 +43,8 @@ public abstract class ControllerLogged extends Controller implements Initializab
             Stage stage = (Stage) this.root.getScene().getWindow();
             String title = stage.getTitle();
 
+            System.out.println(title);
+
             int indiceDoHifen = title.lastIndexOf("-");
 
             String username = title.substring(indiceDoHifen + 1).trim();

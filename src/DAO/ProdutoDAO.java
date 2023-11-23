@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import DAO.DAOMTM.Especificacao_has_Produto;
+import DAO.DAOMTM.Tag_has_Produto;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
+import sistema.Especificacao;
 import sistema.Produto;
 import sistema.ProdutoAlimento;
 import sistema.ProdutoEletronico;
@@ -15,6 +18,7 @@ import sistema.ProdutoFerramenta;
 import sistema.ProdutoLivro;
 import sistema.ProdutoMobilia;
 import sistema.ProdutoRoupa;
+import sistema.Tag;
 import utils.StringManager;
 
 public class ProdutoDAO extends DAO<Produto> 
@@ -209,13 +213,22 @@ public class ProdutoDAO extends DAO<Produto>
     @Override
     public void delete(Produto produto) 
     {
-        /* 
-         * TODO deletar o produto das demais tabelas( as tabelas has)
-         */
+        ArrayList<Especificacao> especificacoesRelacionadas = especificacao_has_Produto_DAO.selectTodasEspecificacoesDoProduto(produto.getId());
+        ArrayList<Tag> tagsRelacionadas = tag_has_Produto_DAO.selectTodasTagsDoProduto(produto.getId());
+
+        // Deletando da tabela tag_has_produto
+        tagsRelacionadas.forEach(tag -> {
+            tag_has_Produto_DAO.delete(tag, produto);
+        });
+
+        // Deletando da tabela especificacao_has_produto
+        especificacoesRelacionadas.forEach(especificacao -> {
+            especificacao_has_Produto_DAO.delete(especificacao, produto);
+        });
+
+        // Deletando da tabela de produto
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.ID.getNomeColuna(), Integer.toString(produto.getId())); 
-
         String instrucao = SQLiteTableManager.delete(Produto.getNomeTabela(), condicao);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
     }
 
@@ -552,6 +565,88 @@ public class ProdutoDAO extends DAO<Produto>
         }
 
     }
+
+    /*
+     * Função de adicionar um produto
+     */
+
+    public void addProduto(Produto produto)
+    {
+        // Adicionando na tabela de produtos
+        this.insert(produto);
+        Produto produtoFromDB = this.selectProdutosCadastradosRecentemente(1).get(0);
+        
+        // Adicionando na tabela de tag_has_produto
+        produto.getTags().forEach(tag -> {
+            tag_has_Produto_DAO.insert(tag, produtoFromDB);
+        });
+
+        // Adicionando na tabela especificacao_hs_produto
+        produto.getEspecificacoes().forEach(especificacao -> {
+            especificacao_has_Produto_DAO.insert(especificacao, produtoFromDB);
+        });
+    }
+
+    /*
+     * Funções de update para cada atributo da classe produto
+     */
+
+    public void updateIdUsuario(Produto produto, int newIdUsuario)
+    {
+        this.updateInt(produto, Produto.Coluna.IDUSUARIO.getNomeColuna(), newIdUsuario);
+    }
+
+    public void updateIdLoja(Produto produto, int newIdLoja)
+    {
+        this.updateInt(produto, Produto.Coluna.IDLOJA.getNomeColuna(), newIdLoja);
+    }
+
+    public void updateDescricao(Produto produto, String newDescricao)
+    {
+        this.updateString(produto, Produto.Coluna.DESCRICAO.getNomeColuna(), newDescricao);
+    }
+
+    public void updateNome(Produto produto, String newNome)
+    {
+        this.updateString(produto, Produto.Coluna.NOME.getNomeColuna(), newNome);
+    }
+
+    public void updateLink(Produto produto, String newLink)
+    {
+        this.updateString(produto, Produto.Coluna.LINK.getNomeColuna(), newLink);
+    }
+
+    public void updateUrl_foto(Produto produto, String newUrl_foto)
+    {
+        this.updateString(produto, Produto.Coluna.URL_FOTO.getNomeColuna(), newUrl_foto);
+    }
+
+    public void updateCategoria(Produto produto, String newCategoria)
+    {
+        this.updateString(produto, Produto.Coluna.CATEGORIA.getNomeColuna(), newCategoria);
+    }
+
+    public void updatePreco(Produto produto, double newPreco)
+    {
+        this.updateDouble(produto, Produto.Coluna.PRECO.getNomeColuna(), newPreco);
+    }
+
+    public void updateValorArrecadado(Produto produto, double newValorArrecadado)
+    {
+        this.updateDouble(produto, Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), newValorArrecadado);
+    }
+
+    public void updateValorFrete(Produto produto, double newValorFrete)
+    {
+        this.updateDouble(produto, Produto.Coluna.VALOR_FRETE.getNomeColuna(), newValorFrete);
+    }
+
+    /*
+     * Atributos
+     */
+
+    Especificacao_has_Produto especificacao_has_Produto_DAO = new Especificacao_has_Produto();
+    Tag_has_Produto tag_has_Produto_DAO = new Tag_has_Produto();
 
 }
 

@@ -1,9 +1,10 @@
-package DAO;
+package DAO.DAOMTM;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Produto;

@@ -1,7 +1,5 @@
 package sistema;
 
-import DAO.LojaDAO;
-
 public class Loja 
 {
     
@@ -28,9 +26,6 @@ public class Loja
         this.nome = nome;
         this.url = url;
         this.url_foto = url_foto;
-
-
-        lojaDAO.insert(this);
     }
 
     /* Funções gerais */
@@ -63,7 +58,6 @@ public class Loja
     public void setNome(String nome) 
     {
         this.nome = nome;
-        lojaDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public int getId() 
@@ -73,7 +67,6 @@ public class Loja
 
     public void setId(int id) {
         this.id = id;
-        lojaDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getUrl() 
@@ -84,7 +77,6 @@ public class Loja
     public void setUrl(String url) 
     {
         this.url = url;
-        lojaDAO.updateString(this, Coluna.URL.getNomeColuna(), this.url);
     }
     
     public String getUrl_foto() 
@@ -95,7 +87,6 @@ public class Loja
     public void setUrl_foto(String url_foto) 
     {
         this.url_foto = url_foto;
-        lojaDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
 
     /* 
@@ -120,12 +111,12 @@ public class Loja
             return this.nomeColuna;
         }
     }
+
     /* Atributos */
     private String nome;
     private String url;
     private String url_foto;
     private int id;
-    private LojaDAO lojaDAO = new LojaDAO();
     private static final String nomeTabela = "Loja";
 
 }

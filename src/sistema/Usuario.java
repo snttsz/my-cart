@@ -2,8 +2,6 @@ package sistema;
 
 import java.util.ArrayList;
 
-import DAO.UsuariosDAO;
-
 public class Usuario {
     
     /* Contrutores */
@@ -13,28 +11,28 @@ public class Usuario {
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public Usuario(int id, String nome, String login, String senha, String email) 
+    public Usuario(int id, String nome, String login, String senha, String email, String url_foto) 
     {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
         this.email = email;
+        this.url_foto = url_foto;
         this.produtos = new ArrayList<Produto>();
     }
 
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public Usuario(String nome, String login, String senha, String email) 
+    public Usuario(String nome, String login, String senha, String email, String url_foto) 
     {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
         this.email = email;
+        this.url_foto = url_foto;
         this.produtos = new ArrayList<Produto>();
-
-        usuarioDAO.insert(this);
     }
 
     /* Funções gerais */
@@ -45,6 +43,7 @@ public class Usuario {
         System.out.println("Login: " + usuario.getLogin());
         System.out.println("E-mail: " + usuario.getEmail());
         System.out.println("Senha: " + usuario.getSenha());
+        System.out.println("Url_foto: " + usuario.getUrl_foto());
         System.out.println("\n");
     }
 
@@ -56,7 +55,6 @@ public class Usuario {
         this.setLogin(login);
         this.setSenha(senha);
         this.setEmail(email);
-        this.setProdutos(produtos);
     }
 
     public static String getNomeTabela() 
@@ -69,12 +67,6 @@ public class Usuario {
         return this.id;
     }
 
-    public void setId(int id) 
-    {
-        this.id = id;
-        usuarioDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
-    }
-
     public String getNome() 
     {
         return this.nome;
@@ -83,7 +75,6 @@ public class Usuario {
     public void setNome(String nome) 
     {
         this.nome = nome;
-        usuarioDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getLogin() 
@@ -94,7 +85,6 @@ public class Usuario {
     public void setLogin(String login) 
     {
         this.login = login;
-        usuarioDAO.updateString(this, Coluna.LOGIN.getNomeColuna(), this.login);
     }
 
     public String getSenha() 
@@ -105,7 +95,6 @@ public class Usuario {
     public void setSenha(String senha) 
     {
         this.senha = senha;
-        usuarioDAO.updateString(this, Coluna.SENHA.getNomeColuna(), this.senha);
     }
 
     public String getEmail() 
@@ -116,7 +105,6 @@ public class Usuario {
     public void setEmail(String email) 
     {
         this.email = email;
-        usuarioDAO.updateString(this, Coluna.EMAIL.getNomeColuna(), this.email);
     }
 
     public ArrayList<Produto> getProdutos() 
@@ -124,12 +112,19 @@ public class Usuario {
         return this.produtos;
     }
 
-    public void setProdutos(ArrayList<Produto> produtos) 
+    public String getUrl_foto() 
+    {
+        return this.url_foto;
+    }
+
+    public void setUrl_foto(String url_foto) 
+    {
+        this.url_foto = url_foto;
+    }
+
+    public void setProdutos(ArrayList<Produto> produtos)
     {
         this.produtos = produtos;
-        this.produtos.forEach(produto -> {
-            //Produtos
-        });
     }
 
     /* 
@@ -141,6 +136,7 @@ public class Usuario {
         NOME("nome"),
         LOGIN("login"),
         SENHA("senha"),
+        URL_FOTO("url_foto"),
         EMAIL("email");
 
         public final String nomeColuna;
@@ -156,13 +152,6 @@ public class Usuario {
         }
     }
 
-    /* Funções */
-
-    public void getProdutoById(int idProduto)
-    {
-        
-    }
-    
     /* Atributos */
 
     private int id;
@@ -170,7 +159,7 @@ public class Usuario {
     private String login;
     private String senha;
     private String email;
-    private UsuariosDAO usuarioDAO = new UsuariosDAO();
+    private String url_foto;
     private static final String nomeTabela = "Usuario";
     private ArrayList<Produto> produtos;
 

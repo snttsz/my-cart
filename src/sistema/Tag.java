@@ -1,7 +1,5 @@
 package sistema;
 
-import DAO.TagDAO;
-
 public class Tag 
 {
     /* Construtores */
@@ -23,8 +21,6 @@ public class Tag
     public Tag(String nome) 
     {
         this.nome = nome;
-        
-        tagDAO.insert(this);
     }
     
     /* Funções gerais */
@@ -48,7 +44,6 @@ public class Tag
     public void setNome(String nome) 
     {
         this.nome = nome;
-        tagDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public int getId() 
@@ -59,7 +54,6 @@ public class Tag
     public void setId(int id) 
     {
         this.id = id;
-        tagDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     /* 
@@ -86,6 +80,5 @@ public class Tag
 
     private int id;
     private String nome;
-    private TagDAO tagDAO = new TagDAO();
     private static final String nomeTabela = "Tag";
 }

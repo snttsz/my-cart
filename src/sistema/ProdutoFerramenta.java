@@ -14,7 +14,7 @@ public class ProdutoFerramenta extends Produto
      */
     public ProdutoFerramenta(int id, String descricao, String nome, double preco, String link,
         String url_foto, double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         super(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
         valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
@@ -24,12 +24,10 @@ public class ProdutoFerramenta extends Produto
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
     public ProdutoFerramenta(String descricao, String nome, double preco, String link, String url_foto, 
-    double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja)
+    double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja)
     {
         super(descricao, nome, preco, link, url_foto,
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
-
-        super.getProdutoDAO().insert(this);
     }
 
 }

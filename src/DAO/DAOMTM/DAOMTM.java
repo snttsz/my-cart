@@ -1,4 +1,4 @@
-package DAO;
+package DAO.DAOMTM;
 
 /* 
  * Classe abstrata responsável por gerenciar os métodos das tabelas intermediárias entre fruto do relacionamento muitos para muitos entre duas tabelas
