@@ -37,8 +37,6 @@ public class ProdutoLivro extends Produto
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
         this.autor = autor;
         this.genero = genero;
-
-        super.insert();
     }
 
     /* Getters e Setters */

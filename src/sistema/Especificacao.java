@@ -1,10 +1,5 @@
 package sistema;
 
-import java.util.ArrayList;
-
-import DAO.EspecificacaoDAO;
-import DAO.Especificacao_has_Produto;
-
 public class Especificacao 
 {
 
@@ -29,8 +24,6 @@ public class Especificacao
     {
         this.nome = nome;
         this.valor = valor;
-
-        especificacaoDAO.insert(this);
     }
 
     /* Funções gerais */
@@ -63,7 +56,6 @@ public class Especificacao
     public void setId(int id) 
     {
         this.id = id;
-        especificacaoDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getNome() 
@@ -74,7 +66,6 @@ public class Especificacao
     public void setNome(String nome) 
     {
         this.nome = nome;
-        especificacaoDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getValor() 
@@ -85,7 +76,6 @@ public class Especificacao
     public void setValor(String valor) 
     {
         this.valor = valor;
-        especificacaoDAO.updateString(this, Coluna.VALOR.getNomeColuna(), this.valor);
     }
 
     /* 
@@ -110,39 +100,11 @@ public class Especificacao
         }
     }
 
-    /* Funções */
-
-    public ArrayList<Produto> produtosRelacionados()
-    {
-        return especificacao_has_Produto_DAO.selectTodosProdutosDaEspecificacao(this.getId());
-    }
-
-    public void delete()
-    {
-        // Deletando da tabela de especificacao_has_produto
-        ArrayList<Produto> produtos = this.produtosRelacionados();
-        for (Produto produto : produtos) 
-        {
-            especificacao_has_Produto_DAO.delete(this, produto);
-        }
-
-        // Deletando da tabela de especificacao
-        especificacaoDAO.delete(this);
-    }
-
-    public void insert()
-    {
-        //Adicionando na tabela de especificacao
-        especificacaoDAO.insert(this);
-    }
-
     /* Atributos */
     
     private int id;
     private String nome;
     private String valor;
-    private EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
-    private Especificacao_has_Produto especificacao_has_Produto_DAO = new Especificacao_has_Produto();
     private static final String nomeTabela = "Especificacao";
 
 }

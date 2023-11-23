@@ -2,10 +2,6 @@ package sistema;
 
 import java.util.ArrayList;
 
-import DAO.Especificacao_has_Produto;
-import DAO.ProdutoDAO;
-import DAO.Tag_has_Produto;
-
 public abstract class Produto 
 {
 
@@ -102,141 +98,114 @@ public abstract class Produto
         return Produto.nomeTabela;
     }
 
-    public int getIdUsuario() 
+    public int getIdUsuario()
     {
-        this.idUsuario = produtoDAO.selectById(this.id).idUsuario;
         return this.idUsuario;
     }
     
     public String getDescricao() 
     {
-        this.descricao = produtoDAO.selectById(this.id).descricao;
         return this.descricao;
     } 
     
     public void setDescricao(String descricao) 
     {
         this.descricao = descricao;
-        produtoDAO.updateString(this, Coluna.DESCRICAO.getNomeColuna(), this.descricao);
     }
 
     public double getPreco() 
     {
-        this.preco = produtoDAO.selectById(this.id).preco;
         return this.preco;
     }
 
     public void setPreco(double preco) 
     {
         this.preco = preco;
-        produtoDAO.updateDouble(this, Coluna.PRECO.getNomeColuna(), this.preco);
     }
 
     public String getNome() 
     {
-        this.nome = produtoDAO.selectById(this.id).nome;
         return this.nome;
     }
 
     public void setNome(String nome) 
     {
         this.nome = nome;
-        produtoDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getLink() 
     {
-        this.link = produtoDAO.selectById(this.id).link;
         return this.link;
     }
 
     public void setLink(String link) 
     {
         this.link = link;
-        produtoDAO.updateString(this, Coluna.LINK.getNomeColuna(), this.link);
     }
 
     public String getUrl_foto() 
     {
-        this.url_foto = produtoDAO.selectById(this.id).url_foto;
         return this.url_foto;
     }
 
     public void setUrl_foto(String url_foto) 
     {
         this.url_foto = url_foto;
-        produtoDAO.updateString(this, Coluna.URL_FOTO.getNomeColuna(), this.url_foto);
     }
 
     public double getValorFrete() 
     {
-        this.valorFrete = produtoDAO.selectById(this.id).valorFrete;
         return this.valorFrete;
     }
 
     public void setValorFrete(double valorFrete) 
     {
         this.valorFrete = valorFrete;
-        produtoDAO.updateDouble(this, Coluna.VALOR_FRETE.getNomeColuna(), this.valorFrete);
     }
 
     public int getIdLoja() 
     {
-        this.idLoja = produtoDAO.selectById(this.id).idLoja;
         return this.idLoja;
     }
 
     public void setIdLoja(int idLoja) 
     {
         this.idLoja = idLoja;
-        produtoDAO.updateInt(this, Coluna.IDLOJA.getNomeColuna(), this.idLoja);
     }
 
     public String getCategoria() 
     {
-        this.categoria = produtoDAO.selectById(this.id).categoria;
         return this.categoria;
     }
 
     public void setCategoria(String categoria) 
     {
         this.categoria = categoria;
-        produtoDAO.updateString(this, Coluna.CATEGORIA.getNomeColuna(), this.categoria);
     }
 
     public ArrayList<Especificacao> getEspecificacoes() 
     {
-        this.especificacoes = especificacao_has_Produto_DAO.selectTodasEspecificacoesDoProduto(this.getId());
         return this.especificacoes;
     }
 
     public ArrayList<Tag> getTags() 
     {
-        this.tags = tag_has_Produto_DAO.selectTodasTagsDoProduto(this.getId());
         return this.tags;
     }
 
     public int getId() 
     {
-        this.id = produtoDAO.selectById(this.id).id;
         return this.id;
     }
     
     public double getValorArrecadado() 
     {
-        this.valorArrecadado = produtoDAO.selectById(this.id).valorArrecadado;
         return this.valorArrecadado;
     }
 
     public void setValorArrecadado(double valorArrecadado) 
     {
         this.valorArrecadado = valorArrecadado;
-        produtoDAO.updateDouble(this, Coluna.VALOR_ARRECADADO.getNomeColuna(), this.valorArrecadado);
-    }
-
-    public ProdutoDAO getProdutoDAO() 
-    {
-        return Produto.produtoDAO;
     }
 
     /* 
@@ -294,56 +263,6 @@ public abstract class Produto
         }
     }
 
-    /* Funções */
-
-    public static ArrayList<Produto> allProdutos()
-    {
-        return produtoDAO.selectAll();
-    }
-    
-    public static ArrayList<Produto> produtosRecentes(int qntDeProdutos)
-    {
-        return produtoDAO.selectProdutosCadastradosRecentemente(qntDeProdutos);
-    }
-
-    public void delete()
-    {
-        // Deletando da tabela de especificacao_has_produto
-        ArrayList<Especificacao> especificacoes = this.getEspecificacoes();
-        for (Especificacao especificacao : especificacoes) 
-        {
-            especificacao_has_Produto_DAO.delete(especificacao, this);
-        }
-
-        // Deletando da tabela de tag_has_produto
-        ArrayList<Tag> tags = this.getTags();
-        for (Tag tag : tags) 
-        {
-            tag_has_Produto_DAO.delete(tag, this);
-        }
-
-        // Deletando da tabela de produto
-        produtoDAO.delete(this);
-    }
-
-    public void insert()
-    {
-        // Adicionando da tabela de especificacao_has_produto
-        for (Especificacao especificacao : this.especificacoes) 
-        {
-            especificacao_has_Produto_DAO.insert(especificacao, this);
-        }
-
-        // Adicionando da tabela de tag_has_produto
-        for (Tag tag : this.tags) 
-        {
-            tag_has_Produto_DAO.insert(tag, this);
-        }
-
-        // Adicionando da tabela de produto
-        produtoDAO.insert(this);
-    }
-
     /* Atributos */
 
     private int id;
@@ -359,9 +278,6 @@ public abstract class Produto
     private int idLoja;
     private ArrayList<Especificacao> especificacoes;
     private ArrayList<Tag> tags;
-    private static ProdutoDAO produtoDAO = new ProdutoDAO();
-    private static Especificacao_has_Produto especificacao_has_Produto_DAO = new Especificacao_has_Produto();
-    private static Tag_has_Produto tag_has_Produto_DAO = new Tag_has_Produto();
     private static final String nomeTabela = "Produto";
 
 }

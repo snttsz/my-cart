@@ -7,28 +7,30 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import sistema.Usuario;
 
 public class RecuperarSenhaController extends ControllerBeforeLogin
 {
     public void voltarParaInicio(ActionEvent event)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", false);
+        this.carregarNovaScene("LoginScreen2.fxml", 0);
     }
 
     public void checarPermissaoAlterarSenha(ActionEvent event)
     {
         String usuario = this.login.getText();
         String nome = this.nome.getText();
-
-        // função pra validar se o usuário e nome constam no banco de dados
-        // TODO: luis
         
-        boolean result = true;
+        /* Verificando se o nome e login do usuário coincidem com algum usuário no banco */
+        this.usuarioParaRecuperar = this.usuariosDAO.recuperarUsuario(usuario, nome);
+        boolean result = false;
+        if (this.usuarioParaRecuperar != null) 
+        {
+            result = true;
+        }
 
         if (result)
         {
@@ -64,8 +66,8 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
 
         if (novasenha.equals(confirmacaoSenha) && !novasenha.isEmpty())
         {
-            // TODO: luis
-            // chamar aqui função pra alterar a senha no banco de dados
+            /* Alterando senha */
+            usuariosDAO.updateSenha(this.usuarioParaRecuperar, confirmacaoSenha);
             
             // seta a opacidade dos textos para 1
             this.novaSenhaText.setOpacity(0.5);
@@ -148,4 +150,10 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
 
     @FXML
     private Rectangle retanguloResultado;
+
+    /*
+     * Atributos
+     */
+
+    private Usuario usuarioParaRecuperar = null;
 }

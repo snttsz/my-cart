@@ -1,25 +1,27 @@
-package DAO;
+package DAO.DAOMTM;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
-import sistema.Especificacao;
 import sistema.Produto;
+import sistema.Tag;
 import utils.StringManager;
 
-public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
+
+public class Tag_has_Produto extends DAOMTM<Tag, Produto>
 {
 
     @Override
-    public void delete(Especificacao especificacao, Produto produto) 
+    public void delete(Tag tag, Produto produto) 
     {
 
-        String condicao1 = StringManager.inserirIgualdade(Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna(), Integer.toString(produto.getId())); 
+        String condicao1 = StringManager.inserirIgualdade(Tag_has_Produto.Coluna.IDProduto.getNomeColuna(), Integer.toString(produto.getId())); 
 
-        String condicao2 = StringManager.inserirIgualdade(Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna(), Integer.toString(especificacao.getId())); 
+        String condicao2 = StringManager.inserirIgualdade(Tag_has_Produto.Coluna.IDTAG.getNomeColuna(), Integer.toString(tag.getId())); 
 
         String condicao = StringManager.inserirAnd(condicao1, condicao2);
 
@@ -29,8 +31,9 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     }
 
     @Override
-    public void insert(Especificacao especificacao, Produto produto) 
+    public void insert(Tag tag, Produto produto) 
     {
+        
         ArrayList<Integer> valoresInteger = new ArrayList<Integer>();
 
         ArrayList<String> arrayColunas = new ArrayList<String>();
@@ -38,13 +41,13 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         /* 
         * Adicionando colunas
         */
-        arrayColunas.add(Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna());
-        arrayColunas.add(Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna());
+        arrayColunas.add(Tag_has_Produto.Coluna.IDTAG.getNomeColuna());
+        arrayColunas.add(Tag_has_Produto.Coluna.IDProduto.getNomeColuna());
 
         /* 
         * Montando valores
         */
-        valoresInteger.add(especificacao.getId());
+        valoresInteger.add(tag.getId());
         valoresInteger.add(produto.getId());
 
         ArrayList<String> valoresIntegerNormalizados = StringManager.formatarInt(valoresInteger);
@@ -58,52 +61,53 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
 
         String valores = StringManager.montarString(valoresIntegerNormalizados);
 
-        String instrucao = SQLiteTableManager.insertTo(Especificacao_has_Produto.nomeTabela, colunas, valores);
+        String instrucao = SQLiteTableManager.insertTo(Tag_has_Produto.nomeTabela, colunas, valores);
         
         SQLiteConnectionManager.enviarQuery(instrucao);        
     }
 
+
+
     /* 
-     * Método responsável por retornar todas as especificações de um produto passado por parâmetro
+     * Método responsável por retornar todas as tags de um produto , cujo id é passado por parâmetro
      */
-    public ArrayList<Especificacao> selectTodasEspecificacoesDoProduto(int idProduto)
+    public ArrayList<Tag> selectTodasTagsDoProduto(int idProduto)
     {
         /* 
         * Montando Comparação entre atributos de duas tabelas diferentes 
          */
-        String atributo1 = Especificacao.getNomeTabela() + "." + Especificacao.Coluna.ID.getNomeColuna();
-        String atributo2 = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
+        String atributo1 = Tag.getNomeTabela() + "." + Tag.Coluna.ID.getNomeColuna();
+        String atributo2 = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDTAG.getNomeColuna();
         String comparacaoAtributos = StringManager.inserirIgualdade(atributo1, atributo2);
         
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDTAG.getNomeColuna();
         String valorDireitaIgualdade = Integer.toString(idProduto);
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
-        String instrucao = SQLiteTableManager.selectAllJoin(Especificacao.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);
+        String instrucao = SQLiteTableManager.selectAllJoin(Tag.getNomeTabela(), Tag_has_Produto.nomeTabela, comparacaoAtributos, condicao);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
         /* 
-         * Montando Especificacoes
+         * Montando Tags
          */
-        ArrayList<Especificacao> especificacoes = new ArrayList<>();
+        ArrayList<Tag> tags = new ArrayList<>();
         try
         {
             while(resultSet.next())
             {
-                int idEspecificacao = resultSet.getInt(Especificacao.Coluna.ID.getNomeColuna());
-                String nome = resultSet.getString(Especificacao.Coluna.NOME.getNomeColuna());
-                String valor = resultSet.getString(Especificacao.Coluna.VALOR.getNomeColuna());
+                int idTag = resultSet.getInt(Tag.Coluna.ID.getNomeColuna());
+                String nome = resultSet.getString(Tag.Coluna.NOME.getNomeColuna());
 
-                Especificacao especificacao = new Especificacao(idEspecificacao,nome,valor);
+                Tag tag = new Tag(idTag, nome);
 
-                especificacoes.add(especificacao);
+                tags.add(tag);
             }
             
-            return especificacoes;
+            return tags;
         }
         catch (SQLException e) 
         {
@@ -117,25 +121,25 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     }
 
     /* 
-     * Método responsável por retornar todos os produtos que possuem uma especificação passada por parâmetro
+     * Método responsável por retornar todos os produtos que possuem o id de uma tag passada por parâmetro
      */
-    public ArrayList<Produto> selectTodosProdutosDaEspecificacao(int idEspecificacao)
+    public ArrayList<Produto> selectTodosProdutosDaTag(int idTag)
     {
         /* 
          * Montando Comparação entre atributos de duas tabelas diferentes 
          */
         String atributo1 = Produto.getNomeTabela() + "." + Produto.Coluna.ID.getNomeColuna();
-        String atributo2 = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
+        String atributo2 = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDProduto.getNomeColuna();
         String comparacaoAtributos = StringManager.inserirIgualdade(atributo1, atributo2);
         
         /* 
          * Montando condição
          */
-        String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
-        String valorDireitaIgualdade = Integer.toString(idEspecificacao);
+        String valorEsquerdaIgualdade = Tag_has_Produto.nomeTabela + "." + Tag_has_Produto.Coluna.IDTAG.getNomeColuna();
+        String valorDireitaIgualdade = Integer.toString(idTag);
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
-        String instrucao = SQLiteTableManager.selectAllJoin(Produto.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);
+        String instrucao = SQLiteTableManager.selectAllJoin(Produto.getNomeTabela(), Tag_has_Produto.nomeTabela, comparacaoAtributos, condicao);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
@@ -146,12 +150,12 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
          ArrayList<Produto> produtosMontados = new ArrayList<>();
          try
          {
-             while (resultSet.next()) 
-             {
-                 produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
-             }
- 
-             return produtosMontados;
+            while (resultSet.next()) 
+            {
+            produtosMontados.add(ProdutoDAO.montarProduto(resultSet));
+            }
+
+            return produtosMontados;
          }
          catch(SQLException e) 
          {
@@ -164,24 +168,25 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
          }
     }
 
+    
     /* 
-     * Método responsável por contar quantas especificações um produto possui a partir do id do produto passado por parâmetro
+     * Método responsável por contar quantas tags um produto possui a partir do id do produto passado por parâmetro
      */
-    public int contarEspecificacoesDoProduto(int idProduto)
+    public int contarTagsDoProduto(int idProduto)
     {
         /* 
          * Motando condição
          */
-        String condicao = StringManager.inserirIgualdade(Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna(), Integer.toString(idProduto)); 
-        
-        String instrucao = SQLiteTableManager.count(Especificacao_has_Produto.nomeTabela, condicao, Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna());
+        String condicao = StringManager.inserirIgualdade(Tag_has_Produto.Coluna.IDProduto.getNomeColuna(), Integer.toString(idProduto)); 
+
+        String instrucao = SQLiteTableManager.count(Tag_has_Produto.nomeTabela, condicao, Tag_has_Produto.Coluna.IDTAG.getNomeColuna());
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
         int resultado = 0;
 
         try
-        { 
+        {
             if(resultSet != null)
             {
                 resultado = resultSet.getInt(1);
@@ -205,7 +210,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
      */
     public enum Coluna
     {
-        IDESPECIFICACAO("Especificacao_idEspecificacao"),
+        IDTAG("Tag_idTag"),
         IDProduto("Produto_idProduto");
 
         private final String nomeColuna;
@@ -221,12 +226,12 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
         }
     }
 
+
     public static String getNomeTabela()
     {
         return nomeTabela;
     }
 
-    private static final String nomeTabela = "Especificacao_has_Produto";
+    private static final String nomeTabela = "Tag_has_Produto";
     
 }
-

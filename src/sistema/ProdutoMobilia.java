@@ -46,8 +46,6 @@ public class ProdutoMobilia extends Produto
         this.altura = altura;
         this.largura = largura;
         this.comprimento = comprimento;
-
-        super.insert();
     }
     
     /* Getters e Setters */

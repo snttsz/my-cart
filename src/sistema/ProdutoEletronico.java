@@ -30,8 +30,6 @@ public class ProdutoEletronico extends Produto
     {
         super(descricao, nome, preco, link, url_foto, 
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
-
-        super.insert();
     }
 
 }

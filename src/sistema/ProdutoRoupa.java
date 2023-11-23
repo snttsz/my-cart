@@ -42,8 +42,6 @@ public class ProdutoRoupa extends Produto
         this.tamanho = tamanho;
         this.cor = cor;
         this.material = material;
-        
-        super.insert();
     }
 
     /* Getters e Setters */
