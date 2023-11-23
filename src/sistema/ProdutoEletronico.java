@@ -14,7 +14,7 @@ public class ProdutoEletronico extends Produto
      */
     public ProdutoEletronico(int id, String descricao, String nome, double preco, String link,
     String url_foto, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         super(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
         valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
@@ -26,12 +26,10 @@ public class ProdutoEletronico extends Produto
      */
     public ProdutoEletronico( String descricao, String nome, double preco, String link,
     String url_foto, double valorArrecadado,
-    double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<String> tags, int idUsuario, int idLoja) 
+    double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         super(descricao, nome, preco, link, url_foto, 
         valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
-
-        super.getProdutoDAO().insert(this);
     }
 
 }

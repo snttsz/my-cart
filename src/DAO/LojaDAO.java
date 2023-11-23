@@ -370,5 +370,26 @@ public class LojaDAO extends DAO<Loja>
 
     }
 
+
+    /*
+     * Funções de update para cada atributo da classe produto
+     */
+
+    public void updateNome(Loja loja, String newNome)
+    {
+        this.updateString(loja, Loja.Coluna.NOME.getNomeColuna(), newNome);
+    }
+
+    public void updateUrl(Loja loja, String newUrl)
+    {
+        this.updateString(loja, Loja.Coluna.URL.getNomeColuna(), newUrl);
+    }
+
+    public void updateUrl_foto(Loja loja, String newUrl_foto)
+    {
+        this.updateString(loja, Loja.Coluna.URL_FOTO.getNomeColuna(), newUrl_foto);
+    }
+
+
 }
 

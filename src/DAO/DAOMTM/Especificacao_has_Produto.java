@@ -1,9 +1,10 @@
-package DAO;
+package DAO.DAOMTM;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DAO.ProdutoDAO;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
@@ -66,7 +67,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     /* 
      * Método responsável por retornar todas as especificações de um produto passado por parâmetro
      */
-    public ArrayList<Especificacao> selectTodasEspecificacoesDoProduto(Produto produto)
+    public ArrayList<Especificacao> selectTodasEspecificacoesDoProduto(int idProduto)
     {
         /* 
         * Montando Comparação entre atributos de duas tabelas diferentes 
@@ -79,7 +80,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
          * Montando condição
          */
         String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDProduto.getNomeColuna();
-        String valorDireitaIgualdade = Integer.toString(produto.getId());
+        String valorDireitaIgualdade = Integer.toString(idProduto);
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
         String instrucao = SQLiteTableManager.selectAllJoin(Especificacao.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);
@@ -119,7 +120,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
     /* 
      * Método responsável por retornar todos os produtos que possuem uma especificação passada por parâmetro
      */
-    public ArrayList<Produto> selectTodosProdutosDaEspecificacao(Especificacao especificacao)
+    public ArrayList<Produto> selectTodosProdutosDaEspecificacao(int idEspecificacao)
     {
         /* 
          * Montando Comparação entre atributos de duas tabelas diferentes 
@@ -132,7 +133,7 @@ public class Especificacao_has_Produto  extends DAOMTM<Especificacao, Produto>
          * Montando condição
          */
         String valorEsquerdaIgualdade = Especificacao_has_Produto.nomeTabela + "." + Especificacao_has_Produto.Coluna.IDESPECIFICACAO.getNomeColuna();
-        String valorDireitaIgualdade = Integer.toString(especificacao.getId());
+        String valorDireitaIgualdade = Integer.toString(idEspecificacao);
         String condicao = StringManager.inserirIgualdade(valorEsquerdaIgualdade, valorDireitaIgualdade);
 
         String instrucao = SQLiteTableManager.selectAllJoin(Produto.getNomeTabela(), Especificacao_has_Produto.nomeTabela, comparacaoAtributos, condicao);

@@ -3,3 +3,6 @@
 
 # compilador
 bin/
+
+# Executaveis
+.class

@@ -1,7 +1,5 @@
 package sistema;
 
-import DAO.EspecificacaoDAO;
-
 public class Especificacao 
 {
 
@@ -26,8 +24,6 @@ public class Especificacao
     {
         this.nome = nome;
         this.valor = valor;
-
-        especificacaoDAO.insert(this);
     }
 
     /* Funções gerais */
@@ -60,7 +56,6 @@ public class Especificacao
     public void setId(int id) 
     {
         this.id = id;
-        especificacaoDAO.updateInt(this, Coluna.ID.getNomeColuna(), this.id);
     }
 
     public String getNome() 
@@ -71,7 +66,6 @@ public class Especificacao
     public void setNome(String nome) 
     {
         this.nome = nome;
-        especificacaoDAO.updateString(this, Coluna.NOME.getNomeColuna(), this.nome);
     }
 
     public String getValor() 
@@ -82,19 +76,6 @@ public class Especificacao
     public void setValor(String valor) 
     {
         this.valor = valor;
-        especificacaoDAO.updateString(this, Coluna.VALOR.getNomeColuna(), this.valor);
-    }
-
-    /* FUNÇÕES */
-
-    public void deletar()
-    {
-        especificacaoDAO.delete(this);
-    }
-
-    public void adicionar()
-    {
-        especificacaoDAO.insert(this);
     }
 
     /* 
@@ -118,11 +99,12 @@ public class Especificacao
             return this.nomeColuna;
         }
     }
+
+    /* Atributos */
     
     private int id;
     private String nome;
     private String valor;
-    private EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
     private static final String nomeTabela = "Especificacao";
 
 }
