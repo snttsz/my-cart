@@ -328,7 +328,7 @@
       <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
-      <Text fx:id="username" fill="WHITE" layoutX="70.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="162.0">
+      <Text fx:id="username" fill="WHITE" layoutX="41.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER" wrappingWidth="162.0">
          <font>
             <Font name="System Italic" size="22.0" />
          </font>

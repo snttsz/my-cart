@@ -2,8 +2,12 @@ package interfacegrafica.controllers;
 
 import sistema.Tag;
 import sistema.Especificacao;
+import sistema.Produto;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -32,8 +36,6 @@ public class CadastrarProdutoController extends ControllerLogged
 
         this.tagsText = new ArrayList<Text>();
         this.especificacoesText = new ArrayList<Text>();
-
-        this.categoriasMenuItens = new ArrayList<MenuItem>();
     }
 
     public void adicionarTagNoCampo(ActionEvent action)
@@ -59,23 +61,10 @@ public class CadastrarProdutoController extends ControllerLogged
 
     public void adicionarEspecificacaoNoCampo(ActionEvent action)
     {
-        // Bloco abaixo vai pra outra função
-        // =================================
-        /* Adicionando a especificação no array de especificações */
-
-        // String especificacaoNome = this.especificacaoNome.getText();
-        // String especificacaoValor = this.especificacaoValor.getText();
-
-        // Especificacao novaEspecificacao = new Especificacao(especificacaoNome, especificacaoValor);
-
-        // this.especificacoes.add(novaEspecificacao);
-
-        // =================================
-
         /* Adicionando a especificação no array de texto */
         Text especificacao = new Text(this.especificacaoNome.getText() + " : " + this.especificacaoValor.getText());
 
-        // checar se o nome já existe
+        // TODO: checar se o nome já existe
         this.especificacoesText.add(especificacao);
 
         if (this.especificacoesText.size() > 7)
@@ -162,6 +151,18 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    @Override
+    public void botaoMenuClicked(MouseEvent mouse)
+    {
+        super.botaoMenuClicked(mouse);
+
+        /* Excluindo foto do produto se já estiver salva */
+        if (adicionouFotoProduto)
+        {
+            this.excluirFotoDoProduto();
+        }
+    }
+
     public void aumentarPainelEspecificacao()
     {
         this.anchorEspecificacao.setPrefHeight(this.anchorEspecificacao.getHeight() + 5);
@@ -175,6 +176,12 @@ public class CadastrarProdutoController extends ControllerLogged
     public void voltarParaOInicio(ActionEvent action)
     {
         this.mudarScene("ScreenLogged.fxml");
+
+        /* Excluindo foto do produto se já estiver salva */
+        if (adicionouFotoProduto)
+        {
+            this.excluirFotoDoProduto();
+        }
     }
 
     public void cadastrarFotoProduto(ActionEvent action)
@@ -188,15 +195,17 @@ public class CadastrarProdutoController extends ControllerLogged
         Random random = new Random();
         int numeroIntervalo = random.nextInt(1, 3123123) + 1;
 
-        // TODO: só copiar a imagem quando o usuário clicar em cadastrar produto
         try
         {
-            nomeDaImagem = this.copiarImagem(filePath, caminhoPastaDestino, 0, String.valueOf(numeroIntervalo));
+            nomeDaImagem = this.copiarImagem(filePath, caminhoPastaDestino, Controller.idUsuario, String.valueOf(numeroIntervalo));
+            this.adicionouFotoProduto = true;
         }
         catch(IOException e)
         {
+            //TODO: aparecer erro na tela quando der exception
             e.printStackTrace();
         }
+
 
         String caminhoFinal = "../../img/users/" + nomeDaImagem;
 
@@ -217,12 +226,162 @@ public class CadastrarProdutoController extends ControllerLogged
 
     public void cadastrarProdutoBD(ActionEvent action)
     {
+        String nomeDoProduto = this.nomeDoProduto.getText();
+        String linkDoProduto = this.linkDoProduto.getText();
+        String valorArrecadado = this.valorArrecadado.getText();
+        String valorDoProduto = this.valorDoProduto.getText();
+        String valorDoFrete = this.valorDoFrete.getText();
 
+        for (Text especificacao : this.especificacoesText) 
+        {
+            int indexOf = especificacao.getText().lastIndexOf(":");
+
+            String nomeEspecificacao = especificacao.getText().substring(0, indexOf - 1);
+            String valorEspecificacao = especificacao.getText().substring(indexOf + 2, especificacao.getText().length());
+
+            Especificacao novaEspecificacao = new Especificacao(nomeEspecificacao, valorEspecificacao);
+
+            this.especificacoes.add(novaEspecificacao);
+        }
+
+        for (Text tag : this.tagsText) 
+        {
+            Tag novaTag = new Tag(tag.getText());
+
+            this.tags.add(novaTag);
+        }
+
+        String categoria = this.categoriasSplitDown.getText();
+
+        String cor = this.cor.getText();
+        String tamanho = this.tamanho.getText();
+        String material = this.material.getText();
+        String altura = this.altura.getText();
+        String largura = this.largura.getText();
+        String comprimento = this.comprimento.getText();
+        String autor = this.autor.getText();
+        String genero = this.genero.getText();
+
+        String descricao = this.descricao.getText();
+        
+        String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
+
+        /* 
+         * TODO: luis
+         */
+        // Criar produto
     }
 
-    public void adicionarCategoriaLista(ActionEvent action)
+    public void adicionarCategoriaLista(MouseEvent mouse)
     {
+        /* 
+         * TODO: luis
+         */
+        /* Puxar categorias do banco de dados e botar nesse array */
+        ArrayList<String> categoriasLista = new ArrayList<String>();
 
+        this.categoriasSplitDown.getItems().clear();
+
+        for (String categoria : categoriasLista)
+        {
+            MenuItem novaCategoria = new MenuItem(categoria);
+
+            this.categoriasSplitDown.getItems().add(novaCategoria);
+        }
+    }
+
+    public void filtrarCamposPorCategoria(ActionEvent action)
+    {
+        String categoriaProduto = this.categoriasSplitDown.getText();
+
+        this.cor.setOpacity(0.5);
+        this.cor.setDisable(true);
+
+        this.tamanho.setOpacity(0.5);
+        this.tamanho.setDisable(true);
+
+        this.material.setOpacity(0.5);
+        this.material.setDisable(true);
+
+        this.altura.setOpacity(0.5);
+        this.altura.setDisable(true);
+
+        this.largura.setOpacity(0.5);
+        this.largura.setDisable(true);
+
+        this.comprimento.setOpacity(0.5);
+        this.comprimento.setDisable(true);
+
+        this.autor.setOpacity(0.5);
+        this.autor.setDisable(true);
+
+        this.genero.setOpacity(0.5);
+        this.genero.setDisable(true);
+
+        if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
+        {
+            this.autor.setOpacity(1);
+            this.autor.setDisable(false);
+
+            this.genero.setOpacity(1);
+            this.genero.setDisable(false);
+        }
+        else if (categoriaProduto == Produto.Categorias.ROUPA.getCategoria() || categoriaProduto == Produto.Categorias.ACESSORIO.getCategoria() || categoriaProduto == Produto.Categorias.CALCADO.getCategoria())
+        {
+            this.cor.setOpacity(1);
+            this.cor.setDisable(false);
+
+            this.tamanho.setOpacity(1);
+            this.tamanho.setDisable(false);
+
+            this.material.setOpacity(1);
+            this.material.setDisable(false);
+        }
+        else if (categoriaProduto == Produto.Categorias.ELETRONICO.getCategoria() || categoriaProduto == Produto.Categorias.ELETRODOMESTICO.getCategoria())
+        {
+            this.cor.setOpacity(1);
+            this.cor.setDisable(false);
+
+            this.material.setOpacity(1);
+            this.material.setDisable(false);
+        }
+        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria())
+        {
+            this.cor.setOpacity(0.5);
+            this.cor.setDisable(true);
+
+            this.tamanho.setOpacity(0.5);
+            this.tamanho.setDisable(true);
+
+            this.material.setOpacity(0.5);
+            this.material.setDisable(true);
+
+            this.altura.setOpacity(0.5);
+            this.altura.setDisable(true);
+
+            this.largura.setOpacity(0.5);
+            this.largura.setDisable(true);
+
+            this.comprimento.setOpacity(0.5);
+            this.comprimento.setDisable(true);
+        }
+    }
+
+    private void excluirFotoDoProduto()
+    {
+        int lastIndexOf = this.fotoProdutoImg.getImage().getUrl().lastIndexOf("/");
+        String nomeDoArquivo = this.fotoProdutoImg.getImage().getUrl().substring(lastIndexOf + 1, this.fotoProdutoImg.getImage().getUrl().length());
+
+        Path caminhoArquivo = Paths.get("src/img/users/" + nomeDoArquivo);
+
+        try
+        {
+            Files.delete(caminhoArquivo);
+        }
+        catch (IOException e)
+        {
+
+        }
     }
 
     /* 
@@ -355,11 +514,11 @@ public class CadastrarProdutoController extends ControllerLogged
      * 
      */
 
-    ArrayList<Tag> tags;
-    ArrayList<Especificacao> especificacoes;
+    private ArrayList<Tag> tags;
+    private ArrayList<Especificacao> especificacoes;
 
-    ArrayList<Text> especificacoesText;
-    ArrayList<Text> tagsText;
+    private ArrayList<Text> especificacoesText;
+    private ArrayList<Text> tagsText;
 
-    ArrayList<MenuItem> categoriasMenuItens;
+    private boolean adicionouFotoProduto;
 }

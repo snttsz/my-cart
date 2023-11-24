@@ -16,7 +16,7 @@ public class TesteSistema
 
         // Usuario newUsuario = new Usuario("Kalvin", "kalvin123", "123", "kalvin123@gmail.com");
         // usuariosDAO.insert(newUsuario);
-
+        
         ArrayList<Usuario> allUsuarios = usuariosDAO.selectAll();
         System.out.println("---- TODOS OS USUARIOS ----");
         allUsuarios.forEach(usuario -> {

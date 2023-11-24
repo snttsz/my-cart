@@ -143,7 +143,7 @@ public class CadastrarUsuarioController extends Controller
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            // e.printStackTrace();
         }    
 
         String caminhoFinal = "../../img/users/" + nomeDaImagem;
@@ -161,7 +161,6 @@ public class CadastrarUsuarioController extends Controller
 
             }
         }
-
 
         /* Cadastrar a foto no banco de dados */
         this.setarFotoUsuarioNoBanco(caminhoFinal);

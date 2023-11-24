@@ -64,8 +64,16 @@ public abstract class ControllerLogged extends Controller implements Initializab
             /* Setando o título da janela com o nome do usuário */
             stage.setTitle("MyCart - " + username);
 
-            /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
+            
             // TODO: pegar só até o primeiro espaço, se n tiver espaço faz isso aq
+            if (username.contains(" "))
+            {
+                int indexOf = username.lastIndexOf(" ");
+
+                username = username.substring(0, indexOf);
+            }
+
+            /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
             if (username.length() > 13)
             {
                 username = username.substring(0, 9) + "...";

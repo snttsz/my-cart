@@ -12,12 +12,11 @@ import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Produto;
-import sistema.ProdutoAlimento;
 import sistema.ProdutoEletronico;
 import sistema.ProdutoFerramenta;
 import sistema.ProdutoLivro;
 import sistema.ProdutoMobilia;
-import sistema.ProdutoRoupa;
+import sistema.ProdutoModa;
 import sistema.Tag;
 import utils.StringManager;
 
@@ -251,20 +250,12 @@ public class ProdutoDAO extends DAO<Produto>
         String url_foto = produto.get(Produto.Coluna.URL_FOTO.getNomeColuna());
         String descricao = produto.get(Produto.Coluna.DESCRICAO.getNomeColuna());
 
-        if(categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
+        if(categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()) || categoria.equals(Produto.Categorias.ELETRODOMESTICO.getCategoria()))
         {
             ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
             valorFrete, categoria, null, null, idUsuario, idLoja);
             
             return produtoEletronico;
-        }
-        else if(categoria.equals(Produto.Categorias.ALIMENTICIO.getCategoria()))
-        {
-            ProdutoAlimento produtoAlimento = new ProdutoAlimento(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, idUsuario, idLoja);
-
-            return produtoAlimento;
-
         }
         else if(categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
         {
@@ -283,7 +274,7 @@ public class ProdutoDAO extends DAO<Produto>
             
             return produtoLivro;
         }
-        else if(categoria.equals(Produto.Categorias.MOBILIA.getCategoria()))
+        else if(categoria.equals(Produto.Categorias.MOBILIA.getCategoria()) || categoria.equals(Produto.Categorias.CASAEJARDIM.getCategoria()) || categoria.equals(Produto.Categorias.AUTOMOTIVO.getCategoria()))
         {
                 
             String material = produto.get(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()); 
@@ -298,13 +289,13 @@ public class ProdutoDAO extends DAO<Produto>
 
             return produtoMobilia;
         }
-        else if(categoria.equals(Produto.Categorias.ROUPA.getCategoria()))
+        else if(categoria.equals(Produto.Categorias.ROUPA.getCategoria()) || categoria.equals(Produto.Categorias.ACESSORIO.getCategoria()) || categoria.equals(Produto.Categorias.CALCADO.getCategoria()))
         {
-            String tamanho = produto.get(ProdutoRoupa.Coluna.TAMANHO.getNomeColuna()); 
-            String cor = produto.get(ProdutoRoupa.Coluna.COR.getNomeColuna());
-            String material = produto.get(ProdutoRoupa.Coluna.MATERIAL.getNomeColuna());
+            String tamanho = produto.get(ProdutoModa.Coluna.TAMANHO.getNomeColuna()); 
+            String cor = produto.get(ProdutoModa.Coluna.COR.getNomeColuna());
+            String material = produto.get(ProdutoModa.Coluna.MATERIAL.getNomeColuna());
 
-            ProdutoRoupa produtoRoupa = new ProdutoRoupa(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
+            ProdutoModa produtoRoupa = new ProdutoModa(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
             valorFrete, categoria, null, null, tamanho, cor, material, idUsuario, idLoja);
 
             return produtoRoupa;
