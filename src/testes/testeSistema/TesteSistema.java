@@ -20,6 +20,7 @@ public class TesteSistema
         ArrayList<Usuario> allUsuarios = usuariosDAO.selectAll();
         System.out.println("---- TODOS OS USUARIOS ----");
         allUsuarios.forEach(usuario -> {
+            // usuariosDAO.delete(usuario);
             Usuario.printarUsuario(usuario);
         });
     }

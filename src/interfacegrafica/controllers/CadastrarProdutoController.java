@@ -6,6 +6,7 @@ import sistema.Especificacao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -183,9 +184,13 @@ public class CadastrarProdutoController extends ControllerLogged
 
         String nomeDaImagem = null;
 
+        Random random = new Random();
+        int numeroIntervalo = random.nextInt(1, 3123123) + 1;
+
+        // TODO: só copiar a imagem quando o usuário clicar em cadastrar produto
         try
         {
-            nomeDaImagem = this.copiarImagem(filePath, caminhoPastaDestino, 0, "fotoProduto");
+            nomeDaImagem = this.copiarImagem(filePath, caminhoPastaDestino, 0, String.valueOf(numeroIntervalo));
         }
         catch(IOException e)
         {
@@ -194,8 +199,19 @@ public class CadastrarProdutoController extends ControllerLogged
 
         String caminhoFinal = "../../img/users/" + nomeDaImagem;
 
-        Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
-        this.fotoProdutoImg.setImage(image);
+        while(true)
+        {
+            try
+            {
+                Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                this.fotoProdutoImg.setImage(image);
+                break;
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
     }
 
     public void cadastrarProdutoBD(ActionEvent action)

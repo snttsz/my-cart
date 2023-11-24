@@ -14,7 +14,7 @@ public class RecuperarSenhaController extends ControllerBeforeLogin
 {
     public void voltarParaInicio(ActionEvent event)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0);
+        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
     }
 
     public void checarPermissaoAlterarSenha(ActionEvent event)

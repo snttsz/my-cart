@@ -71,7 +71,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
+      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onAction="#sairDaConta" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -82,7 +82,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="56.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
-      <ImageView fitHeight="112.0" fitWidth="121.0" layoutX="66.0" layoutY="376.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
+      <ImageView fx:id="fotoUsuario" fitHeight="114.0" fitWidth="162.0" layoutX="65.0" layoutY="372.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
          <image>
             <Image url="@../img/avatar.png" />
          </image>
@@ -90,11 +90,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Circle fill="#1f93ff00" layoutX="122.0" layoutY="430.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="169.0" layoutY="358.0" stroke="BLACK" strokeType="INSIDE" width="42.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="169.0" layoutY="461.0" stroke="BLACK" strokeType="INSIDE" width="42.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="25.0" layoutY="472.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="188.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="48.0" />
       <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="377.0" prefWidth="881.0">
         <content>
           <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="846.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
@@ -141,6 +137,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="44.0" layoutY="464.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="33.0" layoutX="169.0" layoutY="364.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="38.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="166.0" layoutY="459.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
    </children>
 
 </AnchorPane>

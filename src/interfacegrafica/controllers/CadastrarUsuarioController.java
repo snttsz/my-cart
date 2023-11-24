@@ -33,7 +33,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0);
+        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
     }
 
     /**
@@ -100,7 +100,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
                 this.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
     
                 /* Entrando na tela de usuário logado */
-                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", this.idUsuario);
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", this.idUsuario, root);
             }
         }
     }
@@ -115,7 +115,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml", 0);
+        this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario, root);
     }
 
     /**
@@ -161,7 +161,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
 
 
         /* Cadastrar a foto no banco de dados */
-        // this.setarFotoUsuarioNoBanco(caminhoFinal);
+        this.setarFotoUsuarioNoBanco(caminhoFinal);
     }
 
     /**

@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 
+import DAO.UsuariosDAO;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * Classe abstrata responsável por definir as implementações padrões 
@@ -34,7 +39,7 @@ public abstract class Controller
 
         filechooser.setTitle("Escolha uma foto");
         filechooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg"),
+            new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.gif"),
             new FileChooser.ExtensionFilter("Todos os Arquivos", "*.*")
         );
 
@@ -61,7 +66,7 @@ public abstract class Controller
     {
         Path origem = Paths.get(caminhoImagemOriginal);
         
-        String novoNomeArquivo = String.valueOf(idUsuario) + "_" + nomeUsuario + "_" + "userprofile" + this.obterExtensaoDoArquivo(origem.getFileName().toString());
+        String novoNomeArquivo = String.valueOf(idUsuario) + "_" + nomeUsuario + this.obterExtensaoDoArquivo(origem.getFileName().toString());
         
         Path destino = Paths.get(caminhoPastaDestino, novoNomeArquivo);
         
@@ -109,5 +114,76 @@ public abstract class Controller
 
         source.setCursor(Cursor.DEFAULT);
     }
-    
+
+    /**
+     * Função padrão para mudar a screen.
+     * 
+     * A função irá carregar um arquivo fxml e iniciar uma screen com as configurações
+     * contidas no arquivo.
+     * 
+     * @param fxmlName
+     * Nome do arquivo fxml que será carregado.
+     * 
+     * @param idUsuario
+     * ID do usuário que será direcionado para a próxima scene.
+     */
+    public void carregarNovaScene(String fxmlName, int idUsuario, Node root)
+    {
+        try 
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlName));
+            Parent novoRoot = loader.load();
+            
+            Stage stage = (Stage) root.getScene().getWindow();
+            Scene novaScene = new Scene(novoRoot);
+
+            /* Caso um usuário estiver logado */
+            if (idUsuario != 0)
+            {
+                String title = "MyCart - " + this.puxarNomeDoUsuario() + "_" + String.valueOf(idUsuario);
+                stage.setTitle(title);
+            }
+            /* Caso não haja usuário logado */
+            else
+            {
+                stage.setTitle("MyCart");
+            }
+            
+            stage.setScene(novaScene);
+            stage.show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Função para setar o nome do usuário, puxando a informação do banco 
+     * de dados.
+     * 
+     * O nome do usuário irá aparecer no título da janela e será importante
+     * para que screens posteriores tenham o acesso ao dado.
+     */
+    protected String puxarNomeDoUsuario()
+    {
+        String nome = usuariosDAO.selectById(this.idUsuario).getNome();
+
+        return nome;
+    }
+
+    /* 
+     * 
+     *      Atributos internos
+     * 
+     */
+
+    // id do usuário que está logado
+    int idUsuario;
+
+    // DAO do usuário
+    protected UsuariosDAO usuariosDAO = new UsuariosDAO();
+
+    // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
+    protected final String pathResources = "../../resources/";
 }

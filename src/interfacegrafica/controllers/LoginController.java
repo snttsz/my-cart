@@ -56,7 +56,7 @@ public class LoginController extends ControllerBeforeLogin
 
     public void recuperarSenha(ActionEvent event)
     {
-        this.carregarNovaScene("ScreenRecuperarSenha.fxml", 0);
+        this.carregarNovaScene("ScreenRecuperarSenha.fxml", 0, root);
     }
 
     /**
@@ -73,7 +73,7 @@ public class LoginController extends ControllerBeforeLogin
     @FXML
     public void cadastrarUsuario(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", 0);
+        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", 0, root);
     }
 
     public void checarDadosInseridos()
@@ -87,7 +87,7 @@ public class LoginController extends ControllerBeforeLogin
         /* O empty tem que sair */
         if (this.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
         {
-            this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario);
+            this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario, root);
         }
         else
         {

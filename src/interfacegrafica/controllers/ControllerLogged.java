@@ -2,16 +2,16 @@ package interfacegrafica.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +21,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,23 +37,53 @@ public abstract class ControllerLogged extends Controller implements Initializab
     {
         // Aguarda até que o processo de inicialização seja finalizado para executar
         // o comando.
+        // Exemplo de titulo: My Cart - NomeDoUsuario_idDoUsuario
         Platform.runLater(() -> 
         {
             Stage stage = (Stage) this.root.getScene().getWindow();
             String title = stage.getTitle();
 
-            System.out.println(title);
-
+            /* Pegando índice do "-" */
             int indiceDoHifen = title.lastIndexOf("-");
-
+            
+            /* Removendo o conteúdo antes do "-" */
             String username = title.substring(indiceDoHifen + 1).trim();
 
+            /* Se a string username contém "_" */
+            if (username.contains("_"))
+            {
+                int indexOf = username.lastIndexOf("_");
+
+                /* Seta o id do usuário com o conteúdo após o "_" */
+                this.idUsuario = Integer.valueOf(username.substring(indexOf + 1, username.length()));
+
+                /* Remove o conteúdo a partir do "_" */
+                username = username.substring(0, indexOf);
+            }
+
+            /* Setando o título da janela com o nome do usuário */
+            stage.setTitle("MyCart - " + username);
+
+            /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
+            // TODO: pegar só até o primeiro espaço, se n tiver espaço faz isso aq
             if (username.length() > 13)
             {
                 username = username.substring(0, 9) + "...";
             }
 
+            /* Setando o nome de usuário na interface */
             this.username.setText(username);
+            
+            /* 
+             * Setando a foto do usuário na interface
+             */
+
+            /* Puxando foto do banco de dados */
+            String caminhoFoto = this.usuariosDAO.selectById(this.idUsuario).getUrl_foto();
+
+            /* Mostrando foto na interface */
+            Image image = new Image(getClass().getResource(caminhoFoto).toExternalForm());
+            this.fotoUsuario.setImage(image);
         });
     }
 
@@ -202,28 +231,15 @@ public abstract class ControllerLogged extends Controller implements Initializab
         source.setCursor(Cursor.DEFAULT);
     }
 
-    protected void carregarNovaScene(String fxmlname)
-    {
-        try 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlname));
-            Parent novoRoot = loader.load();
-            
-            Stage stage = (Stage) this.root.getScene().getWindow();
-            Scene novaScene = new Scene(novoRoot);
-
-            stage.setScene(novaScene);
-            stage.show();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
-
     protected void mudarScene(String fxmlName)
     {
-        this.carregarNovaScene(fxmlName);
+        this.carregarNovaScene(fxmlName, this.idUsuario, root);
+    }
+
+    @FXML
+    protected void sairDaConta(ActionEvent action)
+    {
+        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
     }
 
     /* 
@@ -310,12 +326,9 @@ public abstract class ControllerLogged extends Controller implements Initializab
     protected Text username;
 
     /* 
-     * 
-     *      ATRIBUTOS INTERNOS
-     * 
+     *   ImageView
      */
 
-    // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
-    private final String pathResources = "../../resources/";
-
+    @FXML
+    protected ImageView fotoUsuario;
 }
