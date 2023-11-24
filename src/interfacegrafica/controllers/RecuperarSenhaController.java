@@ -10,11 +10,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import sistema.Usuario;
 
-public class RecuperarSenhaController extends ControllerBeforeLogin
+public class RecuperarSenhaController extends Controller
 {
     public void voltarParaInicio(ActionEvent event)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
+        this.carregarNovaScene("LoginScreen2.fxml", false);
     }
 
     public void checarPermissaoAlterarSenha(ActionEvent event)

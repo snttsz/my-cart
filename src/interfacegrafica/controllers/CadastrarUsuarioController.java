@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  * @author Glenda
  * 
  */
-public class CadastrarUsuarioController extends ControllerBeforeLogin
+public class CadastrarUsuarioController extends Controller
 {   
     /**
      * Função acionada quando o usuário clicar no botão "voltar".
@@ -33,7 +33,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
+        this.carregarNovaScene("LoginScreen2.fxml", false);
     }
 
     /**
@@ -97,10 +97,10 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
             {
                 /* Cadastrando usuário */
                 usuariosDAO.insert(newUsuario);
-                this.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
+                Controller.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
     
                 /* Entrando na tela de usuário logado */
-                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", this.idUsuario, root);
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true);
             }
         }
     }
@@ -115,7 +115,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario, root);
+        this.carregarNovaScene("ScreenLogged.fxml", true);
     }
 
     /**
@@ -136,7 +136,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
 
         try
         {
-            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, this.idUsuario, this.puxarNomeDoUsuario());
+            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, Controller.idUsuario, this.puxarNomeDoUsuario());
         }
         catch (IOException e)
         {
@@ -173,7 +173,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
     {
-        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(this.idUsuario), caminhoParaImagem);
+        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(Controller.idUsuario), caminhoParaImagem);
     }
 
     /* 

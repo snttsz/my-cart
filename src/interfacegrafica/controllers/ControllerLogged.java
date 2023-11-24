@@ -50,16 +50,16 @@ public abstract class ControllerLogged extends Controller implements Initializab
             String username = title.substring(indiceDoHifen + 1).trim();
 
             /* Se a string username contém "_" */
-            if (username.contains("_"))
-            {
-                int indexOf = username.lastIndexOf("_");
+            // if (username.contains("_"))
+            // {
+            //     int indexOf = username.lastIndexOf("_");
 
-                /* Seta o id do usuário com o conteúdo após o "_" */
-                this.idUsuario = Integer.valueOf(username.substring(indexOf + 1, username.length()));
+            //     /* Seta o id do usuário com o conteúdo após o "_" */
+            //     this.idUsuario = Integer.valueOf(username.substring(indexOf + 1, username.length()));
 
-                /* Remove o conteúdo a partir do "_" */
-                username = username.substring(0, indexOf);
-            }
+            //     /* Remove o conteúdo a partir do "_" */
+            //     username = username.substring(0, indexOf);
+            // }
 
             /* Setando o título da janela com o nome do usuário */
             stage.setTitle("MyCart - " + username);
@@ -79,7 +79,7 @@ public abstract class ControllerLogged extends Controller implements Initializab
              */
 
             /* Puxando foto do banco de dados */
-            String caminhoFoto = this.usuariosDAO.selectById(this.idUsuario).getUrl_foto();
+            String caminhoFoto = this.usuariosDAO.selectById(Controller.idUsuario).getUrl_foto();
 
             /* Mostrando foto na interface */
             Image image = new Image(getClass().getResource(caminhoFoto).toExternalForm());
@@ -233,13 +233,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     protected void mudarScene(String fxmlName)
     {
-        this.carregarNovaScene(fxmlName, this.idUsuario, root);
+        this.carregarNovaScene(fxmlName, true);
     }
 
     @FXML
     protected void sairDaConta(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0, root);
+        this.carregarNovaScene("LoginScreen2.fxml", false);
     }
 
     /* 

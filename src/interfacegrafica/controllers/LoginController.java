@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
  * @author Glenda
  * 
  */
-public class LoginController extends ControllerBeforeLogin
+public class LoginController extends Controller
 {
     /**
      * Função acionada quando o usuário clicar no botão "entrar"
@@ -56,7 +56,7 @@ public class LoginController extends ControllerBeforeLogin
 
     public void recuperarSenha(ActionEvent event)
     {
-        this.carregarNovaScene("ScreenRecuperarSenha.fxml", 0, root);
+        this.carregarNovaScene("ScreenRecuperarSenha.fxml", false);
     }
 
     /**
@@ -73,7 +73,7 @@ public class LoginController extends ControllerBeforeLogin
     @FXML
     public void cadastrarUsuario(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", 0, root);
+        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", false);
     }
 
     public void checarDadosInseridos()
@@ -82,12 +82,12 @@ public class LoginController extends ControllerBeforeLogin
         String password = this.password.getText();
 
         /* Verificando id do usuário, se não existir retorna 0 */
-        this.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
+        Controller.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
         
         /* O empty tem que sair */
-        if (this.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
+        if (Controller.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
         {
-            this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario, root);
+            this.carregarNovaScene("ScreenLogged.fxml", true);
         }
         else
         {

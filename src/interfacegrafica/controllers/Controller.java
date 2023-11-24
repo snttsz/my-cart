@@ -6,6 +6,7 @@ import java.nio.file.*;
 
 import DAO.UsuariosDAO;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -64,6 +65,7 @@ public abstract class Controller
      */
     public String copiarImagem(String caminhoImagemOriginal, String caminhoPastaDestino, int idUsuario, String nomeUsuario) throws IOException
     {
+        // TODO: não copiar imagem maior que 3 mb
         Path origem = Paths.get(caminhoImagemOriginal);
         
         String novoNomeArquivo = String.valueOf(idUsuario) + "_" + nomeUsuario + this.obterExtensaoDoArquivo(origem.getFileName().toString());
@@ -127,7 +129,7 @@ public abstract class Controller
      * @param idUsuario
      * ID do usuário que será direcionado para a próxima scene.
      */
-    public void carregarNovaScene(String fxmlName, int idUsuario, Node root)
+    public void carregarNovaScene(String fxmlName, boolean showUserName)
     {
         try 
         {
@@ -138,9 +140,10 @@ public abstract class Controller
             Scene novaScene = new Scene(novoRoot);
 
             /* Caso um usuário estiver logado */
-            if (idUsuario != 0)
+            if (showUserName)
             {
-                String title = "MyCart - " + this.puxarNomeDoUsuario() + "_" + String.valueOf(idUsuario);
+                // String title = "MyCart - " + this.puxarNomeDoUsuario() + "_" + String.valueOf(idUsuario);
+                String title = "MyCart - " + this.puxarNomeDoUsuario();
                 stage.setTitle(title);
             }
             /* Caso não haja usuário logado */
@@ -167,10 +170,19 @@ public abstract class Controller
      */
     protected String puxarNomeDoUsuario()
     {
-        String nome = usuariosDAO.selectById(this.idUsuario).getNome();
+        String nome = usuariosDAO.selectById(Controller.idUsuario).getNome();
 
         return nome;
     }
+
+    /* 
+     * 
+     *      FXML ENTIDADES
+     * 
+     */
+
+    @FXML
+    protected Node root;
 
     /* 
      * 
@@ -179,7 +191,7 @@ public abstract class Controller
      */
 
     // id do usuário que está logado
-    int idUsuario;
+    protected static int idUsuario;
 
     // DAO do usuário
     protected UsuariosDAO usuariosDAO = new UsuariosDAO();
