@@ -171,6 +171,21 @@ public abstract class ControllerLogged extends Controller implements Initializab
             this.setaInicio.setOpacity(0);
             this.setaLojasCadastradas.setOpacity(0);
         }
+        /* 
+         * Checa se o botão clicado foi "lojas cadastradas" para exibir 
+         * a tela de lojas cadastradas.
+         */
+        else if (botaoSource.getId() == this.lojasCadastradas.getId())
+        {
+            this.mudarScene("ScreenLojasCadastradas.fxml");
+        }
+        /* 
+         * Checa se o botão clicado foi "inicio" para exibir a tela inicial.
+         */
+        else if (botaoSource.getId() == this.inicio.getId())
+        {
+            this.mudarScene("ScreenLogged.fxml");;
+        }
     }
 
     /**
@@ -233,13 +248,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     protected void mudarScene(String fxmlName)
     {
-        this.carregarNovaScene(fxmlName, true);
+        this.carregarNovaScene(fxmlName, true, root);
     }
 
     @FXML
     protected void sairDaConta(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", false);
+        this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
     /* 
@@ -247,10 +262,6 @@ public abstract class ControllerLogged extends Controller implements Initializab
      *      FXML ENTIDADES
      * 
      */
-
-    /* 
-    *    root
-    */
 
     @FXML
     protected Node root;

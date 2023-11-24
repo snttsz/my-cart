@@ -6,7 +6,6 @@ import java.nio.file.*;
 
 import DAO.UsuariosDAO;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -129,7 +128,7 @@ public abstract class Controller
      * @param idUsuario
      * ID do usuário que será direcionado para a próxima scene.
      */
-    public void carregarNovaScene(String fxmlName, boolean showUserName)
+    public void carregarNovaScene(String fxmlName, boolean showUserName, Node root)
     {
         try 
         {
@@ -174,15 +173,6 @@ public abstract class Controller
 
         return nome;
     }
-
-    /* 
-     * 
-     *      FXML ENTIDADES
-     * 
-     */
-
-    @FXML
-    protected Node root;
 
     /* 
      * 

@@ -25,19 +25,19 @@ public class TesteSistema
         });
     }
 
-    public static void povoarBanco()
-    {
-        String scriptPath = "database/scriptPovoamento.txt";
+    // public static void povoarBanco()
+    // {
+    //     String scriptPath = "database/scriptPovoamento.txt";
 
-        ArrayList<String> instrucoes = new ArrayList<String>();
-        instrucoes = ParserArquivo.lerScriptSQL(scriptPath);
+    //     ArrayList<String> instrucoes = new ArrayList<String>();
+    //     instrucoes = ParserArquivo.lerScriptSQL(scriptPath);
         
-        for(String instrucao : instrucoes)
-        {   
-            SQLiteConnectionManager.enviarQuery(instrucao);
-        }
+    //     for(String instrucao : instrucoes)
+    //     {   
+    //         SQLiteConnectionManager.enviarQuery(instrucao);
+    //     }
 
-    }
+    // }
 
 }
 

@@ -2,6 +2,7 @@ package interfacegrafica.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,7 +15,7 @@ public class RecuperarSenhaController extends Controller
 {
     public void voltarParaInicio(ActionEvent event)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", false);
+        this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
     public void checarPermissaoAlterarSenha(ActionEvent event)
@@ -99,6 +100,9 @@ public class RecuperarSenhaController extends Controller
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
      *  Botões

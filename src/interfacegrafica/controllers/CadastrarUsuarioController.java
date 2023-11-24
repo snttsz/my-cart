@@ -3,6 +3,7 @@ package interfacegrafica.controllers;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,7 +34,7 @@ public class CadastrarUsuarioController extends Controller
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", false);
+        this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
     /**
@@ -100,7 +101,7 @@ public class CadastrarUsuarioController extends Controller
                 Controller.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
     
                 /* Entrando na tela de usuário logado */
-                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true);
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true, root);
             }
         }
     }
@@ -115,7 +116,7 @@ public class CadastrarUsuarioController extends Controller
      */
     public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml", true);
+        this.carregarNovaScene("ScreenLogged.fxml", true, root);
     }
 
     /**
@@ -181,6 +182,9 @@ public class CadastrarUsuarioController extends Controller
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
      *  Botões

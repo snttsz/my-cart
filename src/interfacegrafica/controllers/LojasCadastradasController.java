@@ -114,6 +114,9 @@ public class LojasCadastradasController extends ControllerLogged
      * 
      */
 
+    @FXML
+    protected Node root;
+
     /* 
      *    Botões
      */

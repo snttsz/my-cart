@@ -2,6 +2,7 @@ package interfacegrafica.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -56,7 +57,7 @@ public class LoginController extends Controller
 
     public void recuperarSenha(ActionEvent event)
     {
-        this.carregarNovaScene("ScreenRecuperarSenha.fxml", false);
+        this.carregarNovaScene("ScreenRecuperarSenha.fxml", false, root);
     }
 
     /**
@@ -73,7 +74,7 @@ public class LoginController extends Controller
     @FXML
     public void cadastrarUsuario(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", false);
+        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", false, root);
     }
 
     public void checarDadosInseridos()
@@ -87,7 +88,7 @@ public class LoginController extends Controller
         /* O empty tem que sair */
         if (Controller.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
         {
-            this.carregarNovaScene("ScreenLogged.fxml", true);
+            this.carregarNovaScene("ScreenLogged.fxml", true, root);
         }
         else
         {
@@ -100,6 +101,9 @@ public class LoginController extends Controller
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
     *  Text
