@@ -129,6 +129,8 @@ public class CadastrarUsuarioController extends Controller
      */
     public void cadastrarFotoUsuario(ActionEvent action)
     {
+        // TODO: mostrar erro quando a imagem não for carregada ou quando
+        // for maior do que o limite
         String filepath = this.abrirFileChooser(action);
 
         String caminhoPastaDestino = "src/img/users/";

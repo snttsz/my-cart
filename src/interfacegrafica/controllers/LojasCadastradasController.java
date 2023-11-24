@@ -85,28 +85,6 @@ public class LojasCadastradasController extends ControllerLogged
             
         }
     }
-
-    @FXML
-    @Override
-    public void botaoMenuClicked(MouseEvent mouse)
-    {
-        super.botaoMenuClicked(mouse);
-
-        Node botao = (Node) mouse.getSource();
-
-        if (botao.getId() == this.lojasCadastradas.getId())
-        {
-            this.mudarScene("ScreenLojasCadastradas.fxml");
-        }
-        else if (botao.getId() == this.categorias.getId())
-        {
-            // this.mudarSceneCategorias();
-        }
-        else if (botao.getId() == this.inicio.getId())
-        {
-            this.mudarScene("ScreenLogged.fxml");;
-        }
-    }
     
     /* 
      * 
