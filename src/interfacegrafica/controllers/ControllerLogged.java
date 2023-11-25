@@ -12,6 +12,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +22,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,26 +51,16 @@ public abstract class ControllerLogged extends Controller implements Initializab
             /* Removendo o conteúdo antes do "-" */
             String username = title.substring(indiceDoHifen + 1).trim();
 
-            /* Se a string username contém "_" */
-            // if (username.contains("_"))
-            // {
-            //     int indexOf = username.lastIndexOf("_");
-
-            //     /* Seta o id do usuário com o conteúdo após o "_" */
-            //     this.idUsuario = Integer.valueOf(username.substring(indexOf + 1, username.length()));
-
-            //     /* Remove o conteúdo a partir do "_" */
-            //     username = username.substring(0, indexOf);
-            // }
-
             /* Setando o título da janela com o nome do usuário */
             stage.setTitle("MyCart - " + username);
-
             
-            // TODO: pegar só até o primeiro espaço, se n tiver espaço faz isso aq
+            /* 
+             * Caso o nome do usuário seja composto ou haja um sobrenome,
+             * mostra apenas o primeiro nome.
+             */
             if (username.contains(" "))
             {
-                int indexOf = username.lastIndexOf(" ");
+                int indexOf = username.indexOf(" ");
 
                 username = username.substring(0, indexOf);
             }
@@ -265,6 +257,105 @@ public abstract class ControllerLogged extends Controller implements Initializab
         this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
+    @FXML
+    protected void exibirTextoTrocarFotoUsuario(MouseEvent mouse)
+    {
+        this.exibirTextoDeAjuda(this.trocarFotoUsuario, "Alterar sua foto");
+    }
+
+    @FXML
+    protected void exibirTextoTrocarNomeUsuario(MouseEvent mouse)
+    {
+        this.exibirTextoDeAjuda(this.trocarNomeUsuario, "Alterar seu nome");
+    }
+
+    @FXML
+    protected void alterarFotoUsuario(ActionEvent action)
+    {
+        String filepath = this.abrirFileChooser(action);
+
+        String caminhoPastaDestino = "src/img/users/";
+
+        String nomeDaImagem = null;
+
+        try
+        {
+            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, Controller.idUsuario, this.puxarNomeDoUsuario());
+            
+            String caminhoFinal = "../../img/users/" + nomeDaImagem;
+    
+            while(true)
+            {
+                try
+                {
+                    Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                    this.fotoUsuario.setImage(image);
+                    break;
+                }
+                catch (Exception e)
+                {
+    
+                }
+            }
+    
+            /* Cadastrar a foto no banco de dados */
+            this.setarFotoUsuarioNoBanco(caminhoFinal);
+        }
+        catch (IOException e)
+        {
+            // e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void mostrarCampoTrocarNomeUsuario()
+    {
+        this.trocarNomeUsuario.toBack();
+        
+        this.novoNomeUsuario.toFront();
+        this.novoNomeUsuario.setOpacity(1);
+        this.novoNomeUsuario.requestFocus();
+    }
+
+    @FXML
+    public void checarEnterTrocaNomeUsuario(KeyEvent key)
+    {
+        if (key.getCode() == KeyCode.ENTER)
+        {
+            this.trocarNomeUsuario.toFront();
+
+            this.novoNomeUsuario.setOpacity(0);
+            this.novoNomeUsuario.toBack();
+
+            if (!novoNomeUsuario.getText().isEmpty())
+            {
+                this.alterarNomeDoUsuarioNoBD();
+            }
+        }
+    }
+
+    @FXML
+    public void cancelarTrocaNome(MouseEvent mouse)
+    {
+        this.trocarNomeUsuario.toFront();
+
+        this.novoNomeUsuario.setOpacity(0);
+        this.novoNomeUsuario.toBack();
+    }
+
+    public void alterarNomeDoUsuarioNoBD()
+    {
+        String novoNome = this.novoNomeUsuario.getText();
+
+        /* 
+         * TODO: luis
+         * 
+         * variavel com o id do usuario: this.idUsuario
+         */
+
+        this.mudarScene("ScreenLogged.fxml");
+    }
+
     /* 
      * 
      *      FXML ENTIDADES
@@ -297,7 +388,10 @@ public abstract class ControllerLogged extends Controller implements Initializab
     protected Button trocarUsuario;
 
     @FXML
-    protected Button perfilUsuario;
+    protected Button trocarFotoUsuario;
+
+    @FXML
+    protected Button trocarNomeUsuario;
 
     /* 
      *    Input texto
@@ -305,6 +399,9 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     @FXML 
     protected TextField pesquisarField;
+
+    @FXML
+    protected TextField novoNomeUsuario;
 
     /* 
      *    Figuras geométricas

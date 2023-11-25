@@ -19,6 +19,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.InitialScreenLoggedController">
    <children>
+      <TextField fx:id="novoNomeUsuario" layoutX="50.0" layoutY="501.0" onKeyPressed="#checarEnterTrocaNomeUsuario" onMouseExited="#cancelarTrocaNome" opacity="0.0" prefHeight="33.0" prefWidth="162.0" promptText="DIgite o novo nome" />
       <SplitMenuButton fx:id="categoriasMenu" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="225.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="62.0" prefWidth="241.0" text="SplitMenuButton">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -82,7 +83,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="56.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
-      <ImageView fx:id="fotoUsuario" fitHeight="114.0" fitWidth="162.0" layoutX="65.0" layoutY="372.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
+      <ImageView fx:id="fotoUsuario" fitHeight="114.0" fitWidth="162.0" layoutX="65.0" layoutY="372.0" onMouseEntered="#exibirTextoTrocarFotoUsuario" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
          <image>
             <Image url="@../img/avatar.png" />
          </image>
@@ -142,6 +143,16 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="33.0" layoutX="169.0" layoutY="364.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="38.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="166.0" layoutY="459.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Button fx:id="trocarFotoUsuario" layoutX="66.0" layoutY="369.0" mnemonicParsing="false" onAction="#alterarFotoUsuario" onMouseEntered="#exibirTextoTrocarFotoUsuario" opacity="0.0" prefHeight="114.0" prefWidth="121.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarNomeUsuario" layoutX="61.0" layoutY="501.0" mnemonicParsing="false" onAction="#mostrarCampoTrocarNomeUsuario" onMouseEntered="#exibirTextoTrocarNomeUsuario" opacity="0.0" prefHeight="24.0" prefWidth="121.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 
 </AnchorPane>

@@ -12,8 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -64,15 +68,23 @@ public abstract class Controller
      */
     public String copiarImagem(String caminhoImagemOriginal, String caminhoPastaDestino, int idUsuario, String nomeUsuario) throws IOException
     {
-        // TODO: não copiar imagem maior que 3 mb
-        Path origem = Paths.get(caminhoImagemOriginal);
-        
-        String novoNomeArquivo = String.valueOf(idUsuario) + "_" + nomeUsuario + this.obterExtensaoDoArquivo(origem.getFileName().toString());
-        
-        Path destino = Paths.get(caminhoPastaDestino, novoNomeArquivo);
-        
-        /* copia o arquivo para a pasta de destino */
-        Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+        String novoNomeArquivo = null;
+
+        if (checarValidadeImagem(caminhoImagemOriginal))
+        {
+            Path origem = Paths.get(caminhoImagemOriginal);
+            
+            novoNomeArquivo = String.valueOf(idUsuario) + "_" + nomeUsuario + this.obterExtensaoDoArquivo(origem.getFileName().toString());
+            
+            Path destino = Paths.get(caminhoPastaDestino, novoNomeArquivo);
+            
+            /* copia o arquivo para a pasta de destino */
+            Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+        }
+        else
+        {
+            throw new IOException("Imagem maior que 4MB.");
+        }
 
         return novoNomeArquivo;
     }
@@ -174,6 +186,81 @@ public abstract class Controller
         return nome;
     }
 
+    /**
+     * Função padrão mostrar uma janela de erro.
+     * 
+     * A função irá abrir uma nova janela mostrando uma mensagem de erro para o usuário.
+     * 
+     * @param mensagem
+     * Mensagem de erro que será mostrada.
+     */
+    protected void abrirErroStage(String mensagem)
+    {
+        Stage erroStage = new Stage();
+
+        erroStage.initModality(Modality.APPLICATION_MODAL);
+        erroStage.setTitle("Erro");
+
+        StackPane erroLayout = new StackPane();
+        erroLayout.getChildren().add(new Label(mensagem));
+
+        Scene erroScene = new Scene(erroLayout, 500, 100);
+        erroStage.setScene(erroScene);
+
+        erroStage.showAndWait();
+    }   
+
+    /**
+     * Função para checar se o tamanho da imagem compreende o limite máximo.
+     * 
+     * @param caminhoDaImagem
+     * Caminho para a imagem em questão.
+     */
+    protected boolean checarValidadeImagem(String caminhoDaImagem)
+    {
+        boolean result = true;
+
+        try
+        {
+            Path source = Path.of(caminhoDaImagem);
+    
+            long tamanhoEmBytes = Files.size(source);
+            long tamanhoEmMB = tamanhoEmBytes / (long) (Math.pow(2, 20));
+
+            if (tamanhoEmMB > this.maxTamanhoImagemMB)
+            {
+                this.abrirErroStage("O tamanho da imagem não deve ser maior que 4MB!");
+                
+                result = false;
+            }
+        }
+        catch (IOException e)
+        {
+            // e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void exibirTextoDeAjuda(Button source, String texto)
+    {
+        Tooltip tooltip = new Tooltip(texto);
+
+        Tooltip.install(source, tooltip);
+    }
+
+    /**
+     * Função para cadastrar o caminho para a foto de perfil do usuário
+     * no banco de dados.
+     * 
+     * @param caminhoParaImagem
+     * Caminho relativo para a imagem de perfil do usuário.
+     */
+    public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
+    {
+        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(Controller.idUsuario), caminhoParaImagem);
+    }
+
     /* 
      * 
      *      Atributos internos
@@ -188,4 +275,7 @@ public abstract class Controller
 
     // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
     protected final String pathResources = "../../resources/";
+
+    // Constante com o tamanho máximo em MB que uma imagem pode conter
+    protected final int maxTamanhoImagemMB = 4;
 }

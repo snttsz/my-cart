@@ -5,13 +5,16 @@ import sistema.Especificacao;
 import sistema.Produto;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -27,8 +30,30 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+/**
+ * Classe responsável por definir as implementações para cadastrar um novo produto.
+ * 
+ * @author Glenda
+ */
 public class CadastrarProdutoController extends ControllerLogged
-{
+{   
+    /**
+     * Override do método padrão de inicialização da classe Controller do javafx.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) 
+    {
+        super.initialize(location, resources);
+
+        Platform.runLater(() -> 
+        {
+            this.puxarCategorias();
+        });
+    }
+
+    /**
+     * Construtor padrão da classe.
+     */
     public CadastrarProdutoController()
     {
         this.tags = new ArrayList<Tag>();
@@ -37,50 +62,96 @@ public class CadastrarProdutoController extends ControllerLogged
         this.tagsText = new ArrayList<Text>();
         this.especificacoesText = new ArrayList<Text>();
     }
+    
 
+    /**
+     * Função para adicionar uma tag no bloco de texto onde as tags estão sendo
+     * exibidas e no array de tags que posteriormente será adicionado ao objeto
+     * Produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void adicionarTagNoCampo(ActionEvent action)
     {
         /* Adicionando a tag no array de texto */
         Text tag = new Text(this.adicionarTagCampo.getText());
 
-        // checar se o nome já existe
-        this.tagsText.add(tag);
-
-        if (this.tagsText.size() > 7)
+        if (!verificarSeTagJaExiste(this.adicionarTagCampo.getText()))
         {
-            this.aumentarPainelEspecificacao();
+            this.tagsText.add(tag);
+    
+            if (this.tagsText.size() > 7)
+            {
+                this.aumentarPainelEspecificacao();
+            }
+    
+            /* Mostrando a especificação na tela de adicionar produtos, para que
+             * fique visível ao usuário
+             */
+    
+            tag.setText(tag.getText() + "\n");
+            this.textFlowTag.getChildren().add(tag);
+
+            this.adicionarTagCampo.clear();
         }
-
-        /* Mostrando a especificação na tela de adicionar produtos, para que
-         * fique visível ao usuário
-         */
-
-        tag.setText(tag.getText() + "\n");
-        this.textFlowTag.getChildren().add(tag);
+        else
+        {
+            this.abrirErroStage("Tag já cadastrada no produto!");
+        }
     }
 
+    /**
+     * Função para adicionar uma especificação no bloco de texto onde as especificações 
+     * estão sendo exibidas e no array de especificações que posteriormente será 
+     * adicionado ao objeto Produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void adicionarEspecificacaoNoCampo(ActionEvent action)
     {
         /* Adicionando a especificação no array de texto */
         Text especificacao = new Text(this.especificacaoNome.getText() + " : " + this.especificacaoValor.getText());
-
-        // TODO: checar se o nome já existe
-        this.especificacoesText.add(especificacao);
-
-        if (this.especificacoesText.size() > 7)
+        
+        /* Checa se o nome da especificação já existe no produto antes de adicioná-la */
+        if (!verificarSeEspecificacaoJaExiste(this.especificacaoNome.getText()))
         {
-            this.aumentarPainelEspecificacao();
+            this.especificacoesText.add(especificacao);
+    
+            if (this.especificacoesText.size() > 7)
+            {
+                this.aumentarPainelEspecificacao();
+            }
+    
+            /* 
+            * Mostrando a especificação na tela de adicionar produtos, para que
+            * fique visível ao usuário
+            */
+    
+            especificacao.setText(especificacao.getText() + "\n");
+            this.textFlowEspecificacao.getChildren().add(especificacao);
+
+            this.especificacaoNome.clear();
+            this.especificacaoValor.clear();
         }
-
-        /* 
-         * Mostrando a especificação na tela de adicionar produtos, para que
-         * fique visível ao usuário
-         */
-
-        especificacao.setText(especificacao.getText() + "\n");
-        this.textFlowEspecificacao.getChildren().add(especificacao);
+        else
+        {
+            this.abrirErroStage("Especificação já cadastrada no produto!");
+        }
     }
     
+    /**
+     * Função para excluir uma tag no bloco de texto onde as tags estão sendo
+     * exibidas e no array de tags que posteriormente será adicionado ao objeto
+     * Produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void excluirTag(ActionEvent action)
     {
         String nomeTag = this.removerTagCampo.getText();
@@ -114,8 +185,65 @@ public class CadastrarProdutoController extends ControllerLogged
                 }
             }
         }
+
+        this.removerTagCampo.clear();
     }
 
+    /**
+     * Função verificar se uma especificação ja existe no bloco de especificações
+     * do produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    public boolean verificarSeEspecificacaoJaExiste(String novaEspecificacaoNome)
+    {
+        boolean result = false;
+
+        for (Text especificacaoText : this.especificacoesText)
+        {
+            if (especificacaoText.getText().contains(novaEspecificacaoNome))
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Função verificar se uma tag ja existe no bloco de tags
+     * do produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    public boolean verificarSeTagJaExiste(String novaTagNome)
+    {
+        boolean result = false;
+
+        for (Text tagText : this.tagsText)
+        {
+            if (tagText.getText().contains(novaTagNome))
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Função para excluir uma especificação no bloco de texto onde as espeficiações estão sendo
+     * exibidas e no array de especificações que posteriormente será adicionado ao objeto
+     * Produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void excluirEspecificacao(ActionEvent action)
     {
         String nomeEspecificacao = this.removerEspecificacaoCampo.getText();
@@ -149,9 +277,21 @@ public class CadastrarProdutoController extends ControllerLogged
                 }
             }
         }
+
+        this.removerEspecificacaoCampo.clear();
     }
 
-    @Override
+    /**
+     * Override da função da superclasse. Executa a função da superclasse e checa
+     * se o usuário adicionou uma foto ao produto. Se sim e um botão do menu foi clicado,
+     * significa que o usuário cancelou o cadastro do produto. A função irá chamar um método
+     * para excluir a foto cadastrada pelo usuário.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @Override    
     public void botaoMenuClicked(MouseEvent mouse)
     {
         super.botaoMenuClicked(mouse);
@@ -163,16 +303,30 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Aumenta o painel de exibição de especificações.
+     */
     public void aumentarPainelEspecificacao()
     {
         this.anchorEspecificacao.setPrefHeight(this.anchorEspecificacao.getHeight() + 5);
     }
 
+    /**
+     * Aumenta o painel de exibição de tags.
+     */
     public void aumentarPainelTag()
     {
         this.anchorTag.setPrefHeight(this.anchorTag.getHeight() + 5);
     }
 
+    /**
+     * Cancela o cadastro do produto e checa se o usuário adicionou uma foto ao produto. A 
+     * função irá chamar um método para excluir a foto cadastrada pelo usuário.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void voltarParaOInicio(ActionEvent action)
     {
         this.mudarScene("ScreenLogged.fxml");
@@ -184,6 +338,13 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para cadastrar uma foto para o produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void cadastrarFotoProduto(ActionEvent action)
     {
         String filePath = this.abrirFileChooser(action);
@@ -192,6 +353,7 @@ public class CadastrarProdutoController extends ControllerLogged
 
         String nomeDaImagem = null;
 
+        /* Gerando número random para que a imagem não seja repetida */
         Random random = new Random();
         int numeroIntervalo = random.nextInt(1, 3123123) + 1;
 
@@ -199,31 +361,38 @@ public class CadastrarProdutoController extends ControllerLogged
         {
             nomeDaImagem = this.copiarImagem(filePath, caminhoPastaDestino, Controller.idUsuario, String.valueOf(numeroIntervalo));
             this.adicionouFotoProduto = true;
+
+            String caminhoFinal = "../../img/users/" + nomeDaImagem;
+            
+            // Esperando o sistema terminar o processo de I/O
+            while(true)
+            {
+                try
+                {
+                    Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                    this.fotoProdutoImg.setImage(image);
+                    break;
+                }
+                catch (Exception e)
+                {
+    
+                }
+            }
         }
         catch(IOException e)
         {
-            //TODO: aparecer erro na tela quando der exception
-            e.printStackTrace();
-        }
-
-
-        String caminhoFinal = "../../img/users/" + nomeDaImagem;
-
-        while(true)
-        {
-            try
-            {
-                Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
-                this.fotoProdutoImg.setImage(image);
-                break;
-            }
-            catch (Exception e)
-            {
-
-            }
+            // e.printStackTrace();
         }
     }
 
+    /**
+     * Função para cadastrar o produto final no banco de dados, após todos
+     * os campos serem devidamente preenchidos.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void cadastrarProdutoBD(ActionEvent action)
     {
         String nomeDoProduto = this.nomeDoProduto.getText();
@@ -269,10 +438,13 @@ public class CadastrarProdutoController extends ControllerLogged
         /* 
          * TODO: luis
          */
-        // Criar produto
+        // Criar produto e mandar pro banco de dados
     }
 
-    public void adicionarCategoriaLista(MouseEvent mouse)
+    /**
+     * Função para puxar as categorias cadastradas no banco de dados.
+     */
+    public void puxarCategorias()
     {
         /* 
          * TODO: luis
@@ -290,6 +462,13 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Habilitar/Desabilitar campos a depender da categoria do produto em questão.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void filtrarCamposPorCategoria(ActionEvent action)
     {
         String categoriaProduto = this.categoriasSplitDown.getText();
@@ -367,6 +546,9 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para excluir uma foto salva de um produto.
+     */
     private void excluirFotoDoProduto()
     {
         int lastIndexOf = this.fotoProdutoImg.getImage().getUrl().lastIndexOf("/");
@@ -470,9 +652,6 @@ public class CadastrarProdutoController extends ControllerLogged
 
     @FXML
     private Button removerTag;   
-
-    @FXML
-    private Button adicionarCategoria;   
     
     /* 
      *  Panes

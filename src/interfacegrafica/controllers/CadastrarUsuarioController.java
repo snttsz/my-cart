@@ -129,8 +129,6 @@ public class CadastrarUsuarioController extends Controller
      */
     public void cadastrarFotoUsuario(ActionEvent action)
     {
-        // TODO: mostrar erro quando a imagem não for carregada ou quando
-        // for maior do que o limite
         String filepath = this.abrirFileChooser(action);
 
         String caminhoPastaDestino = "src/img/users/";
@@ -140,42 +138,31 @@ public class CadastrarUsuarioController extends Controller
         try
         {
             nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, Controller.idUsuario, this.puxarNomeDoUsuario());
+            
+            String caminhoFinal = "../../img/users/" + nomeDaImagem;
+    
+            while(true)
+            {
+                try
+                {
+                    Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                    this.fotoUsuario.setImage(image);
+                    break;
+                }
+                catch (Exception e)
+                {
+    
+                }
+            }
+    
+            /* Cadastrar a foto no banco de dados */
+            this.setarFotoUsuarioNoBanco(caminhoFinal);
         }
         catch (IOException e)
         {
             // e.printStackTrace();
         }    
 
-        String caminhoFinal = "../../img/users/" + nomeDaImagem;
-
-        while(true)
-        {
-            try
-            {
-                Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
-                this.fotoUsuario.setImage(image);
-                break;
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-        /* Cadastrar a foto no banco de dados */
-        this.setarFotoUsuarioNoBanco(caminhoFinal);
-    }
-
-    /**
-     * Função para cadastrar o caminho para a foto de perfil do usuário
-     * no banco de dados.
-     * 
-     * @param caminhoParaImagem
-     * Caminho relativo para a imagem de perfil do usuário.
-     */
-    public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
-    {
-        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(Controller.idUsuario), caminhoParaImagem);
     }
 
     /* 
@@ -242,5 +229,4 @@ public class CadastrarUsuarioController extends Controller
 
     @FXML
     private ImageView fotoUsuario;
-
 }
