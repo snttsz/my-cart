@@ -82,7 +82,7 @@ public class LojasCadastradasController extends ControllerLogged
         }   
         else if (source.getId() == adicionarLoja.getId())
         {
-            
+            this.mudarScene("ScreenCadastrarLoja.fxml");
         }
     }
     

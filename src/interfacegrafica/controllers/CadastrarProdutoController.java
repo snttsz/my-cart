@@ -27,6 +27,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -435,10 +437,21 @@ public class CadastrarProdutoController extends ControllerLogged
         
         String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
 
-        /* 
-         * TODO: luis
-         */
-        // Criar produto e mandar pro banco de dados
+        String lojaDoProduto = this.adicionarNaLojaCampo.getText();
+
+        boolean canCreateProduct = this.checarCamposObrigatorios();
+
+        if (canCreateProduct)
+        {
+            /* 
+             * TODO: luis
+             */
+            // Criar produto e mandar pro banco de dados
+        }
+        else
+        {
+            this.abrirErroStage("Preencha os campos obrigatórios e tente novamente! \nCaso adicionar uma loja, não esqueça de verificá-la!");
+        }
     }
 
     /**
@@ -545,6 +558,33 @@ public class CadastrarProdutoController extends ControllerLogged
             this.comprimento.setDisable(true);
         }
     }
+    
+    /**
+     * Função para checar se todos os campos obrigatórios estão preenchidos.
+     */
+    public boolean checarCamposObrigatorios()
+    {
+        boolean result = true;
+
+        if (this.nomeDoProduto.getText().isEmpty())
+        {
+            result = false;
+        }
+
+        if (this.categoriasSplitDown.getText().equals("Selecione uma categoria"))
+        {
+            result = false;
+        }
+
+        Color corDoRetangulo = (Color) this.retanguloResultadoLoja.getFill();
+
+        if (!this.adicionarNaLojaCampo.getText().isEmpty() && corDoRetangulo != Color.GREEN)
+        {
+            result = false;
+        }
+
+        return result;
+    }
 
     /**
      * Função para excluir uma foto salva de um produto.
@@ -554,15 +594,39 @@ public class CadastrarProdutoController extends ControllerLogged
         int lastIndexOf = this.fotoProdutoImg.getImage().getUrl().lastIndexOf("/");
         String nomeDoArquivo = this.fotoProdutoImg.getImage().getUrl().substring(lastIndexOf + 1, this.fotoProdutoImg.getImage().getUrl().length());
 
-        Path caminhoArquivo = Paths.get("src/img/users/" + nomeDoArquivo);
+        this.excluirImagem(nomeDoArquivo);
+    }
 
-        try
-        {
-            Files.delete(caminhoArquivo);
-        }
-        catch (IOException e)
-        {
+    /**
+     * Verificar se a loja existe no banco de dados.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    public void verificarSeLojaExiste(ActionEvent action)
+    {
+        String nomeDaLoja = this.adicionarNaLojaCampo.getText();
 
+        /* 
+         * TODO: luis
+         */
+        // verificar se a loja já existe no banco de dados e setar
+        // a variável abaixo
+        // se a loja for cadastrada, retorna true, senão retorna false
+
+        boolean result = true;
+
+        if (result)
+        {
+            this.retanguloResultadoLoja.setFill(Color.GREEN);
+            this.textoResultadoLoja.setText("Encontramos a loja " + nomeDaLoja + "!");
+        }   
+        else
+        {
+            this.retanguloResultadoLoja.setFill(Color.RED);
+            this.textoResultadoLoja.setText("A loja que você está procurando ainda não foi cadastrada por você :(");
         }
     }
 
@@ -637,6 +701,9 @@ public class CadastrarProdutoController extends ControllerLogged
     @FXML
     private TextField removerTagCampo;
 
+    @FXML
+    private TextField adicionarNaLojaCampo;
+
     /* 
      *  Botões
      */
@@ -652,6 +719,9 @@ public class CadastrarProdutoController extends ControllerLogged
 
     @FXML
     private Button removerTag;   
+
+    @FXML
+    private Button adicionarProdutoNaLoja;
     
     /* 
      *  Panes
@@ -673,6 +743,9 @@ public class CadastrarProdutoController extends ControllerLogged
     @FXML 
     private TextFlow textFlowTag;
 
+    @FXML
+    private Text textoResultadoLoja;
+
     /* 
      *  SplitDownButton
      */
@@ -686,6 +759,13 @@ public class CadastrarProdutoController extends ControllerLogged
 
     @FXML 
     private ImageView fotoProdutoImg;
+
+    /* 
+     *  Figuras geométricas
+     */
+
+    @FXML
+    private Rectangle retanguloResultadoLoja;
 
     /* 
      * 

@@ -54,22 +54,7 @@ public abstract class ControllerLogged extends Controller implements Initializab
             /* Setando o título da janela com o nome do usuário */
             stage.setTitle("MyCart - " + username);
             
-            /* 
-             * Caso o nome do usuário seja composto ou haja um sobrenome,
-             * mostra apenas o primeiro nome.
-             */
-            if (username.contains(" "))
-            {
-                int indexOf = username.indexOf(" ");
-
-                username = username.substring(0, indexOf);
-            }
-
-            /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
-            if (username.length() > 13)
-            {
-                username = username.substring(0, 9) + "...";
-            }
+            username = this.tratarNomeDoUsuario(username);
 
             /* Setando o nome de usuário na interface */
             this.username.setText(username);
@@ -230,6 +215,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
         }
     }
 
+    /**
+     * Função para mudar o cursor do mouse para a "mãozinha"
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cursorOn(MouseEvent mouse)
     {
@@ -238,6 +230,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
         source.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Função para mudar o cursor do mouse para default
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cursorNormal(MouseEvent mouse)
     {
@@ -246,33 +245,84 @@ public abstract class ControllerLogged extends Controller implements Initializab
         source.setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Função para mudar a scene da janela.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     protected void mudarScene(String fxmlName)
     {
         this.carregarNovaScene(fxmlName, true, root);
     }
 
+    /**
+     * Função acionada quando o usuário clica no botão para sair da conta.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     protected void sairDaConta(ActionEvent action)
     {
         this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
+    /**
+     * Função acionada quando o usuário move o mouse pelo Node onde está
+     * a foto de perfil.
+     * 
+     * A função exibirá um texto abaixo do cursor indicando que ao clicar no local,
+     * sera possível modificar a foto de perfil.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     protected void exibirTextoTrocarFotoUsuario(MouseEvent mouse)
     {
         this.exibirTextoDeAjuda(this.trocarFotoUsuario, "Alterar sua foto");
     }
 
+    /**
+     * Função acionada quando o usuário move o mouse pelo Node onde está
+     * o nome de usuário.
+     * 
+     * A função exibirá um texto abaixo do cursor indicando que ao clicar no local,
+     * sera possível modificar seu nome.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     protected void exibirTextoTrocarNomeUsuario(MouseEvent mouse)
     {
         this.exibirTextoDeAjuda(this.trocarNomeUsuario, "Alterar seu nome");
     }
 
+    /**
+     * Função acionada quando o usuário clica em sua foto de perfil.
+     * 
+     * A função irá abrir o explorador de arquivos para que o usuário
+     * escolha uma nova imagem de perfil.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     protected void alterarFotoUsuario(ActionEvent action)
     {
         String filepath = this.abrirFileChooser(action);
+
+        if (filepath == null)
+        {
+            return;
+        }
 
         String caminhoPastaDestino = "src/img/users/";
 
@@ -307,8 +357,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
         }
     }
 
+    /**
+     * Função acionada quando o usuário clica no prórpio nome na área
+     * de perfil do usuário.
+     * 
+     */
     @FXML
-    public void mostrarCampoTrocarNomeUsuario()
+    protected void mostrarCampoTrocarNomeUsuario()
     {
         this.trocarNomeUsuario.toBack();
         
@@ -317,8 +372,20 @@ public abstract class ControllerLogged extends Controller implements Initializab
         this.novoNomeUsuario.requestFocus();
     }
 
+    /**
+     * Função acionada quando o usuário digita algo com o textfield trocarNomeUsuario
+     * em foco. 
+     * 
+     * A função verifica se a tecla pressionada é enter para confirmar que o usuário
+     * terminou de inserir o novo nome e chama os métodos corretos para fazer as alterações
+     * no banco de dados.
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
-    public void checarEnterTrocaNomeUsuario(KeyEvent key)
+    protected void checarEnterTrocaNomeUsuario(KeyEvent key)
     {
         if (key.getCode() == KeyCode.ENTER)
         {
@@ -332,10 +399,18 @@ public abstract class ControllerLogged extends Controller implements Initializab
                 this.alterarNomeDoUsuarioNoBD();
             }
         }
-    }
+    }   
 
+    /**
+     * Função acionada quando o usuário move o mouse para fora do textfield
+     * para definir um novo nome de usuário
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
-    public void cancelarTrocaNome(MouseEvent mouse)
+    protected void cancelarTrocaNome(MouseEvent mouse)
     {
         this.trocarNomeUsuario.toFront();
 
@@ -343,7 +418,10 @@ public abstract class ControllerLogged extends Controller implements Initializab
         this.novoNomeUsuario.toBack();
     }
 
-    public void alterarNomeDoUsuarioNoBD()
+    /**
+     * Função para alterar o nome do usuário no banco de dados.
+     */
+    protected void alterarNomeDoUsuarioNoBD()
     {
         String novoNome = this.novoNomeUsuario.getText();
 
@@ -353,7 +431,41 @@ public abstract class ControllerLogged extends Controller implements Initializab
          * variavel com o id do usuario: this.idUsuario
          */
 
-        this.mudarScene("ScreenLogged.fxml");
+        novoNome = this.tratarNomeDoUsuario(novoNome);
+        
+        this.username.setText(novoNome);
+    }
+
+    /**
+     * Função para implementar as definições corretas no nome do usuário
+     * para exibi-lo na tela de perfil.
+     * 
+     * @param username
+     * Nome do usuário
+     * 
+     * @return
+     * String com o nome do usuário tratado corretamente.
+     */
+    protected String tratarNomeDoUsuario(String username)
+    {
+        /* 
+        * Caso o nome do usuário seja composto ou haja um sobrenome,
+        * mostra apenas o primeiro nome.
+        */
+        if (username.contains(" "))
+        {
+            int indexOf = username.indexOf(" ");
+
+            username = username.substring(0, indexOf);
+        }
+
+        /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
+        if (username.length() > 13)
+        {
+            username = username.substring(0, 9) + "...";
+        }
+
+        return username;
     }
 
     /* 

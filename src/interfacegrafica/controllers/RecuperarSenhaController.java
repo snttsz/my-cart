@@ -25,13 +25,8 @@ public class RecuperarSenhaController extends Controller
         
         /* Verificando se o nome e login do usuário coincidem com algum usuário no banco */
         this.usuarioParaRecuperar = this.usuariosDAO.recuperarUsuario(usuario, nome);
-        boolean result = false;
-        if (this.usuarioParaRecuperar != null) 
-        {
-            result = true;
-        }
 
-        if (result)
+        if (this.usuarioParaRecuperar != null)
         {
             this.retanguloResultado.setFill(Color.GREEN);
             this.textoResultado.setText("Os dados inseridos são válidos! Você poderá alterar sua senha abaixo:");

@@ -137,8 +137,8 @@ public abstract class Controller
      * @param fxmlName
      * Nome do arquivo fxml que será carregado.
      * 
-     * @param idUsuario
-     * ID do usuário que será direcionado para a próxima scene.
+     * @param showUserName
+     * Parâmetro que define se o nome do usuário deve ser exibido no título da janela
      */
     public void carregarNovaScene(String fxmlName, boolean showUserName, Node root)
     {
@@ -179,7 +179,7 @@ public abstract class Controller
      * O nome do usuário irá aparecer no título da janela e será importante
      * para que screens posteriores tenham o acesso ao dado.
      */
-    protected String puxarNomeDoUsuario()
+    public String puxarNomeDoUsuario()
     {
         String nome = usuariosDAO.selectById(Controller.idUsuario).getNome();
 
@@ -194,7 +194,7 @@ public abstract class Controller
      * @param mensagem
      * Mensagem de erro que será mostrada.
      */
-    protected void abrirErroStage(String mensagem)
+    public void abrirErroStage(String mensagem)
     {
         Stage erroStage = new Stage();
 
@@ -216,7 +216,7 @@ public abstract class Controller
      * @param caminhoDaImagem
      * Caminho para a imagem em questão.
      */
-    protected boolean checarValidadeImagem(String caminhoDaImagem)
+    public boolean checarValidadeImagem(String caminhoDaImagem)
     {
         boolean result = true;
 
@@ -259,6 +259,20 @@ public abstract class Controller
     public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
     {
         usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(Controller.idUsuario), caminhoParaImagem);
+    }
+
+    protected void excluirImagem(String nomeDoArquivo)
+    {
+        Path caminhoArquivo = Paths.get("src/img/users/" + nomeDoArquivo);
+
+        try
+        {
+            Files.delete(caminhoArquivo);
+        }
+        catch (IOException e)
+        {
+
+        }
     }
 
     /* 

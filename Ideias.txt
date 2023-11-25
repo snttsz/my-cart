@@ -14,6 +14,10 @@
     -> Deixar algumas lojas pré-cadastradas. Tipo: shein, aliexpress e exibir uma miniatura da logo da loja
     por cima da foto do produto quando for exibido na tela
 
+    -> Colocar um texto embaixo do mouse no botão de sair
+
+    -> Colocar um * nos campos obrigatórios
+
 
 -> Ideias para o sistema:
 

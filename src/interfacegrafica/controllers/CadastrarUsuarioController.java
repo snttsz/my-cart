@@ -131,6 +131,11 @@ public class CadastrarUsuarioController extends Controller
     {
         String filepath = this.abrirFileChooser(action);
 
+        if (filepath == null)
+        {
+            return;
+        }
+
         String caminhoPastaDestino = "src/img/users/";
 
         String nomeDaImagem = null;

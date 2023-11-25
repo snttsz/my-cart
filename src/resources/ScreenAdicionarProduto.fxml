@@ -21,6 +21,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.CadastrarProdutoController">
    <children>
+      <TextField fx:id="novoNomeUsuario" layoutX="50.0" layoutY="501.0" onKeyPressed="#checarEnterTrocaNomeUsuario" onMouseExited="#cancelarTrocaNome" opacity="0.0" prefHeight="33.0" prefWidth="162.0" promptText="DIgite o novo nome" />
       <SplitMenuButton fx:id="categoriasMenu" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="225.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="62.0" prefWidth="241.0" text="SplitMenuButton">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -83,9 +84,9 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
       <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="376.0" prefWidth="851.0">
         <content>
-          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1080.0" prefWidth="834.0" style="-fx-background-color: white;">
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1231.0" prefWidth="834.0" style="-fx-background-color: white;">
                <children>
-                  <Text layoutX="16.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto: " wrappingWidth="146.0">
+                  <Text layoutX="15.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto *: " wrappingWidth="156.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -103,7 +104,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="nomeDoProduto" layoutX="159.0" layoutY="185.0" prefHeight="22.0" prefWidth="324.0" promptText="Digite um nome para o produto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <TextField fx:id="nomeDoProduto" layoutX="169.0" layoutY="185.0" prefHeight="22.0" prefWidth="324.0" promptText="Digite um nome para o produto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <TextField fx:id="valorDoProduto" layoutX="399.0" layoutY="249.0" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0,0" />
                   <Text layoutX="16.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor arrecadado:" wrappingWidth="146.0">
                      <font>
@@ -111,21 +112,17 @@
                      </font>
                   </Text>
                   <TextField fx:id="valorArrecadado" layoutX="157.0" layoutY="249.0" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0,0" />
-                  <Text layoutX="16.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoria:" wrappingWidth="146.0">
+                  <Text layoutX="16.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoria *:" wrappingWidth="146.0">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <SplitMenuButton fx:id="categoriasSplitDown" layoutX="99.0" layoutY="309.0" mnemonicParsing="false" style="-fx-background-color: white;" text="Selecione uma categoria">
+                  <SplitMenuButton fx:id="categoriasSplitDown" layoutX="111.0" layoutY="309.0" mnemonicParsing="false" style="-fx-background-color: white;" text="Selecione uma categoria">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </SplitMenuButton>
-                  <Button fx:id="adicionarCategoria" layoutX="315.0" layoutY="310.0" mnemonicParsing="false" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="22.0" prefWidth="31.0" style="-fx-background-color: black;" text="+" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
                   <Text layoutX="14.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Especificações" wrappingWidth="146.0">
                      <font>
                         <Font size="15.0" />
@@ -159,18 +156,17 @@
                   <TextField fx:id="adicionarTagCampo" layoutX="15.0" layoutY="764.0" prefHeight="28.0" prefWidth="198.0" promptText="Ex: roupas para casamento" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <ScrollPane layoutX="72.0" layoutY="590.0" prefHeight="112.0" prefWidth="545.0">
                     <content>
-                      <AnchorPane fx:id="anchorEspecificacao" minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="523.0" />
+                      <AnchorPane fx:id="anchorEspecificacao" minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="523.0" style="-fx-background-color: white;">
+                           <children>
+                              <TextFlow fx:id="textFlowEspecificacao" prefHeight="112.0" prefWidth="530.0" style="-fx-background-color: white;" />
+                           </children></AnchorPane>
                     </content>
                   </ScrollPane>
                   <ScrollPane layoutX="72.0" layoutY="813.0" prefHeight="112.0" prefWidth="545.0">
                      <content>
                         <AnchorPane fx:id="anchorTag" minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="530.0">
                            <children>
-                              <TextFlow fx:id="textFlowTag" prefHeight="112.0" prefWidth="530.0" style="-fx-background-color: white;">
-                                 <children>
-                                    <TextFlow fx:id="textFlowEspecificacao" prefHeight="112.0" prefWidth="530.0" style="-fx-background-color: white;" />
-                                 </children>
-                              </TextFlow>
+                              <TextFlow fx:id="textFlowTag" prefHeight="112.0" prefWidth="530.0" style="-fx-background-color: white;" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -200,7 +196,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="linkDoProduto" layoutX="547.0" layoutY="186.0" prefHeight="28.0" prefWidth="263.0" promptText="Digite o link do produto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <TextField fx:id="linkDoProduto" layoutX="551.0" layoutY="186.0" prefHeight="28.0" prefWidth="263.0" promptText="Digite o link do produto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <Text layoutX="252.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tamanho:" wrappingWidth="80.0">
                      <font>
                         <Font size="15.0" />
@@ -255,6 +251,24 @@
                      </cursor></Button>
                   <TextField fx:id="removerEspecificacaoCampo" layoutX="641.0" layoutY="611.0" prefHeight="26.0" prefWidth="179.0" promptText="Nome da especificação" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <TextField fx:id="removerTagCampo" layoutX="640.0" layoutY="841.0" prefHeight="26.0" prefWidth="179.0" promptText="Nome da tag" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <Text layoutX="14.0" layoutY="1094.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loja" wrappingWidth="146.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="14.0" layoutY="1124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Digite o nome da loja:" wrappingWidth="179.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="adicionarNaLojaCampo" layoutX="186.0" layoutY="1105.0" prefHeight="28.0" prefWidth="198.0" promptText="Ex: Aliexpress" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <Button fx:id="adicionarProdutoNaLoja" layoutX="394.0" layoutY="1106.0" mnemonicParsing="false" onAction="#verificarSeLojaExiste" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="26.0" prefWidth="156.0" style="-fx-background-color: black;" text="Verificar a loja" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Rectangle fx:id="retanguloResultadoLoja" arcHeight="5.0" arcWidth="5.0" fill="#d9dbdd" height="38.0" layoutX="14.0" layoutY="1141.0" stroke="TRANSPARENT" strokeType="INSIDE" width="24.0" />
+                  <Text fx:id="textoResultadoLoja" layoutX="42.0" layoutY="1164.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="668.0" />
                </children></AnchorPane>
         </content>
       </ScrollPane>
@@ -293,9 +307,6 @@
          <image>
             <Image url="@../img/avatar.png" />
          </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
       </ImageView>
       <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="44.0" layoutY="354.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
@@ -303,13 +314,15 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="165.0" layoutY="467.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="44.0" layoutY="464.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="129.0" layoutX="176.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
-      <Button fx:id="trocarFotoUsuario" layoutX="62.0" layoutY="372.0" mnemonicParsing="false" opacity="0.0" prefHeight="114.0" prefWidth="114.0" text="Button" />
       <Button fx:id="trocarNomeUsuario" layoutX="61.0" layoutY="501.0" mnemonicParsing="false" onAction="#mostrarCampoTrocarNomeUsuario" onMouseEntered="#exibirTextoTrocarNomeUsuario" opacity="0.0" prefHeight="24.0" prefWidth="121.0" text="Button">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="novoNomeUsuario" layoutX="50.0" layoutY="501.0" onKeyPressed="#checarEnterTrocaNomeUsuario" onMouseExited="#cancelarTrocaNome" opacity="0.0" prefHeight="33.0" prefWidth="162.0" promptText="DIgite o novo nome" />
+      <Button fx:id="trocarFotoUsuario" layoutX="62.0" layoutY="372.0" mnemonicParsing="false" onAction="#alterarFotoUsuario" onMouseEntered="#exibirTextoTrocarFotoUsuario" opacity="0.0" prefHeight="114.0" prefWidth="114.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 
 </AnchorPane>

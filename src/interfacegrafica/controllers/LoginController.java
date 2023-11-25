@@ -84,9 +84,8 @@ public class LoginController extends Controller
 
         /* Verificando id do usuário, se não existir retorna 0 */
         Controller.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
-        
-        /* O empty tem que sair */
-        if (Controller.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
+
+        if (Controller.idUsuario != 0)
         {
             this.carregarNovaScene("ScreenLogged.fxml", true, root);
         }

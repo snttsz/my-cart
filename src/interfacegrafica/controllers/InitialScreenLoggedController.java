@@ -41,8 +41,8 @@ public class InitialScreenLoggedController extends ControllerLogged
             this.mudarScene("ScreenAdicionarProduto.fxml");
         }   
         else if (source.getId() == adicionarLoja.getId())
-        {
-            
+        {   
+            this.mudarScene("ScreenCadastrarLoja.fxml");
         }
     }
 
