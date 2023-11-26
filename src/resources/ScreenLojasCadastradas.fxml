@@ -97,11 +97,11 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="25.0" layoutY="472.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
       <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="242.0" layoutY="199.0" prefHeight="377.0" prefWidth="855.0">
+      <ScrollPane fx:id="scrollPane" layoutX="242.0" layoutY="199.0" prefHeight="376.0" prefWidth="855.0">
         <content>
           <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="873.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
                <children>
-                  <AnchorPane fx:id="paneLoja1" layoutX="23.0" layoutY="18.0" prefHeight="334.0" prefWidth="801.0">
+                  <AnchorPane fx:id="paneLoja1" layoutX="23.0" layoutY="18.0" prefHeight="346.0" prefWidth="801.0">
                      <children>
                         <Text fx:id="nomeLoja1" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
                            <font>
@@ -120,7 +120,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -139,9 +138,11 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
-                        <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="296.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                        <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="301.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
@@ -153,7 +154,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -172,6 +172,8 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="98.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -181,7 +183,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProdutoPaneDefault11" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -200,12 +201,23 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto3" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="paneLoja2" layoutX="17.0" layoutY="390.0" prefHeight="334.0" prefWidth="801.0">
+                  <AnchorPane fx:id="paneLoja2" layoutX="17.0" layoutY="390.0" prefHeight="348.0" prefWidth="801.0">
                      <children>
+                        <Pane fx:id="paneSemLoja" opacity="0.0" prefHeight="349.0" prefWidth="800.0" style="-fx-background-color: white;">
+                           <children>
+                              <Text fx:id="semMaisLojas" fill="#cdcdcd" layoutX="12.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Não há mais lojas para exibir..." textAlignment="CENTER" wrappingWidth="776.09716796875">
+                                 <font>
+                                    <Font name="System Italic" size="36.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
                         <Text fx:id="nomeLoja2" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
                            <font>
                               <Font name="System Bold" size="24.0" />
@@ -223,7 +235,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProduto1" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -242,9 +253,11 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto1_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
-                        <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="296.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                        <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="306.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
@@ -256,7 +269,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProduto21" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -275,6 +287,8 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="7.0" layoutY="104.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto2_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3_2" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -284,7 +298,6 @@
                                     <Image url="@../img/memoria-ram-test.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="nomeProdutoPaneDefault111" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                               <Text fx:id="precoProduto1" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
                               <Text fx:id="arrecadadoProduto1" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
                               <Text fx:id="faltamProduto1" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
@@ -303,21 +316,29 @@
                                     <Font size="17.0" />
                                  </font>
                               </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="107.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                              <Text fx:id="nomeProduto3_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
-                  <Button layoutX="218.0" layoutY="809.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Página Anterior" textFill="WHITE">
-                     <font>
-                        <Font name="Khmer OS System" size="13.0" />
-                     </font></Button>
-                  <Button layoutX="458.0" layoutY="809.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Pŕoxima Página" textFill="WHITE">
+                  <Button fx:id="pagAnterior" disable="true" layoutX="218.0" layoutY="809.0" mnemonicParsing="false" onAction="#anteriorPaginaLoja" opacity="0.5" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Página Anterior" textFill="WHITE">
                      <font>
                         <Font name="Khmer OS System" size="13.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="proxPagina" layoutX="458.0" layoutY="809.0" mnemonicParsing="false" onAction="#proximaPaginaLoja" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Pŕoxima Página" textFill="WHITE">
+                     <font>
+                        <Font name="Khmer OS System" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5e5e" height="34.0" layoutX="380.0" layoutY="810.0" stroke="TRANSPARENT" strokeType="INSIDE" width="64.0" />
-                  <Text fill="WHITE" layoutX="380.0" layoutY="832.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="64.0">
+                  <Text fx:id="numeroPagina" fill="WHITE" layoutX="380.0" layoutY="832.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="64.0">
                      <font>
                         <Font name="Khmer OS System" size="15.0" />
                      </font>

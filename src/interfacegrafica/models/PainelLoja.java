@@ -1,7 +1,20 @@
 package interfacegrafica.models;
 
+import sistema.Loja;
+import sistema.Produto;
+
 public class PainelLoja 
 {
+    public PainelLoja(Loja loja, PainelProduto produto1, PainelProduto produto2, PainelProduto produto3)
+    {
+        this.idLoja = loja.getId();
+        this.nomeDaLoja = loja.getNome();
+        this.urlDaImagem = loja.getUrl_foto();
+        this.produto1 = produto1;
+        this.produto2 = produto2;
+        this.produto3 = produto3;
+    }
+
     public PainelLoja(int idLoja, String nomeDaLoja, String urlDaImagem, PainelProduto produto1, PainelProduto produto2, PainelProduto produto3) 
     {
         this.idLoja = idLoja;

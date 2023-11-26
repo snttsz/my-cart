@@ -16,7 +16,9 @@
 
     -> Colocar um texto embaixo do mouse no botão de sair
 
-    -> Colocar um * nos campos obrigatórios
+    -> Colocar um * nos campos obrigatórios XXXX
+
+    -> Colocar aviso "Sem produtos ainda" quando uma loja não tiver nenhum produto
 
 
 -> Ideias para o sistema:

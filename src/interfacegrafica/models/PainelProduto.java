@@ -1,13 +1,35 @@
 package interfacegrafica.models;
 
+import sistema.Produto;
+
 public class PainelProduto
 {   
-    public PainelProduto(int idProduto, double valorArrecadado, double valorProduto, String urlImagem) 
+    public PainelProduto (Produto produto)
+    {
+        this.nomeDoProduto = produto.getNome();
+        this.idProduto = produto.getId();
+        this.valorArrecadado = produto.getValorArrecadado();
+        this.valorProduto = produto.getPreco() + produto.getValorFrete();
+        this.urlImagem = produto.getUrl_foto();
+
+        this.setarValoresString();
+    }
+
+    public PainelProduto(int idProduto, String nome, double valorArrecadado, double valorProduto, String urlImagem) 
     {
         this.idProduto = idProduto;
         this.valorArrecadado = valorArrecadado;
         this.valorProduto = valorProduto;
         this.urlImagem = urlImagem;
+        this.nomeDoProduto = nome;
+
+        this.setarValoresString();
+    }
+
+    private void setarValoresString()
+    {
+        this.valorArrecadadoString = "R$ " + String.valueOf(this.valorArrecadado);
+        this.valorProdutoString = "R$ " + String.valueOf(this.valorProduto);
     }
 
     public int getIdProduto() 
@@ -89,10 +111,21 @@ public class PainelProduto
         return result;
     }
 
+    public String getNomeDoProduto() 
+    {
+        return this.nomeDoProduto;
+    }
+
+    public void setNomeDoProduto(String nomeDoProduto) 
+    {
+        this.nomeDoProduto = nomeDoProduto;
+    }
+
     private int idProduto;
     private double valorArrecadado;
     private double valorProduto;
     private String urlImagem;
+    private String nomeDoProduto;
 
     private String valorProdutoString;
     private String valorArrecadadoString;
