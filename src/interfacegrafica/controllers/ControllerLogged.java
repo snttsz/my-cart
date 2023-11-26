@@ -559,4 +559,12 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     @FXML
     protected ImageView fotoUsuario;
+
+    /* 
+     * 
+     *      Atributos internos
+     * 
+     */
+
+    protected static int idProdutoAtual;
 }

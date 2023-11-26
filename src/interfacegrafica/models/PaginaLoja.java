@@ -2,10 +2,10 @@ package interfacegrafica.models;
 
 public class PaginaLoja 
 {
-    public PaginaLoja(PainelLoja loja2, PainelLoja loja1) 
+    public PaginaLoja(PainelLoja loja1, PainelLoja loja2) 
     {
-        this.loja2 = loja2;
         this.loja1 = loja1;
+        this.loja2 = loja2;
     }
 
     public PainelLoja getLoja1() 

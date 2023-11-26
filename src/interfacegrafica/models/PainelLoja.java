@@ -7,6 +7,11 @@ public class PainelLoja
 {
     public PainelLoja(Loja loja, PainelProduto produto1, PainelProduto produto2, PainelProduto produto3)
     {
+        if (loja == null)
+        {
+            return;
+        }
+
         this.idLoja = loja.getId();
         this.nomeDaLoja = loja.getNome();
         this.urlDaImagem = loja.getUrl_foto();
@@ -88,7 +93,7 @@ public class PainelLoja
     private int idLoja;
     private String nomeDaLoja;
     private String urlDaImagem;
-    private PainelProduto produto1;
-    private PainelProduto produto2;
-    private PainelProduto produto3;
+    private PainelProduto produto1 = null;
+    private PainelProduto produto2 = null;
+    private PainelProduto produto3 = null;
 }

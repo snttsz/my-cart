@@ -1,7 +1,6 @@
 package interfacegrafica.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 // JavaFX libraries
@@ -10,7 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -30,6 +32,8 @@ import sistema.Produto;
 import sistema.ProdutoEletronico;
 import sistema.Produto.Categorias;
 
+
+// TODO: mostrar tela de exibição de produto
 public class LojasCadastradasController extends ControllerLogged
 {
     @Override
@@ -49,7 +53,7 @@ public class LojasCadastradasController extends ControllerLogged
             // setar essa variavel abaixo
             this.qtdDeLojasCadastradas = 2;
 
-            this.addNovaPaginaLoja();
+            this.addNovaPaginaLoja(this.getLojas());
             this.exibirNovaPaginaLoja();
         }
         );
@@ -101,66 +105,95 @@ public class LojasCadastradasController extends ControllerLogged
         }
     }
 
-    @FXML
-    public void addNovaPaginaLoja()
+    private Loja[] getLojas()
     {
         // TODO: luis
         // cada chamada dessa função, preciso que retorne duas lojas
         // usa o this.marcadorLojaAtual pra saber de qual até qual loja pegar
         // tipo: o marcador tá na quinta loja, vc vai retornar a quinta loja e a sexta
         // caso não tenha mais duas lojas, pode retornar a segunda nula
-        ArrayList<Loja> lojas = new ArrayList<Loja>();
+        Loja[] lojas = new Loja[5];
+        
+        /* DEBUG */
+        lojas[0] = new Loja(1, "Shein", "https://br.shein.com", "img/shein.png");
+        lojas[1] = new Loja(2, "Aliexpress", "https://aliexpress.com", "img/aliexpress.png");
+        /* END OF DEBUG */
+
+        return lojas;
+    }
+
+    private Produto[] getProdutos(Loja loja)
+    {
+        // TODO: descomentar quando a função com o BD estiver pronta
+        // if (loja == null)
+        // {
+        //     return null;
+        // }
 
         // TODO: luis
         // preciso de 3 produtos de cada loja
         // caso não tenha 3, pode retornar o resto nulo
-        ArrayList<Produto> produtosLoja1 = new ArrayList<Produto>();
-        ArrayList<Produto> produtosLoja2 = new ArrayList<Produto>();
+        Produto[] produtosLoja = new Produto[3];
 
+        /* DEBUG */
+        if (loja.getId() == 1)
+        {
+            produtosLoja[0] = new ProdutoEletronico("Nenhuma", "Josemar com risadinha", 300, "https://teste.com", "img/produto-foto-test.jpeg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 1);
+        }
+        else
+        {
+            produtosLoja[0] = new ProdutoEletronico("Nenhuma", "Josemar sem risadinha", 200, "https://teste.com", "img/produto-foto-test2.jpg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 2);
+        }
+        /* END OF DEBUG */
 
+        return produtosLoja;
+    }
+
+    public void addNovaPaginaLoja(Loja[] lojas)
+    {
         // TODO: descomentar isso aqui quando os comandos do banco estiverem prontos
         // if (lojas.get(1) == null)
         // {
         //     this.mostrarPaneSemLoja2();
         // }
-        
-        // TODO: pode apagar o debug quando os comandos estiverem prontos
-        /* DEBUG */
 
-        produtosLoja1.add(new ProdutoEletronico("Nenhuma", "Josemar com risadinha", 300, "https://teste.com", "img/produto-foto-test.jpeg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 1));
-        produtosLoja2.add(new ProdutoEletronico("Nenhuma", "Josemar sem risadinha", 200, "https://teste.com", "img/produto-foto-test2.jpg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 2));
+        PainelProduto[] produtosLoja1 = this.getPaineisProdutos(this.getProdutos(lojas[0]));
+        PainelProduto[] produtosLoja2 = this.getPaineisProdutos(this.getProdutos(lojas[1]));
+    
+        // TODO: consertar os produtos com o index certo quando 
+        // os comandos do banco estiverem 
+        // prontos 
+        PainelLoja painelLoja1 = new PainelLoja(lojas[0], produtosLoja1[0], produtosLoja1[0], produtosLoja1[0]);
+        PainelLoja painelLoja2 = new PainelLoja(lojas[1], produtosLoja2[0], produtosLoja2[0], produtosLoja2[0]);
 
-        lojas.add(new Loja(1, "Aliexpress", "https://aliexpress.com", "img/aliexpress.png"));
-        lojas.add(new Loja(2, "Shein", "https://br.shein.com", "img/shein.png"));
-
-        Loja loja1 = lojas.get(0);
-        Loja loja2 = lojas.get(1);
-
-        /* END OF DEBUG */
-
-        // TODO: consertar os gets com o index certo quando os comandos do banco estiverem 
-        // prontos
-
-        PainelProduto produto1_loja1 = new PainelProduto(produtosLoja1.get(0));
-        PainelProduto produto2_loja1 = new PainelProduto(produtosLoja1.get(0));
-        PainelProduto produto3_loja1 = new PainelProduto(produtosLoja1.get(0));
-
-        PainelProduto produto1_loja2 = new PainelProduto(produtosLoja2.get(0));
-        PainelProduto produto2_loja2 = new PainelProduto(produtosLoja2.get(0));
-        PainelProduto produto3_loja2 = new PainelProduto(produtosLoja2.get(0));
-
-        PainelLoja painelLoja1 = new PainelLoja(loja1, produto1_loja1, produto2_loja1, produto3_loja1);
-        PainelLoja painelLoja2 = new PainelLoja(loja2, produto1_loja2, produto2_loja2, produto3_loja2);
-
-        PaginaLoja paginaLoja = new PaginaLoja(painelLoja2, painelLoja1);
+        PaginaLoja paginaLoja = new PaginaLoja(painelLoja1, painelLoja2);
 
         this.pilhaLojas.add(paginaLoja);
+    }
+
+    private PainelProduto[] getPaineisProdutos(Produto[] produtos)
+    {
+        PainelProduto[] paineis = new PainelProduto[3];
+
+        paineis[0] = null;
+        paineis[1] = null;
+        paineis[2] = null;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (produtos[i] != null)
+            {
+                paineis[i] = new PainelProduto(produtos[i]);
+            }
+        }
+
+        return paineis;
     }
 
     @FXML
     public void proximaPaginaLoja(ActionEvent action)
     {
-        this.addNovaPaginaLoja();
+        this.addNovaPaginaLoja(this.getLojas());
         
         this.marcadorLojaAtual += 2;
 
@@ -245,8 +278,6 @@ public class LojasCadastradasController extends ControllerLogged
     @FXML
     public void exibirNovaPaginaLoja()
     {
-        this.addNovaPaginaLoja();
-
         PaginaLoja paginaAtual = this.pilhaLojas.firstElement();
 
         this.loja1.atualizarAtributosComPainelLoja(paginaAtual.getLoja1());
@@ -268,6 +299,74 @@ public class LojasCadastradasController extends ControllerLogged
 
         this.loja2 = new PainelLojaJAVAFX(this.paneLoja2, this.nomeLoja2, this.fotoLoja2, this.maisProdutosLoja2, produto1_2, produto2_2, produto3_2);
     }
+
+    @FXML
+    public void pesquisarPorLojaNoBD(KeyEvent key)
+    {
+        if (key.getCode() == KeyCode.ENTER)
+        {
+            String nomeDaLoja = this.pesquisarLojaField.getText();
+
+            /* 
+             * TODO: luis
+             * procurar nome da loja no BD, se não tiver nenhuma,
+             * seta o obj abaixo pra nulo
+             */
+            Loja lojaEncontrada = new Loja("Teste", "https://teste.com", "img/myCart.png");
+
+            if (lojaEncontrada == null)
+            {
+                /* TODO: mudar a scene */
+            }
+            else
+            {
+                Loja[] lojas = new Loja[2];
+                
+                lojas[0] = lojaEncontrada;
+                lojas[1] = null;
+
+                this.addNovaPaginaLoja(lojas);
+            }
+        }
+    }
+
+    @FXML
+    public void exibirProdutoSelecionado(ActionEvent action)
+    {
+        Node button = (Node) action.getSource();
+
+        PainelLoja loja1 = this.pilhaLojas.firstElement().getLoja1();
+        PainelLoja loja2 = this.pilhaLojas.firstElement().getLoja2();
+
+        /* Primeira loja */
+        if (button.getId() == produto1_loja1_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja1.getProduto1().getIdProduto();
+        }
+        else if (button.getId() == produto2_loja1_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja1.getProduto2().getIdProduto();
+        }
+        else if (button.getId() == produto3_loja1_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja1.getProduto3().getIdProduto();
+        }
+        /* Segunda loja */
+        else if (button.getId() == produto1_loja2_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja2.getProduto1().getIdProduto();
+        }
+        else if (button.getId() == produto2_loja2_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja2.getProduto2().getIdProduto();
+        }
+        else if (button.getId() == produto3_loja2_button.getId())
+        {
+            ControllerLogged.idProdutoAtual = loja2.getProduto3().getIdProduto();
+        }
+
+        /* TODO: Mudar scene pra exibir produto */
+    } 
     
     /* 
      * 
@@ -287,6 +386,27 @@ public class LojasCadastradasController extends ControllerLogged
 
     @FXML
     private Button adicionarLoja;
+
+    @FXML
+    private TextField pesquisarLojaField;
+
+    @FXML
+    private Button produto1_loja1_button;
+
+    @FXML
+    private Button produto2_loja1_button;
+
+    @FXML
+    private Button produto3_loja1_button;
+
+    @FXML
+    private Button produto1_loja2_button;
+
+    @FXML
+    private Button produto2_loja2_button;
+
+    @FXML
+    private Button produto3_loja2_button;
 
     /* 
      *    Panes
@@ -515,4 +635,5 @@ public class LojasCadastradasController extends ControllerLogged
     private PainelLojaJAVAFX loja2;
 
     public static int idLojaAtual;
+    public static int idProdutoAtual;
 }

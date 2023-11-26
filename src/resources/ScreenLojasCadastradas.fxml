@@ -140,6 +140,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto1_loja1_button" layoutX="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="301.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
@@ -174,6 +175,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="98.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto2_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -203,6 +205,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto3" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto3_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                      </children>
@@ -255,6 +258,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto1_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto1_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="306.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
@@ -289,6 +293,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="7.0" layoutY="104.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto2_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto2_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3_2" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -318,6 +323,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="107.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto3_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                              <Button fx:id="produto3_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                      </children>
@@ -355,7 +361,7 @@
             <Font name="System Italic" size="22.0" />
          </font>
       </Text>
-      <TextField layoutX="261.0" layoutY="166.0" prefHeight="22.0" prefWidth="278.0" promptText="Pesquisar uma loja" style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25; -fx-border-width: 2;">
+      <TextField fx:id="pesquisarLojaField" layoutX="261.0" layoutY="166.0" prefHeight="22.0" prefWidth="278.0" promptText="Pesquisar uma loja" style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25; -fx-border-width: 2;">
          <font>
             <Font size="16.0" />
          </font>
