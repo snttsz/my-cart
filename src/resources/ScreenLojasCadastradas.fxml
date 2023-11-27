@@ -140,7 +140,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto1_loja1_button" layoutX="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto1_loja1_button" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="301.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">

@@ -2,7 +2,7 @@ package sistema;
 
 import java.util.ArrayList;
 
-public abstract class Produto 
+public class Produto 
 {
 
     /* Construtores */

@@ -366,6 +366,7 @@ public class LojasCadastradasController extends ControllerLogged
         }
 
         /* TODO: Mudar scene pra exibir produto */
+        this.mudarScene("ScreenExibirProduto.fxml");
     } 
     
     /* 

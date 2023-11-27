@@ -94,19 +94,19 @@
         <content>
           <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1249.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
                <children>
-                  <ImageView fx:id="fotoProduto" fitHeight="239.0" fitWidth="212.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="fotoProduto" fitHeight="239.0" fitWidth="212.0" layoutX="21.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/memoria-ram-test.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="265.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome Produto" wrappingWidth="579.62109375">
+                  <Text fx:id="nomeProduto" layoutX="265.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome Produto" wrappingWidth="579.62109375">
                      <font>
                         <Font name="System Bold Italic" size="30.0" />
                      </font>
                   </Text>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="24.0" layoutX="21.0" layoutY="221.0" stroke="#9e9c9c" strokeType="INSIDE" width="213.0" />
                   <Rectangle fx:id="retanguloPorcentagem" arcHeight="5.0" arcWidth="5.0" fill="#23dd2c" height="24.0" layoutX="21.0" layoutY="221.0" stroke="#9e9c9c" strokeType="INSIDE" />
-                  <Text layoutX="264.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado:" wrappingWidth="104.62109375">
+                  <Text layoutX="264.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado:" wrappingWidth="104.62109375">
                      <font>
                         <Font name="System Italic" size="13.0" />
                      </font>
@@ -116,7 +116,7 @@
                         <Font size="31.0" />
                      </font>
                   </Text>
-                  <Text layoutX="264.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor do produto:" wrappingWidth="121.0">
+                  <Text layoutX="264.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor do produto:" wrappingWidth="121.0">
                      <font>
                         <Font name="System Italic" size="13.0" />
                      </font></Text>
@@ -125,12 +125,12 @@
                         <Font size="25.0" />
                      </font>
                   </Text>
-                  <Text layoutX="22.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0%" textAlignment="CENTER" wrappingWidth="211.62109375">
+                  <Text fx:id="porcentagemProduto" layoutX="22.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0%" textAlignment="CENTER" wrappingWidth="211.62109375">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="264.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam:" wrappingWidth="54.0">
+                  <Text layoutX="264.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam:" wrappingWidth="54.0">
                      <font>
                         <Font name="System Italic" size="13.0" />
                      </font></Text>
@@ -267,7 +267,7 @@
                     <content>
                       <AnchorPane fx:id="anchorEspecificacao" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="712.0" style="-fx-background-color: white;">
                            <children>
-                              <TextFlow fx:id="textFlowEspecificacao" prefHeight="146.0" prefWidth="715.0" />
+                              <TextFlow fx:id="textFlowEspecificacao" layoutX="5.0" prefHeight="146.0" prefWidth="715.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -277,7 +277,7 @@
                      <content>
                         <AnchorPane fx:id="anchorTag" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="714.0" style="-fx-background-color: white;">
                            <children>
-                              <TextFlow fx:id="textFlowTag" layoutX="-2.0" layoutY="-1.0" prefHeight="146.0" prefWidth="715.0" />
+                              <TextFlow fx:id="textFlowTag" layoutX="3.0" layoutY="-1.0" prefHeight="146.0" prefWidth="715.0" />
                            </children>
                         </AnchorPane>
                      </content>
