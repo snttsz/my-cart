@@ -112,7 +112,7 @@ public class LojasCadastradasController extends ControllerLogged
         // usa o this.marcadorLojaAtual pra saber de qual até qual loja pegar
         // tipo: o marcador tá na quinta loja, vc vai retornar a quinta loja e a sexta
         // caso não tenha mais duas lojas, pode retornar a segunda nula
-        Loja[] lojas = new Loja[5];
+        Loja[] lojas = new Loja[2];
         
         /* DEBUG */
         lojas[0] = new Loja(1, "Shein", "https://br.shein.com", "img/shein.png");
