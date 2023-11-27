@@ -164,7 +164,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="125.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nome da categoria">
+                  <Text fx:id="nomeCategoria" layoutX="130.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nome da categoria">
                      <font>
                         <Font size="15.0" />
                      </font>

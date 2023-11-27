@@ -52,6 +52,9 @@ public class ExibirProdutoController extends ControllerLogged
             Especificacao especificacao2 = new Especificacao("Espaço de armazenamento: ", "16gb");
 
             especificacoes.add(especificacao1);
+            especificacoes.add(especificacao1);
+            especificacoes.add(especificacao1);
+            especificacoes.add(especificacao1);
             especificacoes.add(especificacao2);
 
             ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -59,6 +62,10 @@ public class ExibirProdutoController extends ControllerLogged
             Tag tag1 = new Tag("pc");
             Tag tag2 = new Tag("componente de pc");
             
+            tags.add(tag1);
+            tags.add(tag1);
+            tags.add(tag1);
+            tags.add(tag1);
             tags.add(tag1);
             tags.add(tag2);
 
@@ -85,42 +92,44 @@ public class ExibirProdutoController extends ControllerLogged
 
     private void setarEspecificacoes(ArrayList<Especificacao> especificacoes)
     {
-        Font systemFont = Font.font("Arial", FontPosture.ITALIC, 15);
+        Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
 
         for (Especificacao especificacao : especificacoes)
         {
-            Text textEspecificacao = new Text(especificacao.getNome() + " : " + especificacao.getValor() + "\n");
+            Text textEspecificacao = new Text(especificacao.getNome() + " : " + especificacao.getValor() + "\n\n");
             textEspecificacao.setFont(systemFont);
 
             this.textFlowEspecificacao.getChildren().add(textEspecificacao);
 
-            if (especificacoes.size() > 5)
+            if (especificacoes.size() > 2)
             {
-                this.anchorEspecificacao.setPrefHeight(this.anchorEspecificacao.getHeight() + 10);
+                this.anchorEspecificacao.setPrefHeight(this.anchorEspecificacao.getHeight() + 100);
             }
         }
     }
 
     private void setarTags(ArrayList<Tag> tags)
     {
-        Font systemFont = Font.font("Arial", FontPosture.ITALIC, 15);
+        Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
 
         for (Tag tag : tags)
         {
-            Text textTag = new Text(tag.getNome() + "\n");
+            Text textTag = new Text(tag.getNome() + "\n\n");
             textTag.setFont(systemFont);
 
             this.textFlowTag.getChildren().add(textTag);
 
-            if (tags.size() > 5)
+            if (tags.size() > 2)
             {
-                this.anchorTag.setPrefHeight(this.anchorTag.getHeight() + 10);
+                this.anchorTag.setPrefHeight(this.anchorTag.getHeight() + 100);
             }
         }
     }
 
     private void setarAtributosCategoria(String categoriaProduto)
     {
+        this.nomeCategoria.setText(categoriaProduto);
+
         /* 
          * TODO: luis
          * Como nós temos alguns atributos que são próprios de cada
@@ -257,6 +266,9 @@ public class ExibirProdutoController extends ControllerLogged
     /* 
      *  Texto
      */
+
+    @FXML
+    private Text nomeCategoria;
 
     @FXML
     private Text porcentagemProduto;
