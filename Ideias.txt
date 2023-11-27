@@ -20,6 +20,7 @@
 
     -> Colocar aviso "Sem produtos ainda" quando uma loja não tiver nenhum produto
 
+    -> Na tela de adicoinar produto, fazer o campo de valores so aceitar numeross
 
 -> Ideias para o sistema:
 

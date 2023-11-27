@@ -71,7 +71,7 @@ public class ExibirProdutoController extends ControllerLogged
             tags.add(tag1);
             tags.add(tag2);
 
-            ProdutoLivro produtoTeste = new ProdutoLivro("Teste Descrição", "Memória Ram", 300, "https://teste.com", "img/myCart.png", 100, 40, Categorias.LIVRO.getCategoria(), especificacoes, tags, "Terror", "Glenda", Controller.idUsuario, LojasCadastradasController.idLojaAtual);
+            ProdutoLivro produtoTeste = new ProdutoLivro("Teste Descrição", "Memória Ram", 300, "https://teste.com", "img/myCart.png", 300,0, Categorias.LIVRO.getCategoria(), especificacoes, tags, "Terror", "Glenda", Controller.idUsuario, LojasCadastradasController.idLojaAtual);
             
             this.exibirProduto(produtoTeste);
         });
@@ -140,7 +140,7 @@ public class ExibirProdutoController extends ControllerLogged
 
         for (Tag tag : tags)
         {
-            Text textTag = new Text(tag.getNome() + "\n\n");
+            Text textTag = new Text('"' + tag.getNome() + '"' + " ");
             textTag.setFont(systemFont);
 
             this.textFlowTag.getChildren().add(textTag);
@@ -168,7 +168,7 @@ public class ExibirProdutoController extends ControllerLogged
          * caso nao tiver, retorna o objeto nulo
          */
         Loja loja = new Loja("Aliexpress", "https://teste.com", "img/aliexpress.png");
-        loja = null;
+        // loja = null;
 
         if (loja != null)
         {

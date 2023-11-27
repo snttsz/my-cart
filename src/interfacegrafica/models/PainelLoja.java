@@ -1,7 +1,6 @@
 package interfacegrafica.models;
 
 import sistema.Loja;
-import sistema.Produto;
 
 public class PainelLoja 
 {
