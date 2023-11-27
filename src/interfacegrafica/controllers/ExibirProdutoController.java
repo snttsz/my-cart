@@ -7,8 +7,10 @@ import java.util.ResourceBundle;
 
 import interfacegrafica.models.PainelProduto;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
@@ -19,8 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import sistema.Especificacao;
+import sistema.Loja;
 import sistema.Produto;
-import sistema.ProdutoEletronico;
 import sistema.ProdutoLivro;
 import sistema.Tag;
 import sistema.Produto.Categorias;
@@ -75,6 +77,31 @@ public class ExibirProdutoController extends ControllerLogged
         });
     }
 
+    @FXML
+    public void voltarParaInicio(ActionEvent action)
+    {
+        this.mudarScene("ScreenLogged.fxml");
+    }
+
+    @FXML
+    public void removerProduto(ActionEvent action)
+    {
+        /* 
+         * TODO: luis
+         * remover o produto do banco de dados
+         * id do produto: ControllerLogged.idProdutoAtual
+         */
+
+        this.abrirErroStage("O produto foi removido do sistema!");
+        this.voltarParaInicio(action);
+    }
+
+    @FXML
+    public void editarProduto(ActionEvent action)
+    {
+        
+    }
+
     private void exibirProduto(Produto produto)
     {
         PainelProduto painelProduto = new PainelProduto(produto);
@@ -88,6 +115,8 @@ public class ExibirProdutoController extends ControllerLogged
         this.setarAtributosCategoria(produto.getCategoria());
         this.setarEspecificacoes(produto.getEspecificacoes());
         this.setarTags(produto.getTags());
+        this.setarDescricao(produto.getDescricao());
+        this.setarLojaDoProduto();
     }
 
     private void setarEspecificacoes(ArrayList<Especificacao> especificacoes)
@@ -100,12 +129,9 @@ public class ExibirProdutoController extends ControllerLogged
             textEspecificacao.setFont(systemFont);
 
             this.textFlowEspecificacao.getChildren().add(textEspecificacao);
-
-            if (especificacoes.size() > 2)
-            {
-                this.anchorEspecificacao.setPrefHeight(this.anchorEspecificacao.getHeight() + 100);
-            }
         }
+
+        this.anchorEspecificacao.setPrefHeight(this.textFlowEspecificacao.getMaxHeight());
     }
 
     private void setarTags(ArrayList<Tag> tags)
@@ -118,11 +144,42 @@ public class ExibirProdutoController extends ControllerLogged
             textTag.setFont(systemFont);
 
             this.textFlowTag.getChildren().add(textTag);
+        }
 
-            if (tags.size() > 2)
-            {
-                this.anchorTag.setPrefHeight(this.anchorTag.getHeight() + 100);
-            }
+        this.anchorTag.setPrefHeight(this.textFlowTag.getMaxHeight());
+    }
+
+    private void setarDescricao(String descricao)
+    {
+        Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
+
+        Text descricaoText = new Text(descricao);
+        descricaoText.setFont(systemFont);
+
+        this.textFlowDescricao.getChildren().add(descricaoText);
+        this.anchorDescricao.setPrefHeight(this.textFlowDescricao.getMaxHeight());
+    }
+
+    private void setarLojaDoProduto()
+    {
+        /* 
+         * TODO: luis
+         * buscar loja no banco de dados que tenha o id do produto
+         * caso nao tiver, retorna o objeto nulo
+         */
+        Loja loja = new Loja("Aliexpress", "https://teste.com", "img/aliexpress.png");
+        loja = null;
+
+        if (loja != null)
+        {
+            this.nomeDaLoja.setText(loja.getNome());
+
+            Image imgLoja = new Image(loja.getUrl_foto());
+            this.fotoDaLoja.setImage(imgLoja);
+        }
+        else
+        {
+            this.nomeDaLoja.setText("");
         }
     }
 
