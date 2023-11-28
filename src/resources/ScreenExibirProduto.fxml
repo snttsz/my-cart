@@ -325,7 +325,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="editarProduto" layoutX="774.0" layoutY="166.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Editar Produto" textFill="WHITE">
+      <Button fx:id="editarProduto" layoutX="774.0" layoutY="166.0" mnemonicParsing="false" onAction="#editarProduto" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Editar Produto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

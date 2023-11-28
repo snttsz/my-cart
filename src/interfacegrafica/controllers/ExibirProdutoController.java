@@ -99,7 +99,13 @@ public class ExibirProdutoController extends ControllerLogged
     @FXML
     public void editarProduto(ActionEvent action)
     {
-        
+        /* 
+        * Boolean indicando que o carregamento da página será para
+        * editar um produto.
+        */
+        ControllerLogged.editarProduto = true;
+
+        this.mudarScene("ScreenAdicionarProduto.fxml");
     }
 
     private void exibirProduto(Produto produto)

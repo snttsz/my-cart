@@ -97,6 +97,12 @@ public class LojasCadastradasController extends ControllerLogged
 
         if (source.getId() == adicionarProduto.getId())
         {   
+            /* 
+             * Boolean indicando que o carregamento da página será para
+             * cadastrar um produto, e não editá-lo.
+             */
+            ControllerLogged.editarProduto = false;
+            
             this.mudarScene("ScreenAdicionarProduto.fxml");
         }   
         else if (source.getId() == adicionarLoja.getId())
@@ -365,7 +371,6 @@ public class LojasCadastradasController extends ControllerLogged
             ControllerLogged.idProdutoAtual = loja2.getProduto3().getIdProduto();
         }
 
-        /* TODO: Mudar scene pra exibir produto */
         this.mudarScene("ScreenExibirProduto.fxml");
     } 
     
@@ -430,38 +435,6 @@ public class LojasCadastradasController extends ControllerLogged
 
     @FXML
     private Button proxPagina;
-
-    /* 
-     *    Texto
-     */
-
-    @FXML
-    private Text arrecadadoPaneDefault;
-
-    @FXML
-    private Text faltamPaneDefault;
-
-    @FXML
-    private Text precoProdutoPaneDefault;
-
-    @FXML
-    private Text nomeProdutoPaneDefault;
-
-    @FXML 
-    private Text precoProduto;
-
-    @FXML 
-    private Text precoArrecadado;
-
-    @FXML 
-    private Text precoFaltam;
-
-    /* 
-     *    Imagens
-     */
-
-    @FXML
-    private ImageView fotoPaneDefault;
 
     /* 
      *    

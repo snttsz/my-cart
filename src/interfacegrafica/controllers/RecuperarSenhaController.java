@@ -62,14 +62,9 @@ public class RecuperarSenhaController extends Controller
         {
             /* Alterando senha */
             usuariosDAO.updateSenha(this.usuarioParaRecuperar, confirmacaoSenha);
-            
-            // seta a opacidade dos textos para 1
+
             this.novaSenhaText.setOpacity(0.5);
             this.repetirSenhaText.setOpacity(0.5);
-            
-            /* 
-             * Seta a opacidade dos botões para 1 e ativa o uso de cada um
-             */
 
             this.senha.setOpacity(0.5);
             this.senha.setDisable(true);

@@ -567,4 +567,5 @@ public abstract class ControllerLogged extends Controller implements Initializab
      */
 
     protected static int idProdutoAtual;
+    protected static boolean editarProduto;
 }

@@ -38,6 +38,12 @@ public class InitialScreenLoggedController extends ControllerLogged
 
         if (source.getId() == adicionarProduto.getId())
         {   
+            /* 
+             * Boolean indicando que o carregamento da página será para
+             * cadastrar um produto, e não editá-lo.
+             */
+            ControllerLogged.editarProduto = false;
+
             this.mudarScene("ScreenAdicionarProduto.fxml");
         }   
         else if (source.getId() == adicionarLoja.getId())

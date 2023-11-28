@@ -7,6 +7,8 @@ import javafx.scene.text.Text;
 
 public class PainelProdutoJAVAFX 
 {
+    public PainelProdutoJAVAFX() {}
+
     public PainelProdutoJAVAFX(Pane produtoLoja, Text nomeDoProduto, Text valorPrecoProduto, Text valorArrecadadoProduto, Text valorFaltamProduto, ImageView fotoProduto) 
     {
         this.produtoLoja = produtoLoja;

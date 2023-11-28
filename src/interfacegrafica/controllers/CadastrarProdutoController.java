@@ -3,12 +3,10 @@ package interfacegrafica.controllers;
 import sistema.Tag;
 import sistema.Especificacao;
 import sistema.Produto;
+import sistema.Produto.Categorias;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -25,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -50,6 +49,12 @@ public class CadastrarProdutoController extends ControllerLogged
         Platform.runLater(() -> 
         {
             this.puxarCategorias();
+            this.inicializarCamposCategoria();
+
+            if (ControllerLogged.editarProduto)
+            {
+                this.inserirDadosDoProduto();
+            }
         });
     }
 
@@ -64,7 +69,33 @@ public class CadastrarProdutoController extends ControllerLogged
         this.tagsText = new ArrayList<Text>();
         this.especificacoesText = new ArrayList<Text>();
     }
-    
+
+    private void inicializarCamposCategoria()
+    {
+        this.cor.setOpacity(0.5);
+        this.cor.setDisable(true);
+
+        this.tamanho.setOpacity(0.5);
+        this.tamanho.setDisable(true);
+
+        this.material.setOpacity(0.5);
+        this.material.setDisable(true);
+
+        this.altura.setOpacity(0.5);
+        this.altura.setDisable(true);
+
+        this.largura.setOpacity(0.5);
+        this.largura.setDisable(true);
+
+        this.comprimento.setOpacity(0.5);
+        this.comprimento.setDisable(true);
+
+        this.autor.setOpacity(0.5);
+        this.autor.setDisable(true);
+
+        this.genero.setOpacity(0.5);
+        this.genero.setDisable(true);
+    }
 
     /**
      * Função para adicionar uma tag no bloco de texto onde as tags estão sendo
@@ -439,14 +470,25 @@ public class CadastrarProdutoController extends ControllerLogged
 
         String lojaDoProduto = this.adicionarNaLojaCampo.getText();
 
-        boolean canCreateProduct = this.checarCamposObrigatorios();
+        boolean canSendProductToDB = this.checarCamposObrigatorios();
 
-        if (canCreateProduct)
+        if (canSendProductToDB)
         {
             /* 
              * TODO: luis
              */
-            // Criar produto e mandar pro banco de dados
+            
+            // atualizar produto no banco de dados com os atributos daqui
+            // id do produto: ControllerLogged.idProdutoAtual
+            if (ControllerLogged.editarProduto)
+            {
+
+            }
+            // criar produto no banco de dados com os atributos daqui
+            else
+            {
+
+            }
         }
         else
         {
@@ -485,30 +527,6 @@ public class CadastrarProdutoController extends ControllerLogged
     public void filtrarCamposPorCategoria(ActionEvent action)
     {
         String categoriaProduto = this.categoriasSplitDown.getText();
-
-        this.cor.setOpacity(0.5);
-        this.cor.setDisable(true);
-
-        this.tamanho.setOpacity(0.5);
-        this.tamanho.setDisable(true);
-
-        this.material.setOpacity(0.5);
-        this.material.setDisable(true);
-
-        this.altura.setOpacity(0.5);
-        this.altura.setDisable(true);
-
-        this.largura.setOpacity(0.5);
-        this.largura.setDisable(true);
-
-        this.comprimento.setOpacity(0.5);
-        this.comprimento.setDisable(true);
-
-        this.autor.setOpacity(0.5);
-        this.autor.setDisable(true);
-
-        this.genero.setOpacity(0.5);
-        this.genero.setDisable(true);
 
         if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
         {
@@ -628,6 +646,180 @@ public class CadastrarProdutoController extends ControllerLogged
             this.retanguloResultadoLoja.setFill(Color.RED);
             this.textoResultadoLoja.setText("A loja que você está procurando ainda não foi cadastrada por você :(");
         }
+    }
+
+    @FXML
+    public void entradaCaractereCampoLoja(KeyEvent key)
+    {
+        this.retanguloResultadoLoja.setFill(Color.rgb(217, 219, 221));
+        this.textoResultadoLoja.setText("");
+    }
+
+    private void inserirDadosDoProduto()
+    {
+        /* TODO: luis
+         * puxar os dados do produto no banco de dados
+         * e devolver um objeto produto. 
+         * Id do produto: ControllerLogged.idProdutoAtual
+         */
+        Produto produto = new Produto("Teste Descrição", "Memória Ram", 300, "https://teste.com", "img/myCart.png", 300,0, Categorias.LIVRO.getCategoria(), null, null, Controller.idUsuario, LojasCadastradasController.idLojaAtual);
+
+        if (produto.getUrl_foto() != null)
+        {
+            Image imgProduto = new Image(produto.getUrl_foto());
+            this.fotoProdutoImg.setImage(imgProduto);
+        }
+
+        this.nomeDoProduto.setText(produto.getNome());
+        this.linkDoProduto.setText(produto.getLink());
+        this.valorDoProduto.setText(String.valueOf(produto.getPreco()));
+        this.valorArrecadado.setText(String.valueOf(produto.getValorArrecadado()));
+        this.valorDoFrete.setText(String.valueOf(produto.getValorFrete()));
+
+        if (produto.getEspecificacoes() != null)
+        {
+            for (Especificacao especificacao : produto.getEspecificacoes())
+            {
+                Text especificacaoText = new Text(especificacao.getNome() + " : " + especificacao.getValor());
+    
+                this.textFlowEspecificacao.getChildren().add(especificacaoText);
+                this.especificacoesText.add(especificacaoText);
+            }
+        }
+
+        if (produto.getTags() != null)
+        {
+            for (Tag tag : produto.getTags())
+            {
+                Text tagText = new Text(tag.getNome());
+    
+                this.textFlowTag.getChildren().add(tagText);
+                this.tagsText.add(tagText);
+            }
+        }
+
+        if (produto.getDescricao() != null)
+        {
+            this.descricao.setText(produto.getDescricao());
+        }
+        
+        /* 
+         *  TODO: luis
+         * 
+         * pegar nome da loja que o produto tá cadastrado. Se não
+         * tiver nenhuma, retorna nulo
+         */
+        String nomeDaLoja = "Aliexpress";
+
+        if (nomeDaLoja != null)
+        {
+            this.adicionarNaLojaCampo.setText(nomeDaLoja);
+            this.retanguloResultadoLoja.setFill(Color.GREEN);
+            this.textoResultadoLoja.setText("Produto cadastrado numa loja!");
+        }
+
+        /* Setando atributos relacionados à categoria do produto */
+        String categoriaProduto = produto.getCategoria();
+
+        this.categoriasSplitDown.setText(categoriaProduto);
+
+        if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
+        {
+            this.autor.setOpacity(1);
+            this.autor.setDisable(false);
+            this.genero.setOpacity(1);
+            this.genero.setDisable(false);
+
+            /* TODO: luis
+             *  puxar do banco de dados
+             * id do produto: ControllerLogged.idProdutoAtual
+             */
+            String autor;
+            String genero;
+
+            // this.genero.setText(genero);
+            // this.autor.setText(autor);
+        }
+        else if (categoriaProduto == Produto.Categorias.ROUPA.getCategoria() || categoriaProduto == Produto.Categorias.ACESSORIO.getCategoria() || categoriaProduto == Produto.Categorias.CALCADO.getCategoria())
+        {
+            this.cor.setOpacity(1);
+            this.cor.setDisable(false);
+
+            this.tamanho.setOpacity(1);
+            this.tamanho.setDisable(false);
+
+            this.material.setOpacity(1);
+            this.material.setDisable(false);
+
+            /* TODO: luis
+             *  puxar do banco de dados
+             * id do produto: ControllerLogged.idProdutoAtual
+             */
+            String cor;
+            String tamanho;
+            String material;
+
+            // this.cor.setText(cor);
+            // this.tamanho.setText(tamanho);
+            // this.material.setText(material);
+        }
+        else if (categoriaProduto == Produto.Categorias.ELETRONICO.getCategoria() || categoriaProduto == Produto.Categorias.ELETRODOMESTICO.getCategoria())
+        {
+            this.cor.setOpacity(1);
+            this.cor.setDisable(false);
+
+            this.material.setOpacity(1);
+            this.material.setDisable(false);
+
+            /* TODO: luis
+             *  puxar do banco de dados
+             * id do produto: ControllerLogged.idProdutoAtual
+             */
+            String cor;
+            String material;
+
+            // this.cor.setText(cor);
+            // this.material.setText(material);
+        }
+        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria())
+        {
+            this.cor.setOpacity(0.5);
+            this.cor.setDisable(true);
+
+            this.tamanho.setOpacity(0.5);
+            this.tamanho.setDisable(true);
+
+            this.material.setOpacity(0.5);
+            this.material.setDisable(true);
+
+            this.altura.setOpacity(0.5);
+            this.altura.setDisable(true);
+
+            this.largura.setOpacity(0.5);
+            this.largura.setDisable(true);
+
+            this.comprimento.setOpacity(0.5);
+            this.comprimento.setDisable(true);
+
+            /* TODO: luis
+             *  puxar do banco de dados
+             * id do produto: ControllerLogged.idProdutoAtual
+             */
+            String cor;
+            String tamanho;
+            String material;
+            String altura;
+            String largura;
+            String comprimento;
+
+            // this.cor.setText(cor);
+            // this.tamanho.setText(tamanho);
+            // this.material.setText(material);
+            // this.altura.setText(altura);
+            // this.largura.setText(largura);
+            // this.comprimento.setText(comprimento);
+        }
+
     }
 
     /* 
