@@ -568,4 +568,16 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     protected static int idProdutoAtual;
     protected static boolean editarProduto;
+    
+    protected static int labelPaginaProdutoAtual;
+    protected static String valorLabelAtual;
+
+    protected enum labelsPaginasProduto
+    {
+        TAG,
+        ESPECIFICACAO,
+        LOJA,
+        TODOS_OS_PRODUTOS,
+        CATEGORIA
+    }
 }

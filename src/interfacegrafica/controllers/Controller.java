@@ -103,6 +103,15 @@ public abstract class Controller
         return nomeDoArquivo.substring(ultimoPonto);
     }
 
+    /**
+     * Função acionada quando o usuário passa o mouse por cima de um botão.
+     * 
+     * A função irá diminuir a opacidade do botão para causar um efeito de brilho.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void onButton(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
@@ -112,6 +121,15 @@ public abstract class Controller
         source.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Função acionada quando o usuário remove o mouse de cima de um botão.
+     * 
+     * A função irá setar a opacidade do botão para 1, para remover o efeito de brilho.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void offButton(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
@@ -119,6 +137,15 @@ public abstract class Controller
         source.setOpacity(1);
     }
 
+    /**
+     * Função acionada quando o usuário clica em um botão.
+     * 
+     * A função irá diminuir a opacidade do botão para causar um efeito de brilho.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void clickedButton(MouseEvent mouse)
     {
         Node source = (Node) mouse.getSource();
@@ -242,6 +269,17 @@ public abstract class Controller
         return result;
     }
 
+    /**
+     * Função acionada quando o usuário passa o mouse por cima de um botão.
+     * 
+     * A função irá exibir um pequeno bloco de texto abaixo do cursor.
+     * 
+     * @param source
+     * Botão que causou a chamada do evento
+     * 
+     * @param texto
+     * Texto que será exibido abaixo do cursor.
+     */
     public void exibirTextoDeAjuda(Button source, String texto)
     {
         Tooltip tooltip = new Tooltip(texto);
@@ -259,8 +297,14 @@ public abstract class Controller
     public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
     {
         usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(Controller.idUsuario), caminhoParaImagem);
-    }
+    }   
 
+    /**
+     * Função para excluir uma imagem da pasta local de imagens.
+     * 
+     * @param nomeDoArquivo
+     * Nome do arquivo de imagem.
+     */
     protected void excluirImagem(String nomeDoArquivo)
     {
         Path caminhoArquivo = Paths.get("src/img/users/" + nomeDoArquivo);

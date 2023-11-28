@@ -27,6 +27,13 @@ import sistema.ProdutoLivro;
 import sistema.Tag;
 import sistema.Produto.Categorias;
 
+/**
+ * 
+ * Classe responsável por definir as implementações da tela de exibir os detalhes de um produto.
+ * 
+ * @author Glenda
+ * 
+ */
 public class ExibirProdutoController extends ControllerLogged
 {
     /**
@@ -77,12 +84,31 @@ public class ExibirProdutoController extends ControllerLogged
         });
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "sair"
+     * 
+     * A função irá voltar para o inicio do programa.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void voltarParaInicio(ActionEvent action)
     {
         this.mudarScene("ScreenLogged.fxml");
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "remover produto"
+     * 
+     * A função irá remover o produto do banco de dados e exibir uma janela informando ao usuário
+     * que o produto foi removido. Logo após, irá voltar para a tela de inicio.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void removerProduto(ActionEvent action)
     {
@@ -96,6 +122,16 @@ public class ExibirProdutoController extends ControllerLogged
         this.voltarParaInicio(action);
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "editar produto"
+     * 
+     * A função irá setar o parâmetro de edição de produto para "true" na tela seguinte
+     * e carregar a tela.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void editarProduto(ActionEvent action)
     {
@@ -108,6 +144,12 @@ public class ExibirProdutoController extends ControllerLogged
         this.mudarScene("ScreenAdicionarProduto.fxml");
     }
 
+    /**
+     * Função para setar os objetos da tela com as informações de um produto.
+     * 
+     * @param produto
+     * Produto o qual as informações serão exibidas na tela.
+     */
     private void exibirProduto(Produto produto)
     {
         PainelProduto painelProduto = new PainelProduto(produto);
@@ -125,6 +167,12 @@ public class ExibirProdutoController extends ControllerLogged
         this.setarLojaDoProduto();
     }
 
+    /**
+     * Função para setar os objetos da tela com as especificações de um produto.
+     * 
+     * @param especificacoes
+     * Especificações do produto o qual as informações serão exibidas na tela.
+     */
     private void setarEspecificacoes(ArrayList<Especificacao> especificacoes)
     {
         Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
@@ -140,6 +188,12 @@ public class ExibirProdutoController extends ControllerLogged
         this.anchorEspecificacao.setPrefHeight(this.textFlowEspecificacao.getMaxHeight());
     }
 
+    /**
+     * Função para setar os objetos da tela com as tags de um produto.
+     * 
+     * @param tags
+     * Tags do produto o qual as informações serão exibidas na tela.
+     */
     private void setarTags(ArrayList<Tag> tags)
     {
         Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
@@ -155,6 +209,12 @@ public class ExibirProdutoController extends ControllerLogged
         this.anchorTag.setPrefHeight(this.textFlowTag.getMaxHeight());
     }
 
+    /**
+     * Função para setar os objetos da tela com a descricao de um produto.
+     * 
+     * @param descricao
+     * Descricao do produto o qual as informações serão exibidas na tela.
+     */
     private void setarDescricao(String descricao)
     {
         Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
@@ -164,8 +224,14 @@ public class ExibirProdutoController extends ControllerLogged
 
         this.textFlowDescricao.getChildren().add(descricaoText);
         this.anchorDescricao.setPrefHeight(this.textFlowDescricao.getMaxHeight());
-    }
+    }   
 
+    /**
+     * Função para setar os objetos da tela com a loja associada a um produto.
+     * 
+     * A função irá puxar as informações da loja do banco de dados e atribuir as informações
+     * aos objetos necessários.
+     */
     private void setarLojaDoProduto()
     {
         /* 
@@ -189,6 +255,14 @@ public class ExibirProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para setar os objetos da tela associados com a categoria de um produto.
+     * 
+     * A função irá puxar as informações necessárias do banco de dados.
+     * 
+     * @param categoria
+     * Categoria do produto o qual as informações serão exibidas na tela.
+     */
     private void setarAtributosCategoria(String categoriaProduto)
     {
         this.nomeCategoria.setText(categoriaProduto);
@@ -284,6 +358,15 @@ public class ExibirProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para setar a barra de progresso do produto.
+     * 
+     * @param valorArrecadado
+     * Valor arrecadado do produto
+     * 
+     * @param valorProduto
+     * Preço total do produto
+     */
     private void mostrarPorcentagemParaValorProduto(double valorArrecadado, double valorProduto)
     {
         double porcentagem = (100 * valorArrecadado) / valorProduto;

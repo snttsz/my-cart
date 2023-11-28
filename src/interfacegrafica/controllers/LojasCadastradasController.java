@@ -33,9 +33,18 @@ import sistema.ProdutoEletronico;
 import sistema.Produto.Categorias;
 
 
-// TODO: mostrar tela de exibição de produto
+/**
+ * 
+ * Classe responsável por definir as implementações da tela de lojas cadastradas.
+ * 
+ * @author Glenda
+ * 
+ */
 public class LojasCadastradasController extends ControllerLogged
 {
+    /**
+     * Override do método padrão de inicialização da classe Controller do javafx.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -53,12 +62,18 @@ public class LojasCadastradasController extends ControllerLogged
             // setar essa variavel abaixo
             this.qtdDeLojasCadastradas = 2;
 
+            this.checarBotoesProxAnt();
+            
             this.addNovaPaginaLoja(this.getLojas());
+            
             this.exibirNovaPaginaLoja();
         }
         );
     }
 
+    /**
+     * Exibir mensagem de "Sem mais lojas" no painel da segunda loja
+     */
     public void mostrarPaneSemLoja2()
     {
         this.paneSemLoja.toFront();
@@ -111,6 +126,9 @@ public class LojasCadastradasController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para puxar lojas do banco de dados.
+     */
     private Loja[] getLojas()
     {
         // TODO: luis
@@ -128,6 +146,12 @@ public class LojasCadastradasController extends ControllerLogged
         return lojas;
     }
 
+    /**
+     * Função para puxar produtos de uma loja do banco de dados.
+     * 
+     * @param loja
+     * Loja a qual os produtos serão puxados.
+     */
     private Produto[] getProdutos(Loja loja)
     {
         // TODO: descomentar quando a função com o BD estiver pronta
@@ -155,6 +179,12 @@ public class LojasCadastradasController extends ControllerLogged
         return produtosLoja;
     }
 
+    /**
+     * Função para adicionar nova pagina de lojas à pilha de páginas.
+     * 
+     * @param lojas
+     * Vetor de lojas com as lojas que serão exibidas na tela.
+     */
     public void addNovaPaginaLoja(Loja[] lojas)
     {
         // TODO: descomentar isso aqui quando os comandos do banco estiverem prontos
@@ -174,9 +204,15 @@ public class LojasCadastradasController extends ControllerLogged
 
         PaginaLoja paginaLoja = new PaginaLoja(painelLoja1, painelLoja2);
 
-        this.pilhaLojas.add(paginaLoja);
+        this.pilhaLojas.push(paginaLoja);
     }
 
+    /**
+     * Retorna um vetor de PainelProduto com os produtos recebidos por parâmetro.
+     * 
+     * @param produtos
+     * Produtos que serão transformados em PainelProduto.
+     */
     private PainelProduto[] getPaineisProdutos(Produto[] produtos)
     {
         PainelProduto[] paineis = new PainelProduto[3];
@@ -196,6 +232,15 @@ public class LojasCadastradasController extends ControllerLogged
         return paineis;
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "próxima página"
+     * 
+     * A função irá chamar os métodos necessários para exibir os produtos da pŕoxima página.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void proximaPaginaLoja(ActionEvent action)
     {
@@ -208,6 +253,9 @@ public class LojasCadastradasController extends ControllerLogged
         this.exibirNovaPaginaLoja();
     }
 
+    /**
+     * Função para desabilitar os botões de próxima página e página anterior quando necessário.
+     */
     private void checarBotoesProxAnt()
     {
         if (this.marcadorLojaAtual >= this.qtdDeLojasCadastradas)
@@ -269,6 +317,15 @@ public class LojasCadastradasController extends ControllerLogged
 
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "página anterior"
+     * 
+     * A função irá chamar os métodos necessários para exibir os produtos da página anterior.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void anteriorPaginaLoja(ActionEvent action)
     {
@@ -281,7 +338,9 @@ public class LojasCadastradasController extends ControllerLogged
         this.exibirNovaPaginaLoja();
     }
 
-    @FXML
+    /**
+     * Função para setar os atributos necessários para exibir a página atual.
+     */
     public void exibirNovaPaginaLoja()
     {
         PaginaLoja paginaAtual = this.pilhaLojas.firstElement();
@@ -290,7 +349,9 @@ public class LojasCadastradasController extends ControllerLogged
         this.loja2.atualizarAtributosComPainelLoja(paginaAtual.getLoja2());
     }
 
-    @FXML
+    /**
+     * Função para inicializar o vetor de painéis do javafx.
+     */
     public void inicializarModels()
     {
         PainelProdutoJAVAFX produto1 = new PainelProdutoJAVAFX(this.produtoLoja1, this.nomeProduto, this.valorPrecoProduto, this.valorArrecadadoProduto, this.valorFaltamProduto, this.fotoProduto);
@@ -306,6 +367,13 @@ public class LojasCadastradasController extends ControllerLogged
         this.loja2 = new PainelLojaJAVAFX(this.paneLoja2, this.nomeLoja2, this.fotoLoja2, this.maisProdutosLoja2, produto1_2, produto2_2, produto3_2);
     }
 
+    /**
+     * Função acionada quando o usuário pressiona enter dentro do campo de pesquisar por loja.
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void pesquisarPorLojaNoBD(KeyEvent key)
     {
@@ -336,6 +404,15 @@ public class LojasCadastradasController extends ControllerLogged
         }
     }
 
+    /**
+     * Função acionada quando o usuário clica em um produto.
+     * 
+     * A função irá chamar a tela de exibição dos detalhes de um produto.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void exibirProdutoSelecionado(ActionEvent action)
     {

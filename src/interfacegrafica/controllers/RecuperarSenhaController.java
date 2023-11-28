@@ -11,13 +11,40 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import sistema.Usuario;
 
+
+/**
+ * 
+ * Classe responsável por definir as implementações da tela de recuperar senha do usuário.
+ * 
+ * @author Glenda
+ * 
+ */
 public class RecuperarSenhaController extends Controller
 {
+    /**
+     * Função acionada quando o usuário clicar no botão "Voltar"
+     * 
+     * A função irá voltar para a tela de início.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void voltarParaInicio(ActionEvent event)
     {
         this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
+    /**
+     * Função acionada quando o usuário clica no botão "verificar autenticidade"
+     * 
+     * Função irá checar no banco de dados se as informações inseridas pelo usuário são
+     * válidas para que a recuperação de senha seja permitida.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void checarPermissaoAlterarSenha(ActionEvent event)
     {
         String usuario = this.login.getText();
@@ -51,8 +78,17 @@ public class RecuperarSenhaController extends Controller
             this.retanguloResultado.setFill(Color.RED);
             this.textoResultado.setText("Os dados inseridos são inválidos! Infelizmente, você não poderá modificar sua senha. Para mais informações, entre em contato com o e-mail kalvinalbuquerque5@gmail.com");
         }
-    }
+    }   
 
+    /**
+     * Função acionada quando o usuário clica no botão "alterar senha"
+     * 
+     * Função irá alterar a senha do usuário no banco de dados.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     public void alterarSenhaBD(ActionEvent action)
     {
         String novasenha = this.senha.getText();

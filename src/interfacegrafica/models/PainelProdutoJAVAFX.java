@@ -24,6 +24,7 @@ public class PainelProdutoJAVAFX
         if (painelProduto == null)
         {
             this.produtoLoja.setOpacity(0);
+            this.produtoLoja.setDisable(true);
             
             return;
         }

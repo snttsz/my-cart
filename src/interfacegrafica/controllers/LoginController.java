@@ -87,7 +87,8 @@ public class LoginController extends Controller
 
         if (Controller.idUsuario != 0)
         {
-            this.carregarNovaScene("ScreenLogged.fxml", true, root);
+            // this.carregarNovaScene("ScreenLogged.fxml", true, root);
+            this.carregarNovaScene("ScreenExibirProdutos.fxml", true, root);
         }
         else
         {

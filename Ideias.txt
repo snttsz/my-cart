@@ -22,6 +22,8 @@
 
     -> Na tela de adicoinar produto, fazer o campo de valores so aceitar numeross
 
+    -> Alterar dados do usuário dentro do programa
+
 -> Ideias para o sistema:
 
     -> Ter lojas cadastradas e elaborar formas de um produto ter ou não ter uma loja associada.

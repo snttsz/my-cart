@@ -51,6 +51,10 @@ public class CadastrarProdutoController extends ControllerLogged
             this.puxarCategorias();
             this.inicializarCamposCategoria();
 
+            /* 
+             * Se o modo de exibição for para editar o produto, insere os dados do produto no campo
+             * para que sejam coletados e salvos quando o usuário solicitar.
+             */
             if (ControllerLogged.editarProduto)
             {
                 this.inserirDadosDoProduto();
@@ -70,6 +74,11 @@ public class CadastrarProdutoController extends ControllerLogged
         this.especificacoesText = new ArrayList<Text>();
     }
 
+    /**
+     * Função para inicializar os campos que estão associados à categoria do produto. A função
+     * irá diminuir a opacidade e desabilitar os campos para que sejam habilitados de acordo
+     * posteriormente.
+     */
     private void inicializarCamposCategoria()
     {
         this.cor.setOpacity(0.5);
@@ -648,6 +657,10 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para checar se foi adicionado um novo caractere no campo de associar uma loja ao produto.
+     * A função irá reverter para nulo o objeto que define se a loja é válida ou não.
+     */
     @FXML
     public void entradaCaractereCampoLoja(KeyEvent key)
     {
@@ -655,6 +668,11 @@ public class CadastrarProdutoController extends ControllerLogged
         this.textoResultadoLoja.setText("");
     }
 
+    /**
+     * Função para inserir os dados de um produto já cadastrado.
+     * 
+     * Esta função será chamada apenas quando a tela estiver no modo de edição de produto, e não de criação.
+     */
     private void inserirDadosDoProduto()
     {
         /* TODO: luis

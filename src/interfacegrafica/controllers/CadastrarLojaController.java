@@ -12,8 +12,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * 
+ * Classe responsável por definir as implementações da tela de login do usuário.
+ * 
+ * @author Glenda
+ * 
+ */
 public class CadastrarLojaController extends ControllerLogged
 {
+    /**
+     * Função acionada quando o usuário clicar no botão "Cancelar"
+     * 
+     * A função irá voltar para a tela de início.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void voltarParaOInicio(ActionEvent action)
     {
@@ -36,6 +52,15 @@ public class CadastrarLojaController extends ControllerLogged
         super.botaoMenuClicked(mouse);
     }
 
+    /**
+     * Função acionada quando o usuário clicar no botão "cadastrar loja"
+     * 
+     * A função irá cadastrar a loja no banco de dados.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cadastrarLojaBD(ActionEvent action)
     {
@@ -48,6 +73,16 @@ public class CadastrarLojaController extends ControllerLogged
          */
     }
 
+    /**
+     * Função acionada quando o usuário clica no botão de adicionar foto.
+     * 
+     * A função irá abrir um file explorer, copiar a imagem selecionada para
+     * uma pasta local do projeto e exibi-la na tela para o usuário.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cadastrarFotoLoja(ActionEvent action)
     {
@@ -89,6 +124,10 @@ public class CadastrarLojaController extends ControllerLogged
         }
     }
 
+    /**
+     * Função para remover a foto do usuário da pasta local quando o mesmo adiciona uma foto à loja
+     * e cancela a operação de cadastro.
+     */
     private void excluirFotoDaLoja()
     {
         int lastIndexOf = this.fotoLoja.getImage().getUrl().lastIndexOf("/");

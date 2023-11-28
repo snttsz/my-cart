@@ -6,6 +6,11 @@ public class PaginaProduto
 {
     public PaginaProduto(Produto[] produtos)
     {
+        if (produtos == null)
+        {
+            return;
+        }
+
         this.produto1 = new PainelProduto(produtos[0]);
         this.produto2 = new PainelProduto(produtos[1]);
         this.produto3 = new PainelProduto(produtos[2]);
@@ -74,10 +79,10 @@ public class PaginaProduto
         this.produto6 = produto6;
     }
 
-    PainelProduto produto1;
-    PainelProduto produto2;
-    PainelProduto produto3;
-    PainelProduto produto4;
-    PainelProduto produto5;
-    PainelProduto produto6;
+    PainelProduto produto1 = null;
+    PainelProduto produto2 = null;
+    PainelProduto produto3 = null;
+    PainelProduto produto4 = null;
+    PainelProduto produto5 = null;
+    PainelProduto produto6 = null;
 }
