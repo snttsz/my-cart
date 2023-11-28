@@ -199,9 +199,9 @@ public class LojasCadastradasController extends ControllerLogged
     @FXML
     public void proximaPaginaLoja(ActionEvent action)
     {
-        this.addNovaPaginaLoja(this.getLojas());
-        
         this.marcadorLojaAtual += 2;
+        
+        this.addNovaPaginaLoja(this.getLojas());
 
         this.checarBotoesProxAnt();
 
