@@ -3,6 +3,7 @@ package interfacegrafica.controllers;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,7 +21,7 @@ import javafx.scene.paint.Color;
  * @author Glenda
  * 
  */
-public class CadastrarUsuarioController extends ControllerBeforeLogin
+public class CadastrarUsuarioController extends Controller
 {   
     /**
      * Função acionada quando o usuário clicar no botão "voltar".
@@ -33,7 +34,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void voltarParaInicio(ActionEvent action)
     {
-        this.carregarNovaScene("LoginScreen2.fxml", 0);
+        this.carregarNovaScene("LoginScreen2.fxml", false, root);
     }
 
     /**
@@ -97,10 +98,10 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
             {
                 /* Cadastrando usuário */
                 usuariosDAO.insert(newUsuario);
-                this.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
+                Controller.idUsuario = usuariosDAO.selectUsuariosCadastradosRecentemente(1).get(0).getId();
     
                 /* Entrando na tela de usuário logado */
-                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", this.idUsuario);
+                this.carregarNovaScene("ScreenCadastrarUsuarioFoto.fxml", true, root);
             }
         }
     }
@@ -115,7 +116,7 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      */
     public void continuarLogin(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenLogged.fxml", 0);
+        this.carregarNovaScene("ScreenLogged.fxml", true, root);
     }
 
     /**
@@ -130,50 +131,43 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
     {
         String filepath = this.abrirFileChooser(action);
 
+        if (filepath == null)
+        {
+            return;
+        }
+
         String caminhoPastaDestino = "src/img/users/";
 
         String nomeDaImagem = null;
 
         try
         {
-            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, this.idUsuario, this.puxarNomeDoUsuario());
+            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, Controller.idUsuario, this.puxarNomeDoUsuario());
+            
+            String caminhoFinal = "../../img/users/" + nomeDaImagem;
+    
+            while(true)
+            {
+                try
+                {
+                    Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                    this.fotoUsuario.setImage(image);
+                    break;
+                }
+                catch (Exception e)
+                {
+    
+                }
+            }
+    
+            /* Cadastrar a foto no banco de dados */
+            this.setarFotoUsuarioNoBanco(caminhoFinal);
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            // e.printStackTrace();
         }    
 
-        String caminhoFinal = "../../img/users/" + nomeDaImagem;
-
-        while(true)
-        {
-            try
-            {
-                Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
-                this.fotoUsuario.setImage(image);
-                break;
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-
-        /* Cadastrar a foto no banco de dados */
-        // this.setarFotoUsuarioNoBanco(caminhoFinal);
-    }
-
-    /**
-     * Função para cadastrar o caminho para a foto de perfil do usuário
-     * no banco de dados.
-     * 
-     * @param caminhoParaImagem
-     * Caminho relativo para a imagem de perfil do usuário.
-     */
-    public void setarFotoUsuarioNoBanco(String caminhoParaImagem)
-    {
-        usuariosDAO.updateUrl_Foto(usuariosDAO.selectById(this.idUsuario), caminhoParaImagem);
     }
 
     /* 
@@ -181,6 +175,9 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
      *  Botões
@@ -237,5 +234,4 @@ public class CadastrarUsuarioController extends ControllerBeforeLogin
 
     @FXML
     private ImageView fotoUsuario;
-
 }

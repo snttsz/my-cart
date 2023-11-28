@@ -2,16 +2,17 @@ package interfacegrafica.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,23 +39,36 @@ public abstract class ControllerLogged extends Controller implements Initializab
     {
         // Aguarda até que o processo de inicialização seja finalizado para executar
         // o comando.
+        // Exemplo de titulo: My Cart - NomeDoUsuario_idDoUsuario
         Platform.runLater(() -> 
         {
             Stage stage = (Stage) this.root.getScene().getWindow();
             String title = stage.getTitle();
 
-            System.out.println(title);
-
+            /* Pegando índice do "-" */
             int indiceDoHifen = title.lastIndexOf("-");
-
+            
+            /* Removendo o conteúdo antes do "-" */
             String username = title.substring(indiceDoHifen + 1).trim();
 
-            if (username.length() > 13)
-            {
-                username = username.substring(0, 9) + "...";
-            }
+            /* Setando o título da janela com o nome do usuário */
+            stage.setTitle("MyCart - " + username);
+            
+            username = this.tratarNomeDoUsuario(username);
 
+            /* Setando o nome de usuário na interface */
             this.username.setText(username);
+            
+            /* 
+             * Setando a foto do usuário na interface
+             */
+
+            /* Puxando foto do banco de dados */
+            String caminhoFoto = this.usuariosDAO.selectById(Controller.idUsuario).getUrl_foto();
+
+            /* Mostrando foto na interface */
+            Image image = new Image(getClass().getResource(caminhoFoto).toExternalForm());
+            this.fotoUsuario.setImage(image);
         });
     }
 
@@ -142,6 +156,21 @@ public abstract class ControllerLogged extends Controller implements Initializab
             this.setaInicio.setOpacity(0);
             this.setaLojasCadastradas.setOpacity(0);
         }
+        /* 
+         * Checa se o botão clicado foi "lojas cadastradas" para exibir 
+         * a tela de lojas cadastradas.
+         */
+        else if (botaoSource.getId() == this.lojasCadastradas.getId())
+        {
+            this.mudarScene("ScreenLojasCadastradas.fxml");
+        }
+        /* 
+         * Checa se o botão clicado foi "inicio" para exibir a tela inicial.
+         */
+        else if (botaoSource.getId() == this.inicio.getId())
+        {
+            this.mudarScene("ScreenLogged.fxml");;
+        }
     }
 
     /**
@@ -186,6 +215,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
         }
     }
 
+    /**
+     * Função para mudar o cursor do mouse para a "mãozinha"
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cursorOn(MouseEvent mouse)
     {
@@ -194,6 +230,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
         source.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Função para mudar o cursor do mouse para default
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
     @FXML
     public void cursorNormal(MouseEvent mouse)
     {
@@ -202,28 +245,227 @@ public abstract class ControllerLogged extends Controller implements Initializab
         source.setCursor(Cursor.DEFAULT);
     }
 
-    protected void carregarNovaScene(String fxmlname)
+    /**
+     * Função para mudar a scene da janela.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    protected void mudarScene(String fxmlName)
     {
-        try 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(pathResources + fxmlname));
-            Parent novoRoot = loader.load();
-            
-            Stage stage = (Stage) this.root.getScene().getWindow();
-            Scene novaScene = new Scene(novoRoot);
+        this.carregarNovaScene(fxmlName, true, root);
+    }
 
-            stage.setScene(novaScene);
-            stage.show();
-        } 
-        catch (IOException e) 
+    /**
+     * Função acionada quando o usuário clica no botão para sair da conta.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void sairDaConta(ActionEvent action)
+    {
+        this.carregarNovaScene("LoginScreen2.fxml", false, root);
+    }
+
+    /**
+     * Função acionada quando o usuário move o mouse pelo Node onde está
+     * a foto de perfil.
+     * 
+     * A função exibirá um texto abaixo do cursor indicando que ao clicar no local,
+     * sera possível modificar a foto de perfil.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void exibirTextoTrocarFotoUsuario(MouseEvent mouse)
+    {
+        this.exibirTextoDeAjuda(this.trocarFotoUsuario, "Alterar sua foto");
+    }
+
+    /**
+     * Função acionada quando o usuário move o mouse pelo Node onde está
+     * o nome de usuário.
+     * 
+     * A função exibirá um texto abaixo do cursor indicando que ao clicar no local,
+     * sera possível modificar seu nome.
+     * 
+     * @param mouse
+     * Objeto MouseEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void exibirTextoTrocarNomeUsuario(MouseEvent mouse)
+    {
+        this.exibirTextoDeAjuda(this.trocarNomeUsuario, "Alterar seu nome");
+    }
+
+    /**
+     * Função acionada quando o usuário clica em sua foto de perfil.
+     * 
+     * A função irá abrir o explorador de arquivos para que o usuário
+     * escolha uma nova imagem de perfil.
+     * 
+     * @param action
+     * Objeto ActionEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void alterarFotoUsuario(ActionEvent action)
+    {
+        String filepath = this.abrirFileChooser(action);
+
+        if (filepath == null)
         {
-            e.printStackTrace();
+            return;
+        }
+
+        String caminhoPastaDestino = "src/img/users/";
+
+        String nomeDaImagem = null;
+
+        try
+        {
+            nomeDaImagem = this.copiarImagem(filepath, caminhoPastaDestino, Controller.idUsuario, this.puxarNomeDoUsuario());
+            
+            String caminhoFinal = "../../img/users/" + nomeDaImagem;
+    
+            while(true)
+            {
+                try
+                {
+                    Image image = new Image(getClass().getResource(caminhoFinal).toExternalForm());
+                    this.fotoUsuario.setImage(image);
+                    break;
+                }
+                catch (Exception e)
+                {
+    
+                }
+            }
+    
+            /* Cadastrar a foto no banco de dados */
+            this.setarFotoUsuarioNoBanco(caminhoFinal);
+        }
+        catch (IOException e)
+        {
+            // e.printStackTrace();
         }
     }
 
-    protected void mudarScene(String fxmlName)
+    /**
+     * Função acionada quando o usuário clica no prórpio nome na área
+     * de perfil do usuário.
+     * 
+     */
+    @FXML
+    protected void mostrarCampoTrocarNomeUsuario()
     {
-        this.carregarNovaScene(fxmlName);
+        this.trocarNomeUsuario.toBack();
+        
+        this.novoNomeUsuario.toFront();
+        this.novoNomeUsuario.setOpacity(1);
+        this.novoNomeUsuario.requestFocus();
+    }
+
+    /**
+     * Função acionada quando o usuário digita algo com o textfield trocarNomeUsuario
+     * em foco. 
+     * 
+     * A função verifica se a tecla pressionada é enter para confirmar que o usuário
+     * terminou de inserir o novo nome e chama os métodos corretos para fazer as alterações
+     * no banco de dados.
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void checarEnterTrocaNomeUsuario(KeyEvent key)
+    {
+        if (key.getCode() == KeyCode.ENTER)
+        {
+            this.trocarNomeUsuario.toFront();
+
+            this.novoNomeUsuario.setOpacity(0);
+            this.novoNomeUsuario.toBack();
+
+            if (!novoNomeUsuario.getText().isEmpty())
+            {
+                this.alterarNomeDoUsuarioNoBD();
+            }
+        }
+    }   
+
+    /**
+     * Função acionada quando o usuário move o mouse para fora do textfield
+     * para definir um novo nome de usuário
+     * 
+     * @param key
+     * Objeto KeyEvent com informações sobre o evento e entidade
+     * que causou a chamada da função.
+     */
+    @FXML
+    protected void cancelarTrocaNome(MouseEvent mouse)
+    {
+        this.trocarNomeUsuario.toFront();
+
+        this.novoNomeUsuario.setOpacity(0);
+        this.novoNomeUsuario.toBack();
+    }
+
+    /**
+     * Função para alterar o nome do usuário no banco de dados.
+     */
+    protected void alterarNomeDoUsuarioNoBD()
+    {
+        String novoNome = this.novoNomeUsuario.getText();
+
+        /* 
+         * TODO: luis
+         * 
+         * variavel com o id do usuario: this.idUsuario
+         */
+
+        novoNome = this.tratarNomeDoUsuario(novoNome);
+        
+        this.username.setText(novoNome);
+    }
+
+    /**
+     * Função para implementar as definições corretas no nome do usuário
+     * para exibi-lo na tela de perfil.
+     * 
+     * @param username
+     * Nome do usuário
+     * 
+     * @return
+     * String com o nome do usuário tratado corretamente.
+     */
+    protected String tratarNomeDoUsuario(String username)
+    {
+        /* 
+        * Caso o nome do usuário seja composto ou haja um sobrenome,
+        * mostra apenas o primeiro nome.
+        */
+        if (username.contains(" "))
+        {
+            int indexOf = username.indexOf(" ");
+
+            username = username.substring(0, indexOf);
+        }
+
+        /* Se o nome contém mais que 13 letras, encurta substituindo com "..." */
+        if (username.length() > 13)
+        {
+            username = username.substring(0, 9) + "...";
+        }
+
+        return username;
     }
 
     /* 
@@ -231,10 +473,6 @@ public abstract class ControllerLogged extends Controller implements Initializab
      *      FXML ENTIDADES
      * 
      */
-
-    /* 
-    *    root
-    */
 
     @FXML
     protected Node root;
@@ -262,7 +500,10 @@ public abstract class ControllerLogged extends Controller implements Initializab
     protected Button trocarUsuario;
 
     @FXML
-    protected Button perfilUsuario;
+    protected Button trocarFotoUsuario;
+
+    @FXML
+    protected Button trocarNomeUsuario;
 
     /* 
      *    Input texto
@@ -270,6 +511,9 @@ public abstract class ControllerLogged extends Controller implements Initializab
 
     @FXML 
     protected TextField pesquisarField;
+
+    @FXML
+    protected TextField novoNomeUsuario;
 
     /* 
      *    Figuras geométricas
@@ -310,12 +554,30 @@ public abstract class ControllerLogged extends Controller implements Initializab
     protected Text username;
 
     /* 
+     *   ImageView
+     */
+
+    @FXML
+    protected ImageView fotoUsuario;
+
+    /* 
      * 
-     *      ATRIBUTOS INTERNOS
+     *      Atributos internos
      * 
      */
 
-    // Constante com o caminho pra pasta resources, onde está os arquivos .fxml
-    private final String pathResources = "../../resources/";
+    protected static int idProdutoAtual;
+    protected static boolean editarProduto;
+    
+    protected static int labelPaginaProdutoAtual;
+    protected static String valorLabelAtual;
 
+    protected enum labelsPaginasProduto
+    {
+        TAG,
+        ESPECIFICACAO,
+        LOJA,
+        TODOS_OS_PRODUTOS,
+        CATEGORIA
+    }
 }

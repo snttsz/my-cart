@@ -2,7 +2,7 @@ package sistema;
 
 import java.util.ArrayList;
 
-public abstract class Produto 
+public class Produto 
 {
 
     /* Construtores */
@@ -244,11 +244,15 @@ public abstract class Produto
     public enum Categorias
     {
         ELETRONICO("Eletrônico"),
-        ALIMENTICIO("Alimentício"),
         FERRAMENTA("Ferramenta"),
         LIVRO("Livro"),
         ROUPA("Roupa"),
-        MOBILIA("Mobília");
+        MOBILIA("Mobília"),
+        ACESSORIO("Acessório"),
+        CALCADO("Calçado"),
+        ELETRODOMESTICO("Eletrodoméstico"),
+        AUTOMOTIVO("Automotivo"),
+        CASAEJARDIM("Casa e Jardim");
 
         private final String categoria;
 

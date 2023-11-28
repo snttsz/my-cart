@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import DAO.ProdutoDAO;
 
-public class ProdutoRoupa extends Produto
+public class ProdutoModa extends Produto
 {
     
     /* Construtores */
 
-    public ProdutoRoupa(){};
+    public ProdutoModa(){};
 
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public ProdutoRoupa(int id, String descricao, String nome, double preco, String link,
+    public ProdutoModa(int id, String descricao, String nome, double preco, String link,
         String url_foto,  double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
@@ -31,7 +31,7 @@ public class ProdutoRoupa extends Produto
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public ProdutoRoupa( String descricao, String nome, double preco, String link,
+    public ProdutoModa( String descricao, String nome, double preco, String link,
         String url_foto,  double valorArrecadado, double valorFrete, 
         String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
         String tamanho, String cor, String material, int idUsuario, int idLoja) 
