@@ -38,33 +38,17 @@ public class InitialScreenLoggedController extends ControllerLogged
 
         if (source.getId() == adicionarProduto.getId())
         {   
+            /* 
+             * Boolean indicando que o carregamento da página será para
+             * cadastrar um produto, e não editá-lo.
+             */
+            ControllerLogged.editarProduto = false;
+
             this.mudarScene("ScreenAdicionarProduto.fxml");
         }   
         else if (source.getId() == adicionarLoja.getId())
-        {
-            
-        }
-    }
-
-    @FXML
-    @Override
-    public void botaoMenuClicked(MouseEvent mouse)
-    {
-        super.botaoMenuClicked(mouse);
-
-        Node botao = (Node) mouse.getSource();
-
-        if (botao.getId() == this.lojasCadastradas.getId())
-        {
-            this.mudarScene("ScreenLojasCadastradas.fxml");
-        }
-        else if (botao.getId() == this.categorias.getId())
-        {
-            // this.mudarSceneCategorias();
-        }
-        else if (botao.getId() == this.inicio.getId())
-        {
-            this.mudarScene("ScreenLogged.fxml");;
+        {   
+            this.mudarScene("ScreenCadastrarLoja.fxml");
         }
     }
 
@@ -73,6 +57,9 @@ public class InitialScreenLoggedController extends ControllerLogged
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
      *    Botões

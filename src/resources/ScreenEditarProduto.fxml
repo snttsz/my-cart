@@ -261,7 +261,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="adicionarNaLojaCampo" layoutX="186.0" layoutY="1105.0" onKeyPressed="#entradaCaractereCampoLoja" prefHeight="28.0" prefWidth="198.0" promptText="Ex: Aliexpress" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <TextField fx:id="adicionarNaLojaCampo" layoutX="186.0" layoutY="1105.0" prefHeight="28.0" prefWidth="198.0" promptText="Ex: Aliexpress" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <Button fx:id="adicionarProdutoNaLoja" layoutX="394.0" layoutY="1106.0" mnemonicParsing="false" onAction="#verificarSeLojaExiste" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="26.0" prefWidth="156.0" style="-fx-background-color: black;" text="Verificar a loja" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />

@@ -2,13 +2,13 @@ package interfacegrafica.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
-
 
 /**
  * 
@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
  * @author Glenda
  * 
  */
-public class LoginController extends ControllerBeforeLogin
+public class LoginController extends Controller
 {
     /**
      * Função acionada quando o usuário clicar no botão "entrar"
@@ -37,7 +37,7 @@ public class LoginController extends ControllerBeforeLogin
 
     /**
      * Função acionada quando o usuário estiver dentro dos campos
-     * usuario ou senha e pressionar "enter"
+     * usuario ou senha e pressionar "enter".
      * 
      * A função irá checar se os dados inseridos nos campos de textos
      * são válidos para realizar um login.
@@ -57,7 +57,7 @@ public class LoginController extends ControllerBeforeLogin
 
     public void recuperarSenha(ActionEvent event)
     {
-        this.carregarNovaScene("ScreenRecuperarSenha.fxml", 0);
+        this.carregarNovaScene("ScreenRecuperarSenha.fxml", false, root);
     }
 
     /**
@@ -74,7 +74,7 @@ public class LoginController extends ControllerBeforeLogin
     @FXML
     public void cadastrarUsuario(ActionEvent action)
     {
-        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", 0);
+        this.carregarNovaScene("ScreenCadastrarUsuario.fxml", false, root);
     }
 
     public void checarDadosInseridos()
@@ -83,12 +83,12 @@ public class LoginController extends ControllerBeforeLogin
         String password = this.password.getText();
 
         /* Verificando id do usuário, se não existir retorna 0 */
-        this.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
-        
-        /* O empty tem que sair */
-        if (this.idUsuario != 0 && !(usuario.isEmpty() || password.isEmpty()))
+        Controller.idUsuario = this.usuariosDAO.verificarVeracidadeDoUsuario(usuario, password);
+
+        if (Controller.idUsuario != 0)
         {
-            this.carregarNovaScene("ScreenLogged.fxml", this.idUsuario);
+            // this.carregarNovaScene("ScreenLogged.fxml", true, root);
+            this.carregarNovaScene("ScreenExibirProdutos.fxml", true, root);
         }
         else
         {
@@ -101,6 +101,9 @@ public class LoginController extends ControllerBeforeLogin
      *      FXML ENTIDADES
      * 
      */
+
+    @FXML
+    protected Node root;
 
     /* 
     *  Text

@@ -56,6 +56,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text fx:id="algoErrado" fill="RED" layoutX="655.0" layoutY="327.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Usuário ou senha incorretos." />
+      <Text fx:id="algoErrado" fill="RED" layoutX="655.0" layoutY="327.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Usuário ou senha inválidos." />
    </children>
 </AnchorPane>
