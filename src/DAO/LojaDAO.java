@@ -230,6 +230,13 @@ public class LojaDAO extends DAO<Loja>
 
     }
 
+    public int contarLojas()
+    {
+        ArrayList<Loja> lojas = this.selectAll();
+
+        return lojas.size();
+    }
+
     /* 
      * Método responsável por contar todas as lojas cadastradas por um usuário, com base no id do usario passado por parâmetro
      */
