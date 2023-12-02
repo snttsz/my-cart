@@ -1,6 +1,9 @@
 package interfacegrafica.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 // JavaFX libraries
@@ -21,6 +24,8 @@ import javafx.scene.text.Text;
 // Java libraries
 import java.util.Stack;
 
+import DAO.LojaDAO;
+import DAO.ProdutoDAO;
 // Local libraries
 import interfacegrafica.models.PaginaLoja;
 import interfacegrafica.models.PainelLoja;
@@ -29,8 +34,6 @@ import interfacegrafica.models.PainelProduto;
 import interfacegrafica.models.PainelProdutoJAVAFX;
 import sistema.Loja;
 import sistema.Produto;
-import sistema.ProdutoEletronico;
-import sistema.Produto.Categorias;
 
 
 /**
@@ -58,9 +61,7 @@ public class LojasCadastradasController extends ControllerLogged
         {
             this.inicializarModels();
 
-            // TODO: luis
-            // setar essa variavel abaixo
-            this.qtdDeLojasCadastradas = 2;
+            this.qtdDeLojasCadastradas = lojaDAO.contarLojas();
 
             this.checarBotoesProxAnt();
             
@@ -131,19 +132,28 @@ public class LojasCadastradasController extends ControllerLogged
      */
     private Loja[] getLojas()
     {
-        // TODO: luis
-        // cada chamada dessa função, preciso que retorne duas lojas
-        // usa o this.marcadorLojaAtual pra saber de qual até qual loja pegar
-        // tipo: o marcador tá na quinta loja, vc vai retornar a quinta loja e a sexta
-        // caso não tenha mais duas lojas, pode retornar a segunda nula
-        Loja[] lojas = new Loja[2];
-        
-        /* DEBUG */
-        lojas[0] = new Loja(1, "Shein", "https://br.shein.com", "img/shein.png");
-        lojas[1] = new Loja(2, "Aliexpress", "https://aliexpress.com", "img/aliexpress.png");
-        /* END OF DEBUG */
+        ArrayList<Loja> lojas = lojaDAO.selectAll();
+        ArrayList<Loja> lojasSelecionadas = new ArrayList<>();
 
-        return lojas;
+        int tamLojas = lojas.size(), i = this.marcadorLojaAtual;
+        if (tamLojas == 0) return null;
+
+        while ((i+1 <= tamLojas) && (lojasSelecionadas.size() < 2)) 
+        {
+            lojasSelecionadas.add(lojas.get(i));
+            i++;
+        }
+
+        if (lojasSelecionadas.size() == 1)
+        {
+            lojasSelecionadas.add(null);
+        }
+        else if (lojasSelecionadas.size() == 0)
+        {
+            return null;
+        }
+
+        return lojasSelecionadas.toArray(new Loja[lojasSelecionadas.size()]);
     }
 
     /**
@@ -154,29 +164,26 @@ public class LojasCadastradasController extends ControllerLogged
      */
     private Produto[] getProdutos(Loja loja)
     {
-        // TODO: descomentar quando a função com o BD estiver pronta
-        // if (loja == null)
-        // {
-        //     return null;
-        // }
-
-        // TODO: luis
-        // preciso de 3 produtos de cada loja
-        // caso não tenha 3, pode retornar o resto nulo
-        Produto[] produtosLoja = new Produto[3];
-
-        /* DEBUG */
-        if (loja.getId() == 1)
+        if (loja == null)
         {
-            produtosLoja[0] = new ProdutoEletronico("Nenhuma", "Josemar com risadinha", 300, "https://teste.com", "img/produto-foto-test.jpeg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 1);
+            return null;
         }
-        else
-        {
-            produtosLoja[0] = new ProdutoEletronico("Nenhuma", "Josemar sem risadinha", 200, "https://teste.com", "img/produto-foto-test2.jpg", 100, 50, Categorias.ELETRODOMESTICO.getCategoria(), null, null, Controller.idUsuario, 2);
-        }
-        /* END OF DEBUG */
 
-        return produtosLoja;
+        ArrayList<Produto> produtos = produtoDAO.selectTodosProdutosDoUsuario(ControllerLogged.idUsuario);
+        ArrayList<Produto> produtosDaLoja = new ArrayList<>();
+        for (Produto produto: produtos)
+        {
+            if (produto.getIdLoja() == loja.getId())
+            {
+                produtosDaLoja.add(produto);
+            }
+        }
+
+        if(produtosDaLoja.size() == 0)
+        {
+            return null;
+        }
+        return produtosDaLoja.toArray(new Produto[produtosDaLoja.size()]);
     }
 
     /**
@@ -298,13 +305,14 @@ public class LojasCadastradasController extends ControllerLogged
             LojasCadastradasController.idLojaAtual = this.pilhaLojas.firstElement().getLoja2().getIdLoja();   
         }
 
-        /* 
-        * TODO: luis
-        * setar essa varivel pra true se a loja tiver mais de
-        * tres produtos e false se tiver 3 ou menos de 3
-        * id da loja: LojasCadastradasController.idLojaAtual
-        */
         boolean exibirVerMais = false;
+
+        Loja loja = lojaDAO.selectById(LojasCadastradasController.idLojaAtual);
+        List<Produto> produtos = new ArrayList<>(Arrays.asList(this.getProdutos(loja)));
+        if (produtos.size() > 3)
+        {
+            exibirVerMais = true;
+        }
 
         if (exibirVerMais)
         {
@@ -381,12 +389,15 @@ public class LojasCadastradasController extends ControllerLogged
         {
             String nomeDaLoja = this.pesquisarLojaField.getText();
 
-            /* 
-             * TODO: luis
-             * procurar nome da loja no BD, se não tiver nenhuma,
-             * seta o obj abaixo pra nulo
-             */
-            Loja lojaEncontrada = new Loja("Teste", "https://teste.com", "img/myCart.png");
+            Loja lojaEncontrada = null;
+            ArrayList<Loja> lojasBD = lojaDAO.selectAll();
+            for (Loja loja : lojasBD)
+            {
+                if (nomeDaLoja.equals(loja.getNome()))
+                {
+                    lojaEncontrada = loja;
+                }
+            }
 
             if (lojaEncontrada == null)
             {
@@ -684,6 +695,9 @@ public class LojasCadastradasController extends ControllerLogged
 
     private PainelLojaJAVAFX loja1;
     private PainelLojaJAVAFX loja2;
+
+    private LojaDAO lojaDAO = new LojaDAO();
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
 
     public static int idLojaAtual;
     public static int idProdutoAtual;

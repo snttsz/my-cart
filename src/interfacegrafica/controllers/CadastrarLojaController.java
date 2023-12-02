@@ -3,6 +3,7 @@ package interfacegrafica.controllers;
 import java.io.IOException;
 import java.util.Random;
 
+import DAO.LojaDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import sistema.Loja;
 
 /**
  * 
@@ -68,9 +70,8 @@ public class CadastrarLojaController extends ControllerLogged
         String linkDaLoja = this.linkDaLoja.getText();
         String caminhoFotoLoja = this.fotoLoja.getImage().getUrl();
 
-        /* 
-         * TODO: luis
-         */
+        Loja novaLoja = new Loja(nomeDaLoja, linkDaLoja, caminhoFotoLoja);
+        lojaDAO.insert(novaLoja);
     }
 
     /**
@@ -176,5 +177,6 @@ public class CadastrarLojaController extends ControllerLogged
      */
     
     private boolean adicionouFotoLoja;
+    private LojaDAO lojaDAO = new LojaDAO();
     
 }
