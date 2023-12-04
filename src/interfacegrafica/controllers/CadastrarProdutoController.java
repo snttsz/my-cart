@@ -2,16 +2,26 @@ package interfacegrafica.controllers;
 
 import sistema.Tag;
 import sistema.Especificacao;
+import sistema.Loja;
 import sistema.Produto;
+import sistema.ProdutoEletronico;
+import sistema.ProdutoFerramenta;
+import sistema.ProdutoLivro;
+import sistema.ProdutoMobilia;
+import sistema.ProdutoModa;
 import sistema.Produto.Categorias;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import DAO.LojaDAO;
+import DAO.ProdutoDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -478,25 +488,57 @@ public class CadastrarProdutoController extends ControllerLogged
         String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
 
         String lojaDoProduto = this.adicionarNaLojaCampo.getText();
+        // TODO: luis
+        // pegar id da loja baseado no nome
+        // Provavelmente também editar as tags e categorias não está funcionando
 
         boolean canSendProductToDB = this.checarCamposObrigatorios();
 
         if (canSendProductToDB)
         {
-            /* 
-             * TODO: luis
-             */
-            
-            // atualizar produto no banco de dados com os atributos daqui
-            // id do produto: ControllerLogged.idProdutoAtual
-            if (ControllerLogged.editarProduto)
-            {
 
+            Produto novoProduto = new Produto();
+
+            if (categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
+            {
+                novoProduto = new ProdutoEletronico(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, 
+                fotoDoProduto, Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, idUsuario, 0);
+            } 
+            else if (categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
+            {
+                novoProduto = new ProdutoFerramenta(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, 
+                fotoDoProduto, Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, idUsuario, 0);
             }
-            // criar produto no banco de dados com os atributos daqui
+            else if (categoria.equals(Produto.Categorias.LIVRO.getCategoria()))
+            {
+                novoProduto = new ProdutoLivro(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto,
+                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, autor, genero, idUsuario, 0);
+            }
+            else if (categoria.equals(Produto.Categorias.MOBILIA.getCategoria()))
+            {
+                novoProduto = new ProdutoMobilia(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto, 
+                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, material, cor, 
+                Double.parseDouble(altura), Double.parseDouble(largura), Double.parseDouble(comprimento), idUsuario, 0);
+            }
+            else if (categoria.equals(Produto.Categorias.ROUPA.getCategoria()))
+            {
+                novoProduto = new ProdutoModa(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto, 
+                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, tamanho, cor, 
+                material, idUsuario, 0);
+            }
             else
             {
+                System.out.println("--- CATEGORIA INVÁLIDA ---");
+            }
 
+            if (ControllerLogged.editarProduto)
+            {
+                Produto toUpdateProduto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
+                produtoDAO.updateAll(toUpdateProduto, novoProduto);
+            }
+            else
+            {   
+                produtoDAO.insert(novoProduto);
             }
         }
         else
@@ -506,15 +548,21 @@ public class CadastrarProdutoController extends ControllerLogged
     }
 
     /**
-     * Função para puxar as categorias cadastradas no banco de dados.
+     * Função para puxar as categoriasc do usuário cadastradas no banco de dados.
      */
     public void puxarCategorias()
     {
-        /* 
-         * TODO: luis
-         */
-        /* Puxar categorias do banco de dados e botar nesse array */
+        ArrayList<Produto> produtosLista = produtoDAO.selectTodosProdutosDoUsuario(ControllerLogged.idUsuario);
         ArrayList<String> categoriasLista = new ArrayList<String>();
+        Set<String> set = new HashSet<>();
+
+        // Filtrando as categorias repetidas
+        for (Produto produto : produtosLista) {
+            String categoria = produto.getCategoria();
+            if (set.add(categoria)) {
+                categoriasLista.add(categoria);
+            }
+        }
 
         this.categoriasSplitDown.getItems().clear();
 
@@ -636,14 +684,16 @@ public class CadastrarProdutoController extends ControllerLogged
     {
         String nomeDaLoja = this.adicionarNaLojaCampo.getText();
 
-        /* 
-         * TODO: luis
-         */
-        // verificar se a loja já existe no banco de dados e setar
-        // a variável abaixo
-        // se a loja for cadastrada, retorna true, senão retorna false
+        boolean result = false;
 
-        boolean result = true;
+        ArrayList<Loja> lojas = lojaDAO.selectLojaPorNome(nomeDaLoja, 1);
+        for (Loja loja : lojas)
+        {
+            if (loja.getNome().equals(nomeDaLoja))
+            {
+                result = true;
+            }
+        }
 
         if (result)
         {
@@ -675,12 +725,7 @@ public class CadastrarProdutoController extends ControllerLogged
      */
     private void inserirDadosDoProduto()
     {
-        /* TODO: luis
-         * puxar os dados do produto no banco de dados
-         * e devolver um objeto produto. 
-         * Id do produto: ControllerLogged.idProdutoAtual
-         */
-        Produto produto = new Produto("Teste Descrição", "Memória Ram", 300, "https://teste.com", "img/myCart.png", 300,0, Categorias.LIVRO.getCategoria(), null, null, Controller.idUsuario, LojasCadastradasController.idLojaAtual);
+        Produto produto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
 
         if (produto.getUrl_foto() != null)
         {
@@ -721,13 +766,16 @@ public class CadastrarProdutoController extends ControllerLogged
             this.descricao.setText(produto.getDescricao());
         }
         
-        /* 
-         *  TODO: luis
-         * 
-         * pegar nome da loja que o produto tá cadastrado. Se não
-         * tiver nenhuma, retorna nulo
-         */
-        String nomeDaLoja = "Aliexpress";
+        String nomeDaLoja;
+        Loja loja = lojaDAO.selectById(produto.getIdLoja());
+        if (loja != null)
+        {
+            nomeDaLoja = loja.getNome();
+        }
+        else
+        {
+            nomeDaLoja = null;
+        }
 
         if (nomeDaLoja != null)
         {
@@ -990,4 +1038,6 @@ public class CadastrarProdutoController extends ControllerLogged
     private ArrayList<Text> tagsText;
 
     private boolean adicionouFotoProduto;
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    private LojaDAO lojaDAO = new LojaDAO();
 }

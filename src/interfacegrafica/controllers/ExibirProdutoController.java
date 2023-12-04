@@ -5,6 +5,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import DAO.LojaDAO;
+import DAO.ProdutoDAO;
 import interfacegrafica.models.PainelProduto;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -46,41 +48,9 @@ public class ExibirProdutoController extends ControllerLogged
 
         Platform.runLater(() -> 
         {
-            /* 
-             * TODO: luis
-             * // Puxar produto do banco de dados
-             * id do produto: ControllerLogged.idProdutoAtual
-             */
-            Produto produto;
+            Produto produto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
             
-            /* DEBUG */
-
-            ArrayList<Especificacao> especificacoes = new ArrayList<Especificacao>();
-
-            Especificacao especificacao1 = new Especificacao("Tipo de Memoria", "DDR3");
-            Especificacao especificacao2 = new Especificacao("Espaço de armazenamento: ", "16gb");
-
-            especificacoes.add(especificacao1);
-            especificacoes.add(especificacao1);
-            especificacoes.add(especificacao1);
-            especificacoes.add(especificacao1);
-            especificacoes.add(especificacao2);
-
-            ArrayList<Tag> tags = new ArrayList<Tag>();
-            
-            Tag tag1 = new Tag("pc");
-            Tag tag2 = new Tag("componente de pc");
-            
-            tags.add(tag1);
-            tags.add(tag1);
-            tags.add(tag1);
-            tags.add(tag1);
-            tags.add(tag1);
-            tags.add(tag2);
-
-            ProdutoLivro produtoTeste = new ProdutoLivro("Teste Descrição", "Memória Ram", 300, "https://teste.com", "img/myCart.png", 300,0, Categorias.LIVRO.getCategoria(), especificacoes, tags, "Terror", "Glenda", Controller.idUsuario, LojasCadastradasController.idLojaAtual);
-            
-            this.exibirProduto(produtoTeste);
+            this.exibirProduto(produto);
         });
     }
 
@@ -112,11 +82,8 @@ public class ExibirProdutoController extends ControllerLogged
     @FXML
     public void removerProduto(ActionEvent action)
     {
-        /* 
-         * TODO: luis
-         * remover o produto do banco de dados
-         * id do produto: ControllerLogged.idProdutoAtual
-         */
+        Produto produtoAtual = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
+        produtoDAO.delete(produtoAtual);
 
         this.abrirErroStage("O produto foi removido do sistema!");
         this.voltarParaInicio(action);
@@ -234,13 +201,12 @@ public class ExibirProdutoController extends ControllerLogged
      */
     private void setarLojaDoProduto()
     {
-        /* 
-         * TODO: luis
-         * buscar loja no banco de dados que tenha o id do produto
-         * caso nao tiver, retorna o objeto nulo
-         */
-        Loja loja = new Loja("Aliexpress", "https://teste.com", "img/aliexpress.png");
-        // loja = null;
+        Loja loja = null;
+        Produto produto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
+        if(produto != null)
+        {
+            loja = lojaDAO.selectById(produto.getIdLoja());
+        }
 
         if (loja != null)
         {
@@ -495,4 +461,6 @@ public class ExibirProdutoController extends ControllerLogged
 
     // Constante com a largura padrão da barra do produto
     private final int widthBarraProduto = 213;
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    private LojaDAO lojaDAO = new LojaDAO();
 }

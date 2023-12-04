@@ -632,6 +632,20 @@ public class ProdutoDAO extends DAO<Produto>
         this.updateDouble(produto, Produto.Coluna.VALOR_FRETE.getNomeColuna(), newValorFrete);
     }
 
+    public void updateAll(Produto produtoAtual, Produto novoProduto)
+    {
+        updateValorArrecadado(produtoAtual, novoProduto.getValorArrecadado());
+        updateValorFrete(produtoAtual, novoProduto.getValorFrete());
+        updateIdUsuario(produtoAtual, novoProduto.getIdUsuario());
+        updateDescricao(produtoAtual, novoProduto.getDescricao());
+        updateCategoria(produtoAtual, novoProduto.getCategoria());
+        updateUrl_foto(produtoAtual, novoProduto.getUrl_foto());
+        updateIdLoja(produtoAtual, novoProduto.getIdLoja());
+        updatePreco(produtoAtual, novoProduto.getPreco());
+        updateNome(produtoAtual, novoProduto.getNome());
+        updateLink(produtoAtual, novoProduto.getLink());
+    }
+
     /*
      * Atributos
      */
