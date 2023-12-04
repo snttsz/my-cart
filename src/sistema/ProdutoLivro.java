@@ -14,12 +14,9 @@ public class ProdutoLivro extends Produto
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public ProdutoLivro(int id, String descricao, String nome, double preco, String link,
-        String url_foto,  double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String autor, String genero, int idUsuario, int idLoja) 
+    public ProdutoLivro(int id, String descricao, String nome, double preco, String link, String url_foto,  double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String autor, String genero, int idUsuario, int idLoja) 
     {
-        super(id,descricao, nome, preco, link, url_foto, valorArrecadado, 
-        valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
+        super(id,descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
 
         this.autor = autor;
         this.genero = genero;
@@ -28,19 +25,43 @@ public class ProdutoLivro extends Produto
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public ProdutoLivro(String descricao, String nome, double preco, String link, String url_foto,
-         double valorArrecadado, double valorFrete,
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String autor,
-        String genero, int idUsuario, int idLoja) 
+    public ProdutoLivro(String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String autor, String genero, int idUsuario, int idLoja) 
     {
-        super(descricao, nome, preco, link, url_foto,
-        valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
+        super(descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
+        
         this.autor = autor;
         this.genero = genero;
     }
 
-    /* Getters e Setters */
+    @Override
+    public void inserirProdutoNoBD()
+    {
+        super.inserirProdutoNoBD();
 
+        /* 
+         * Adicionando atributos específicos da classe
+         */
+        this.atualizarAtributosEspecificos();
+    }
+
+    @Override
+    public void updateProdutoBD()
+    {
+        super.updateProdutoBD();
+
+        /* 
+         * Atualizando atributos específicos da classe
+         */
+        this.atualizarAtributosEspecificos();
+    }
+
+    private void atualizarAtributosEspecificos()
+    {
+        this.produtoDao.updateString(this, ColunaProdutoLivro.AUTOR.getNomeColuna(), this.autor);
+        this.produtoDao.updateString(this, ColunaProdutoLivro.GENERO.getNomeColuna(), this.genero);
+    }
+
+    /* Getters e Setters */
     public String getAutor() 
     {
         return this.autor;
@@ -49,7 +70,6 @@ public class ProdutoLivro extends Produto
     public void setAutor(String autor) 
     {
         this.autor = autor;
-        produtoDAO.updateString(this, Coluna.AUTOR.getNomeColuna(), this.autor);
     }
 
     public String getGenero() 
@@ -60,20 +80,19 @@ public class ProdutoLivro extends Produto
     public void setGenero(String genero) 
     {
         this.genero = genero;
-        produtoDAO.updateString(this, Coluna.GENERO.getNomeColuna(), this.genero);
     }
 
     /* 
      * Enum com as tabelas da classe
      */
-    public enum Coluna
+    public enum ColunaProdutoLivro
     {
         AUTOR("autor"),
         GENERO("genero");
 
         private final String nomeColuna;
 
-        Coluna(String nomeColuna)
+        ColunaProdutoLivro(String nomeColuna)
         {
             this.nomeColuna = nomeColuna;
         }
@@ -84,10 +103,7 @@ public class ProdutoLivro extends Produto
         }
     }
 
-
     /* Atributos */
     private String autor;
     private String genero;
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
-
 }

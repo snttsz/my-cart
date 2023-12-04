@@ -24,7 +24,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import DAO.LojaDAO;
+import DAO.ProdutoDAO;
 
 /**
  * Classe abstrata responsável por definir as implementações padrões 
@@ -162,7 +166,16 @@ public abstract class ControllerLogged extends Controller implements Initializab
          */
         else if (botaoSource.getId() == this.lojasCadastradas.getId())
         {
-            this.mudarScene("ScreenLojasCadastradas.fxml");
+            ArrayList<Integer> lojasCadastradas = this.lojaDAO.selectLojaUsuario(Controller.idUsuario);
+
+            if (lojasCadastradas.size() == 0)
+            {
+                this.abrirErroStage("Não há lojas cadastradas ainda!");
+            }
+            else
+            {
+                this.mudarScene("ScreenLojasCadastradas.fxml");
+            }
         }
         /* 
          * Checa se o botão clicado foi "inicio" para exibir a tela inicial.
@@ -580,4 +593,7 @@ public abstract class ControllerLogged extends Controller implements Initializab
         TODOS_OS_PRODUTOS,
         CATEGORIA
     }
+
+    protected LojaDAO lojaDAO = new LojaDAO();
+    protected ProdutoDAO produtoDAO = new ProdutoDAO();
 }

@@ -578,6 +578,7 @@ public class ProdutoDAO extends DAO<Produto>
         });
     }
 
+    
     /*
      * Funções de update para cada atributo da classe produto
      */

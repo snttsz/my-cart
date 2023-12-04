@@ -2,8 +2,6 @@ package sistema;
 
 import java.util.ArrayList;
 
-import DAO.ProdutoDAO;
-
 public class ProdutoMobilia extends Produto
 {
 
@@ -14,13 +12,9 @@ public class ProdutoMobilia extends Produto
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public ProdutoMobilia(int id,  String descricao, String nome, double preco, String link,
-        String url_foto, double valorArrecadado, double valorFrete, 
-        String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
-        String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja)
+    public ProdutoMobilia(int id,  String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja)
     {
-        super(id, descricao, nome, preco, link, url_foto,
-        valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
+        super(id, descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
             
         this.material = material;
         this.cor = cor;
@@ -32,14 +26,10 @@ public class ProdutoMobilia extends Produto
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public ProdutoMobilia( String descricao, String nome, double preco, String link,
-        String url_foto, double valorArrecadado,
-        double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags,
-        String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja) 
+    public ProdutoMobilia(String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, String material, String cor, double altura, double largura, double comprimento, int idUsuario, int idLoja) 
     {
 
-        super(descricao, nome, preco, link, url_foto,
-        valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
+        super(descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario,idLoja);
 
         this.material = material;
         this.cor = cor;
@@ -47,9 +37,39 @@ public class ProdutoMobilia extends Produto
         this.largura = largura;
         this.comprimento = comprimento;
     }
+
+    @Override
+    public void inserirProdutoNoBD()
+    {
+        super.inserirProdutoNoBD();
+
+        /* 
+         * Adicionando atributos específicos da classe
+         */
+        this.atualizarAtributosEspecificos();
+    }
+
+    @Override
+    public void updateProdutoBD()
+    {
+        super.updateProdutoBD();
+
+        /* 
+         * Atualizando atributos específicos da classe
+         */
+        this.atualizarAtributosEspecificos();
+    }
+
+    private void atualizarAtributosEspecificos()
+    {
+        this.produtoDao.updateString(this, ColunaProdutoMobilia.COR.getNomeColuna(), this.cor);
+        this.produtoDao.updateString(this, ColunaProdutoMobilia.MATERIAL.getNomeColuna(), this.material);
+        this.produtoDao.updateString(this, ColunaProdutoMobilia.ALTURA.getNomeColuna(), String.valueOf(this.altura));
+        this.produtoDao.updateString(this, ColunaProdutoMobilia.LARGURA.getNomeColuna(), String.valueOf(this.largura));
+        this.produtoDao.updateString(this, ColunaProdutoMobilia.COMPRIMENTO.getNomeColuna(), String.valueOf(this.comprimento));
+    }
     
     /* Getters e Setters */
-
 
     public String getMaterial() 
     {
@@ -59,7 +79,6 @@ public class ProdutoMobilia extends Produto
     public void setMaterial(String material) 
     {
         this.material = material;
-        produtoDAO.updateString(this, Coluna.MATERIAL.getNomeColuna(), this.material);
     }
 
     public String getCor() 
@@ -70,7 +89,6 @@ public class ProdutoMobilia extends Produto
     public void setCor(String cor) 
     {
         this.cor = cor;
-        produtoDAO.updateString(this, Coluna.COR.getNomeColuna(), this.cor);
     }
 
     public double getAltura() 
@@ -81,7 +99,6 @@ public class ProdutoMobilia extends Produto
     public void setAltura(double altura) 
     {
         this.altura = altura;
-        produtoDAO.updateDouble(this, Coluna.ALTURA.getNomeColuna(), this.altura);
     }
 
     public double getLargura() 
@@ -92,7 +109,6 @@ public class ProdutoMobilia extends Produto
     public void setLargura(double largura) 
     {
         this.largura = largura;
-        produtoDAO.updateDouble(this, Coluna.LARGURA.getNomeColuna(), this.largura);
     }
 
     public double getComprimento() 
@@ -103,13 +119,12 @@ public class ProdutoMobilia extends Produto
     public void setComprimento(double comprimento) 
     {
         this.comprimento = comprimento;
-        produtoDAO.updateDouble(this, Coluna.COMPRIMENTO.getNomeColuna(), this.comprimento);
     }
 
     /* 
      * Enum com as tabelas da classe
      */
-    public enum Coluna
+    public enum ColunaProdutoMobilia
     {
         MATERIAL("material"),
         COR("cor"),
@@ -119,7 +134,7 @@ public class ProdutoMobilia extends Produto
 
         private final String nomeColuna;
 
-        Coluna(String nomeColuna)
+        ColunaProdutoMobilia(String nomeColuna)
         {
             this.nomeColuna = nomeColuna;
         }
@@ -138,6 +153,4 @@ public class ProdutoMobilia extends Produto
     private double altura; 
     private double largura; 
     private double comprimento; 
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
-
 }

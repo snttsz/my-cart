@@ -105,13 +105,13 @@
                      </font>
                   </Text>
                   <TextField fx:id="nomeDoProduto" layoutX="169.0" layoutY="185.0" prefHeight="22.0" prefWidth="324.0" promptText="Digite um nome para o produto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
-                  <TextField fx:id="valorDoProduto" layoutX="399.0" layoutY="249.0" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0,0" />
+                  <TextField fx:id="valorDoProduto" layoutX="399.0" layoutY="249.0" onKeyReleased="#filterOnlyDigits" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
                   <Text layoutX="16.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor arrecadado:" wrappingWidth="146.0">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="valorArrecadado" layoutX="157.0" layoutY="249.0" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0,0" />
+                  <TextField fx:id="valorArrecadado" layoutX="157.0" layoutY="249.0" onKeyReleased="#filterOnlyDigits" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
                   <Text layoutX="16.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoria *:" wrappingWidth="146.0">
                      <font>
                         <Font size="15.0" />
@@ -189,7 +189,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="valorDoFrete" layoutX="630.0" layoutY="249.0" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0,0" />
+                  <TextField fx:id="valorDoFrete" layoutX="630.0" layoutY="249.0" onKeyReleased="#filterOnlyDigits" prefHeight="24.0" prefWidth="93.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
                   <TextField fx:id="cor" layoutX="56.0" layoutY="349.0" prefHeight="28.0" prefWidth="179.0" promptText="Ex: Preto" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
                   <Text layoutX="504.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link:" wrappingWidth="42.0">
                      <font>
@@ -224,9 +224,9 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="altura" layoutX="70.0" layoutY="398.0" prefHeight="28.0" prefWidth="139.0" promptText="Em centímetros" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
-                  <TextField fx:id="largura" layoutX="292.0" layoutY="399.0" prefHeight="28.0" prefWidth="139.0" promptText="Em centímetros" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
-                  <TextField fx:id="comprimento" layoutX="568.0" layoutY="400.0" prefHeight="28.0" prefWidth="139.0" promptText="Em centímetros" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <TextField fx:id="altura" layoutX="70.0" layoutY="398.0" onKeyReleased="#filterOnlyDigits" prefHeight="28.0" prefWidth="139.0" promptText="0.0" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
+                  <TextField fx:id="largura" layoutX="292.0" layoutY="399.0" onKeyReleased="#filterOnlyDigits" prefHeight="28.0" prefWidth="139.0" promptText="Em centímetros" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
+                  <TextField fx:id="comprimento" layoutX="568.0" layoutY="400.0" onKeyReleased="#filterOnlyDigits" prefHeight="28.0" prefWidth="139.0" promptText="Em centímetros" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" text="0.0" />
                   <Text layoutX="15.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autor:" wrappingWidth="68.0">
                      <font>
                         <Font size="15.0" />

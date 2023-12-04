@@ -14,16 +14,15 @@ import sistema.Produto.Categorias;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import DAO.LojaDAO;
 import DAO.ProdutoDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -33,6 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -449,9 +449,10 @@ public class CadastrarProdutoController extends ControllerLogged
     {
         String nomeDoProduto = this.nomeDoProduto.getText();
         String linkDoProduto = this.linkDoProduto.getText();
-        String valorArrecadado = this.valorArrecadado.getText();
-        String valorDoProduto = this.valorDoProduto.getText();
-        String valorDoFrete = this.valorDoFrete.getText();
+        
+        double valorArrecadado = Double.parseDouble(this.valorArrecadado.getText());
+        double valorDoProduto = Double.parseDouble(this.valorDoProduto.getText());
+        double valorDoFrete = Double.parseDouble(this.valorDoFrete.getText());
 
         for (Text especificacao : this.especificacoesText) 
         {
@@ -475,71 +476,92 @@ public class CadastrarProdutoController extends ControllerLogged
         String categoria = this.categoriasSplitDown.getText();
 
         String cor = this.cor.getText();
-        String tamanho = this.tamanho.getText();
         String material = this.material.getText();
-        String altura = this.altura.getText();
-        String largura = this.largura.getText();
-        String comprimento = this.comprimento.getText();
         String autor = this.autor.getText();
         String genero = this.genero.getText();
-
         String descricao = this.descricao.getText();
+        String tamanho = this.tamanho.getText();
         
-        String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
+        double altura = Double.parseDouble(this.altura.getText());
+        double largura = Double.parseDouble(this.largura.getText());
+        double comprimento = Double.parseDouble(this.comprimento.getText());
 
-        String lojaDoProduto = this.adicionarNaLojaCampo.getText();
-        // TODO: luis
-        // pegar id da loja baseado no nome
-        // Provavelmente também editar as tags e categorias não está funcionando
+        String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
 
         boolean canSendProductToDB = this.checarCamposObrigatorios();
 
         if (canSendProductToDB)
         {
-
-            Produto novoProduto = new Produto();
+            int idLoja = getIdLoja();
 
             if (categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
             {
-                novoProduto = new ProdutoEletronico(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, 
-                fotoDoProduto, Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, idUsuario, 0);
+                ProdutoEletronico novoProduto = new ProdutoEletronico(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, ControllerLogged.idUsuario, idLoja, cor, material);
+
+                if (ControllerLogged.editarProduto)
+                {
+                    novoProduto.updateProdutoBD();
+                }
+                else
+                {
+                    novoProduto.inserirProdutoNoBD();
+                }
             } 
             else if (categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
             {
-                novoProduto = new ProdutoFerramenta(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, 
-                fotoDoProduto, Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, idUsuario, 0);
+                ProdutoFerramenta novoProduto = new ProdutoFerramenta(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, ControllerLogged.idUsuario, idLoja, material, cor, altura, largura, comprimento);
+                
+                if (ControllerLogged.editarProduto)
+                {
+                    novoProduto.updateProdutoBD();
+                }
+                else
+                {
+                    novoProduto.inserirProdutoNoBD();
+                }
             }
             else if (categoria.equals(Produto.Categorias.LIVRO.getCategoria()))
             {
-                novoProduto = new ProdutoLivro(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto,
-                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, autor, genero, idUsuario, 0);
+                ProdutoLivro novoProduto = new ProdutoLivro(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, especificacoes, tags, autor, genero, idUsuario, idLoja);
+                
+                if (ControllerLogged.editarProduto)
+                {
+                    novoProduto.updateProdutoBD();
+                }
+                else
+                {
+                    novoProduto.inserirProdutoNoBD();
+                }
             }
             else if (categoria.equals(Produto.Categorias.MOBILIA.getCategoria()))
             {
-                novoProduto = new ProdutoMobilia(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto, 
-                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, material, cor, 
-                Double.parseDouble(altura), Double.parseDouble(largura), Double.parseDouble(comprimento), idUsuario, 0);
+                ProdutoMobilia novoProduto = new ProdutoMobilia(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, especificacoes, tags, material, cor, altura, largura, comprimento, idUsuario, idLoja);
+                
+                if (ControllerLogged.editarProduto)
+                {
+                    novoProduto.updateProdutoBD();
+                }
+                else
+                {
+                    novoProduto.inserirProdutoNoBD();
+                }
             }
             else if (categoria.equals(Produto.Categorias.ROUPA.getCategoria()))
             {
-                novoProduto = new ProdutoModa(descricao, nomeDoProduto, Double.parseDouble(valorDoProduto), linkDoProduto, fotoDoProduto, 
-                Double.parseDouble(valorArrecadado), Double.parseDouble(valorDoFrete), categoria, especificacoes, tags, tamanho, cor, 
-                material, idUsuario, 0);
-            }
-            else
-            {
-                System.out.println("--- CATEGORIA INVÁLIDA ---");
+                ProdutoModa novoProduto = new ProdutoModa(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, tamanho, cor, material, ControllerLogged.idUsuario, idLoja);
+                
+                if (ControllerLogged.editarProduto)
+                {
+                    novoProduto.updateProdutoBD();
+                }
+                else
+                {
+                    novoProduto.inserirProdutoNoBD();
+                }
             }
 
-            if (ControllerLogged.editarProduto)
-            {
-                Produto toUpdateProduto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
-                produtoDAO.updateAll(toUpdateProduto, novoProduto);
-            }
-            else
-            {   
-                produtoDAO.insert(novoProduto);
-            }
+            this.abrirErroStage("Produto adicionado com sucesso!");
+            this.mudarScene("ScreenLogged.fxml");
         }
         else
         {
@@ -547,28 +569,50 @@ public class CadastrarProdutoController extends ControllerLogged
         }
     }
 
+    private int getIdLoja()
+    {
+        int result = 0;
+
+        ArrayList<Integer> lojas = lojaDAO.selectLojaUsuario(ControllerLogged.idUsuario);
+
+        for (Integer idLoja : lojas)
+        {
+            Loja loja = lojaDAO.selectById(idLoja);
+
+            if (loja.getNome() == this.adicionarNaLojaCampo.getText())
+            {
+                result = loja.getId();
+                break;
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Função para puxar as categoriasc do usuário cadastradas no banco de dados.
      */
     public void puxarCategorias()
     {
-        ArrayList<Produto> produtosLista = produtoDAO.selectTodosProdutosDoUsuario(ControllerLogged.idUsuario);
-        ArrayList<String> categoriasLista = new ArrayList<String>();
-        Set<String> set = new HashSet<>();
-
-        // Filtrando as categorias repetidas
-        for (Produto produto : produtosLista) {
-            String categoria = produto.getCategoria();
-            if (set.add(categoria)) {
-                categoriasLista.add(categoria);
-            }
-        }
-
         this.categoriasSplitDown.getItems().clear();
-
-        for (String categoria : categoriasLista)
+        
+        Categorias[] categorias = Categorias.values();
+        
+        for (Categorias categoria : categorias)
         {
-            MenuItem novaCategoria = new MenuItem(categoria);
+            MenuItem novaCategoria = new MenuItem(categoria.getCategoria());
+
+            EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+                
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    categoriasSplitDown.setText(categoria.getCategoria());
+                    filtrarCamposPorCategoria();
+                }
+            };
+
+            novaCategoria.setOnAction(eventHandler);
 
             this.categoriasSplitDown.getItems().add(novaCategoria);
         }
@@ -576,13 +620,11 @@ public class CadastrarProdutoController extends ControllerLogged
 
     /**
      * Habilitar/Desabilitar campos a depender da categoria do produto em questão.
-     * 
-     * @param action
-     * Objeto ActionEvent com informações sobre o evento e entidade
-     * que causou a chamada da função.
      */
-    public void filtrarCamposPorCategoria(ActionEvent action)
+    public void filtrarCamposPorCategoria()
     {
+        this.inicializarCamposCategoria();
+        
         String categoriaProduto = this.categoriasSplitDown.getText();
 
         if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
@@ -612,25 +654,25 @@ public class CadastrarProdutoController extends ControllerLogged
             this.material.setOpacity(1);
             this.material.setDisable(false);
         }
-        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria())
+        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria() || categoriaProduto == Produto.Categorias.FERRAMENTA.getCategoria())
         {
-            this.cor.setOpacity(0.5);
-            this.cor.setDisable(true);
+            this.cor.setOpacity(1);
+            this.cor.setDisable(false);
 
-            this.tamanho.setOpacity(0.5);
-            this.tamanho.setDisable(true);
+            this.tamanho.setOpacity(1);
+            this.tamanho.setDisable(false);
 
-            this.material.setOpacity(0.5);
-            this.material.setDisable(true);
+            this.material.setOpacity(1);
+            this.material.setDisable(false);
 
-            this.altura.setOpacity(0.5);
-            this.altura.setDisable(true);
+            this.altura.setOpacity(1);
+            this.altura.setDisable(false);
 
-            this.largura.setOpacity(0.5);
-            this.largura.setDisable(true);
+            this.largura.setOpacity(1);
+            this.largura.setDisable(false);
 
-            this.comprimento.setOpacity(0.5);
-            this.comprimento.setDisable(true);
+            this.comprimento.setOpacity(1);
+            this.comprimento.setDisable(false);
         }
     }
     
@@ -687,6 +729,7 @@ public class CadastrarProdutoController extends ControllerLogged
         boolean result = false;
 
         ArrayList<Loja> lojas = lojaDAO.selectLojaPorNome(nomeDaLoja, 1);
+        
         for (Loja loja : lojas)
         {
             if (loja.getNome().equals(nomeDaLoja))
@@ -847,7 +890,7 @@ public class CadastrarProdutoController extends ControllerLogged
             // this.cor.setText(cor);
             // this.material.setText(material);
         }
-        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria())
+        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria() || categoriaProduto == Produto.Categorias.FERRAMENTA.getCategoria())
         {
             this.cor.setOpacity(0.5);
             this.cor.setDisable(true);
@@ -886,6 +929,20 @@ public class CadastrarProdutoController extends ControllerLogged
             // this.comprimento.setText(comprimento);
         }
 
+    }
+
+    @FXML
+    public void filterOnlyDigits(KeyEvent key)
+    {
+        Node source = (Node) key.getSource();
+        TextField field = (TextField) source;
+
+        if (!key.getCode().isDigitKey() && (key.getCode() != KeyCode.PERIOD || key.getCode() == KeyCode.PERIOD && field.getText().contains(".")) && !key.getCode().isArrowKey() && key.getCode() != KeyCode.BACK_SPACE)
+        {
+
+            field.clear();
+            field.setText("0.0");
+        }
     }
 
     /* 

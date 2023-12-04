@@ -2,7 +2,9 @@ package sistema;
 
 import java.util.ArrayList;
 
-public class Produto 
+import DAO.ProdutoDAO;
+
+public abstract class Produto 
 {
 
     /* Construtores */
@@ -13,9 +15,7 @@ public class Produto
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public Produto(int id, String descricao, String nome, double preco, String link,
-    String url_foto, double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
+    public Produto(int id, String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
@@ -30,15 +30,15 @@ public class Produto
         this.id = id;
         this.idUsuario = idUsuario;
         this.idLoja = idLoja;
+
+        this.produtoDao = new ProdutoDAO();
     }
     
     
     /* 
     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
     */
-    public Produto(String descricao, String nome, double preco, String link,
-    String url_foto,  double valorArrecadado, double valorFrete, 
-    String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
+    public Produto(String descricao, String nome, double preco, String link, String url_foto,  double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja) 
     {
         this.descricao = descricao;
         this.nome = nome;
@@ -52,6 +52,8 @@ public class Produto
         this.tags = tags;
         this.idUsuario = idUsuario;
         this.idLoja = idLoja;
+
+        this.produtoDao = new ProdutoDAO();
     }
     
     /* 
@@ -80,8 +82,7 @@ public class Produto
         this.setValorFrete(valorFrete);
     }
     
-    protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, 
-    String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria) 
+    protected void setValores(int disponibilidade, String descricao, String nome, double preco, String link,String url_foto, String marca, int prioridade, double valorArrecadado, double valorFrete, String categoria) 
     {
         this.setNome(nome);
         this.setPreco(preco);
@@ -208,6 +209,23 @@ public class Produto
         this.valorArrecadado = valorArrecadado;
     }
 
+    public ProdutoDAO getProdutoDAO()
+    {
+        return this.produtoDao;
+    }
+
+    public void inserirProdutoNoBD()
+    {
+        this.produtoDao.insert(this);
+        
+        this.id = this.produtoDao.selectProdutosCadastradosRecentemente(1).get(0).getId();
+    }
+
+    public void updateProdutoBD()
+    {
+        this.produtoDao.updateAll(this.produtoDao.selectById(this.id), this);
+    }
+    
     /* 
      * Enum com as tabelas da classe
      */
@@ -269,19 +287,20 @@ public class Produto
 
     /* Atributos */
 
-    private int id;
-    private int idUsuario;
-    private String descricao;
-    private String nome;
-    private String link;
-    private String url_foto;
-    private String categoria;
-    private double preco;
-    private double valorArrecadado;
-    private double valorFrete; 
-    private int idLoja;
-    private ArrayList<Especificacao> especificacoes;
-    private ArrayList<Tag> tags;
-    private static final String nomeTabela = "Produto";
+    protected int id;
+    protected int idUsuario;
+    protected String descricao;
+    protected String nome;
+    protected String link;
+    protected String url_foto;
+    protected String categoria;
+    protected double preco;
+    protected double valorArrecadado;
+    protected double valorFrete; 
+    protected int idLoja;
+    protected ArrayList<Especificacao> especificacoes;
+    protected ArrayList<Tag> tags;
+    protected static final String nomeTabela = "Produto";
 
+    protected ProdutoDAO produtoDao;
 }

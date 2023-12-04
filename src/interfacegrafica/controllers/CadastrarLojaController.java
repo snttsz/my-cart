@@ -72,6 +72,9 @@ public class CadastrarLojaController extends ControllerLogged
 
         Loja novaLoja = new Loja(nomeDaLoja, linkDaLoja, caminhoFotoLoja);
         lojaDAO.insert(novaLoja);
+
+        this.abrirErroStage("Loja cadastrada com sucesso!");
+        this.mudarScene("ScreenLogged.fxml");
     }
 
     /**

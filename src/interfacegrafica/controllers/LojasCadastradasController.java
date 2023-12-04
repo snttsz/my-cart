@@ -54,6 +54,10 @@ public class LojasCadastradasController extends ControllerLogged
         super.initialize(location, resources);
 
         this.pilhaLojas = new Stack<PaginaLoja>();
+
+        this.todasLojas = new ArrayList<Integer>();
+
+        this.marcadorLojaAtual = 0;
         
         // Aguarda até que o processo de inicialização seja finalizado para executar
         // o comando.
@@ -61,7 +65,9 @@ public class LojasCadastradasController extends ControllerLogged
         {
             this.inicializarModels();
 
-            this.qtdDeLojasCadastradas = lojaDAO.contarLojas();
+            this.qtdDeLojasCadastradas = this.lojaDAO.contarLojas();
+
+            this.todasLojas = this.lojaDAO.selectLojaUsuario(ControllerLogged.idUsuario);
 
             this.checarBotoesProxAnt();
             
@@ -132,28 +138,20 @@ public class LojasCadastradasController extends ControllerLogged
      */
     private Loja[] getLojas()
     {
-        ArrayList<Loja> lojas = lojaDAO.selectAll();
-        ArrayList<Loja> lojasSelecionadas = new ArrayList<>();
+        Loja[] lojas = new Loja[2];
 
-        int tamLojas = lojas.size(), i = this.marcadorLojaAtual;
-        if (tamLojas == 0) return null;
+        lojas[0] = this.lojaDAO.selectById(this.todasLojas.get(this.marcadorLojaAtual));
 
-        while ((i+1 <= tamLojas) && (lojasSelecionadas.size() < 2)) 
+        if (this.todasLojas.get(this.marcadorLojaAtual + 1) != null)
         {
-            lojasSelecionadas.add(lojas.get(i));
-            i++;
+            lojas[1] = this.lojaDAO.selectById(this.todasLojas.get(this.marcadorLojaAtual + 1));
+        }
+        else
+        {
+            lojas[1] = null;
         }
 
-        if (lojasSelecionadas.size() == 1)
-        {
-            lojasSelecionadas.add(null);
-        }
-        else if (lojasSelecionadas.size() == 0)
-        {
-            return null;
-        }
-
-        return lojasSelecionadas.toArray(new Loja[lojasSelecionadas.size()]);
+        return lojas;
     }
 
     /**
@@ -169,21 +167,23 @@ public class LojasCadastradasController extends ControllerLogged
             return null;
         }
 
-        ArrayList<Produto> produtos = produtoDAO.selectTodosProdutosDoUsuario(ControllerLogged.idUsuario);
-        ArrayList<Produto> produtosDaLoja = new ArrayList<>();
-        for (Produto produto: produtos)
+        ArrayList<Integer> produtos = this.lojaDAO.selectTodosProdutosDaLojaUsuario(loja.getId(), ControllerLogged.idUsuario);
+
+        Produto[] result = new Produto[3];
+
+        result[0] = null;
+        result[1] = null;
+        result[2] = null;
+
+        for (int i = 0; i < 3; i++)
         {
-            if (produto.getIdLoja() == loja.getId())
+            if (produtos.get(i) != null)
             {
-                produtosDaLoja.add(produto);
+                result[i] = this.produtoDAO.selectById(produtos.get(i));
             }
         }
 
-        if(produtosDaLoja.size() == 0)
-        {
-            return null;
-        }
-        return produtosDaLoja.toArray(new Produto[produtosDaLoja.size()]);
+        return result;
     }
 
     /**
@@ -194,20 +194,16 @@ public class LojasCadastradasController extends ControllerLogged
      */
     public void addNovaPaginaLoja(Loja[] lojas)
     {
-        // TODO: descomentar isso aqui quando os comandos do banco estiverem prontos
-        // if (lojas.get(1) == null)
-        // {
-        //     this.mostrarPaneSemLoja2();
-        // }
+        if (lojas[1] == null)
+        {
+            this.mostrarPaneSemLoja2();
+        }
 
         PainelProduto[] produtosLoja1 = this.getPaineisProdutos(this.getProdutos(lojas[0]));
         PainelProduto[] produtosLoja2 = this.getPaineisProdutos(this.getProdutos(lojas[1]));
     
-        // TODO: consertar os produtos com o index certo quando 
-        // os comandos do banco estiverem 
-        // prontos 
-        PainelLoja painelLoja1 = new PainelLoja(lojas[0], produtosLoja1[0], produtosLoja1[0], produtosLoja1[0]);
-        PainelLoja painelLoja2 = new PainelLoja(lojas[1], produtosLoja2[0], produtosLoja2[0], produtosLoja2[0]);
+        PainelLoja painelLoja1 = new PainelLoja(lojas[0], produtosLoja1[0], produtosLoja1[1], produtosLoja1[2]);
+        PainelLoja painelLoja2 = new PainelLoja(lojas[1], produtosLoja2[0], produtosLoja2[1], produtosLoja2[2]);
 
         PaginaLoja paginaLoja = new PaginaLoja(painelLoja1, painelLoja2);
 
@@ -276,7 +272,7 @@ public class LojasCadastradasController extends ControllerLogged
             this.proxPagina.setDisable(false);
         }
 
-        if (this.marcadorLojaAtual <= 1)
+        if (this.marcadorLojaAtual <= 0)
         {
             this.pagAnterior.setOpacity(0.5);
             this.pagAnterior.setDisable(true);
@@ -690,14 +686,13 @@ public class LojasCadastradasController extends ControllerLogged
 
     private Stack<PaginaLoja> pilhaLojas;
 
-    private int marcadorLojaAtual = 1;
+    private int marcadorLojaAtual;
     private int qtdDeLojasCadastradas;
 
     private PainelLojaJAVAFX loja1;
     private PainelLojaJAVAFX loja2;
 
-    private LojaDAO lojaDAO = new LojaDAO();
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    ArrayList<Integer> todasLojas;
 
     public static int idLojaAtual;
     public static int idProdutoAtual;

@@ -2,7 +2,6 @@ package sistema;
 
 public class Loja 
 {
-    
     /* Construtores */
 
     public Loja(){};

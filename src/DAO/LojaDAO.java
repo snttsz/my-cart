@@ -230,6 +230,47 @@ public class LojaDAO extends DAO<Loja>
 
     }
 
+
+    /* 
+     * Método responsável por retornar todos os produtos cadastrados em uma loja, cadastrado por um determinado usuário
+     */
+    public ArrayList<Integer> selectTodosProdutosDaLojaUsuario(int idLoja, int idUsuario)
+    {
+        String condicao1 = StringManager.inserirIgualdade(Produto.Coluna.IDLOJA.getNomeColuna(), Integer.toString(idLoja));
+
+        String condicao2 = StringManager.inserirIgualdade(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(idUsuario));
+
+        String condicao = StringManager.inserirAnd(condicao1, condicao2);
+
+        /* Select idProduto FROM Produto WHERE Loja_idLoja = x AND Usuario_idUsuario = y; */
+        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), condicao);
+
+        System.out.println("HERE: " + instrucao);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> idProdutos = new ArrayList<Integer>();
+
+        try
+        {
+            while (resultSet.next()) 
+            {
+                idProdutos.add(resultSet.getInt(Produto.Coluna.ID.getNomeColuna()));
+            }
+
+            return idProdutos;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
     public int contarLojas()
     {
         ArrayList<Loja> lojas = this.selectAll();
@@ -397,6 +438,52 @@ public class LojaDAO extends DAO<Loja>
         this.updateString(loja, Loja.Coluna.URL_FOTO.getNomeColuna(), newUrl_foto);
     }
 
+    /* 
+     * Método responsável por retornar todos os ID's das lojas cadastradas por um usuário
+     */
+    public ArrayList<Integer> selectLojaUsuario(int idUsuario)
+    {
+        /* 
+        * Motando condição
+        */
+        
+        String condicao = StringManager.inserirIgualdade(Produto.getNomeTabela()+ "." + Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(idUsuario)); 
 
+        /* 
+        * Montando join
+        */
+        String tabela1 = Loja.getNomeTabela() + "." + Loja.Coluna.ID.getNomeColuna();
+        String tabela2 = Produto.getNomeTabela() + "." + Produto.Coluna.IDLOJA.getNomeColuna();
+        String join = StringManager.formatarJoin(Loja.getNomeTabela(), tabela1, tabela2);
+
+        /* SELECT Loja.idLoja FROM Produto JOIN Loja ON loja.idLoja = Produto.Loja_idLoja WHERE Produto.Usuario_idUsuario = x; */
+
+        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela() + join, Loja.getNomeTabela()+"." + Loja.Coluna.ID.getNomeColuna(), condicao);
+        System.out.println(instrucao);
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> idLojas = new ArrayList<Integer>();
+
+        try
+        {
+            while(resultSet.next())
+            {
+                System.out.println("djaslkdjaslkjdlaskj");
+                idLojas.add(resultSet.getInt(Loja.Coluna.ID.getNomeColuna())); 
+            }
+
+            return idLojas;
+        }
+        catch(SQLException e) 
+            {
+                e.printStackTrace(); 
+                throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+            }
+            finally
+            {
+                SQLiteConnectionManager.desconectar();
+            }
+
+    }
 }
 
