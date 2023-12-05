@@ -81,7 +81,7 @@ public class ProdutoEletronico extends Produto
     private String cor;
     private String material;
 
-    private enum ColunaProdutoEletronico
+    public enum ColunaProdutoEletronico
     {
         COR("cor"),
         MATERIAL("material");

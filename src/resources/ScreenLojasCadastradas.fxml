@@ -56,7 +56,7 @@
             <Glow />
          </effect>
       </Button>
-      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>
@@ -97,22 +97,18 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="25.0" layoutY="472.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
       <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="242.0" layoutY="199.0" prefHeight="376.0" prefWidth="855.0">
+      <ScrollPane fx:id="scrollPane" layoutX="242.0" layoutY="199.0" prefHeight="377.0" prefWidth="855.0">
         <content>
           <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="873.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
                <children>
                   <AnchorPane fx:id="paneLoja1" layoutX="23.0" layoutY="18.0" prefHeight="346.0" prefWidth="801.0">
                      <children>
-                        <Text fx:id="nomeLoja1" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
+                        <Text fx:id="nomeLoja1" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="223.1669921875">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Text>
-                        <ImageView fx:id="fotoLoja1" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/aliexpress.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="fotoLoja1" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
                         <Pane fx:id="produtoLoja1" layoutX="144.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
                            <children>
                               <ImageView fx:id="fotoProduto" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
@@ -143,7 +139,7 @@
                               <Button fx:id="produto1_loja1_button" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
-                        <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="301.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                        <Button fx:id="maisProdutosLoja1" layoutX="555.0" layoutY="301.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
@@ -175,7 +171,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="98.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto2_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto2_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -205,32 +201,22 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto3" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto3_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto3_loja1_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="semProdutosLoja1" layoutX="125.0" layoutY="45.0" prefHeight="301.0" prefWidth="676.0" style="-fx-background-color: white;">
+                           <children>
+                              <Text layoutY="159.0" opacity="0.31" strokeType="OUTSIDE" strokeWidth="0.0" text="Sem produtos..." textAlignment="CENTER" wrappingWidth="675.3271484375">
+                                 <font>
+                                    <Font name="System Italic" size="37.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="paneLoja2" layoutX="17.0" layoutY="390.0" prefHeight="348.0" prefWidth="801.0">
                      <children>
-                        <Pane fx:id="paneSemLoja" opacity="0.0" prefHeight="349.0" prefWidth="800.0" style="-fx-background-color: white;">
-                           <children>
-                              <Text fx:id="semMaisLojas" fill="#cdcdcd" layoutX="12.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Não há mais lojas para exibir..." textAlignment="CENTER" wrappingWidth="776.09716796875">
-                                 <font>
-                                    <Font name="System Italic" size="36.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Pane>
-                        <Text fx:id="nomeLoja2" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da Loja" wrappingWidth="223.1669921875">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Text>
-                        <ImageView fx:id="fotoLoja2" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/aliexpress.png" />
-                           </image>
-                        </ImageView>
                         <Pane fx:id="produtoLoja1_2" layoutX="144.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
                            <children>
                               <ImageView fx:id="fotoProduto1_2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
@@ -258,10 +244,10 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="101.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto1_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto1_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto1_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
-                        <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="306.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
+                        <Button fx:id="maisProdutosLoja2" layoutX="555.0" layoutY="306.0" mnemonicParsing="false" onAction="#verMaisProdutosDaLoja" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #f25e02; -fx-border-radius: 25; -fx-background-radius: 25;" text="Ver mais produtos desta loja" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
@@ -293,7 +279,7 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="7.0" layoutY="104.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto2_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto2_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto2_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
                         <Pane fx:id="produtoLoja3_2" layoutX="570.0" layoutY="56.0" prefHeight="234.0" prefWidth="215.0">
@@ -323,9 +309,33 @@
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="6.0" layoutY="107.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                               <Text fx:id="nomeProduto3_2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                              <Button fx:id="produto3_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                              <Button fx:id="produto3_loja2_button" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" onMousePressed="#clickedButton" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                            </children>
                         </Pane>
+                        <Pane fx:id="semProdutosLoja2" layoutX="124.0" layoutY="44.0" opacity="0.0" prefHeight="301.0" prefWidth="676.0" style="-fx-background-color: white;">
+                           <children>
+                              <Text layoutY="159.0" opacity="0.31" strokeType="OUTSIDE" strokeWidth="0.0" text="Sem produtos..." textAlignment="CENTER" wrappingWidth="675.3271484375">
+                                 <font>
+                                    <Font name="System Italic" size="37.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="paneSemLoja" prefHeight="349.0" prefWidth="800.0" style="-fx-background-color: white;">
+                           <children>
+                              <Text fx:id="semMaisLojas" fill="#cdcdcd" layoutX="12.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Não há mais lojas para exibir..." textAlignment="CENTER" wrappingWidth="776.09716796875">
+                                 <font>
+                                    <Font name="System Italic" size="36.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <ImageView fx:id="fotoLoja2" fitHeight="82.0" fitWidth="88.0" layoutX="28.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text fx:id="nomeLoja2" layoutX="28.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="223.1669921875">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
                   <Button fx:id="pagAnterior" disable="true" layoutX="218.0" layoutY="809.0" mnemonicParsing="false" onAction="#anteriorPaginaLoja" opacity="0.5" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #5e5e5e;" text="Página Anterior" textFill="WHITE">

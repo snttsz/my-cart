@@ -1,8 +1,11 @@
 package interfacegrafica.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Stack;
+
+import javax.swing.Action;
 
 import interfacegrafica.models.PaginaProduto;
 import interfacegrafica.models.PainelProdutoJAVAFX;
@@ -37,22 +40,38 @@ public class ExibirProdutosController extends ControllerLogged
 
         this.pilhaPaginas = new Stack<PaginaProduto>();
 
+        this.produtos = new ArrayList<Integer>();
+
         Platform.runLater(() -> 
         {
             this.inicializarPaineis();
 
-            /* 
-             * TODO: luis
-             * setar a variavel abaixo
-             */
-            this.qtdTotalProdutos = 6;
+            this.puxarProdutos();
 
-            this.checarBotoesProxAnt();
-            
             this.addNovaPagina();
+
+            this.marcadorProdutoAtual += 6;
+            
+            this.checarBotoesProxAnt();
             
             this.exibirPagina();
         });
+    }
+
+    private void puxarProdutos()
+    {
+        if (ControllerLogged.labelPaginaProdutoAtual.equals(labelsPaginasProduto.CATEGORIA.getNomeLabel()))
+        {
+            this.qtdTotalProdutos = this.produtoDAO.contarProdutosCategorizadosDoUsuario(ControllerLogged.idUsuario, ControllerLogged.valorLabelAtual);
+
+            this.produtos = this.produtoDAO.selectProdutosCategorizadosDoUsuario(ControllerLogged.idUsuario, ControllerLogged.valorLabelAtual);
+        }
+        if (ControllerLogged.labelPaginaProdutoAtual.equals(labelsPaginasProduto.NOME.getNomeLabel()))
+        {
+            this.qtdTotalProdutos = this.produtoDAO.countProdutosPorColuna("Produto." + Produto.Coluna.NOME.getNomeColuna(), ControllerLogged.valorLabelAtual, ControllerLogged.idUsuario);
+
+            this.produtos = this.produtoDAO.selectProdutosPorColuna("Produto." + Produto.Coluna.NOME.getNomeColuna(), ControllerLogged.valorLabelAtual, ControllerLogged.idUsuario);
+        }
     }
 
     @FXML
@@ -167,17 +186,26 @@ public class ExibirProdutosController extends ControllerLogged
      */
     private void addNovaPagina()
     {
-        /* 
-         * TODO: luis
-         * retornar um vetor com 6 produtos. caso não tenha +6 produtos,
-         * retornar o resto nulo.
-         * usa o this.marcadorProdutoAtual pra ver de qual produto você vai começar
-         * ex: marcador ta no 6, você vai pegar do sétimo até o décimo segundo
-         * se nao tiver produto, retorna o vetor nulo
-         * 
-         * Na hora que for fazer esse me fala que tem uns bo
-         */
-        Produto[] produtos = null;
+        Produto[] produtos = new Produto[6];
+
+        produtos[0] = null;
+        produtos[1] = null;
+        produtos[2] = null;
+        produtos[3] = null;
+        produtos[4] = null;
+        produtos[5] = null;
+
+        for (int i = this.marcadorProdutoAtual; i < marcadorProdutoAtual + 6; i++)
+        {
+            try
+            {
+                produtos[i] = this.produtoDAO.selectById(this.produtos.get(i));
+            }
+            catch (IndexOutOfBoundsException exception)
+            {
+
+            }
+        }
 
         PaginaProduto paginaProduto = new PaginaProduto(produtos);
 
@@ -228,27 +256,27 @@ public class ExibirProdutosController extends ControllerLogged
     {
         Node button = (Node) action.getSource();
 
-        if (button.getId() == produto1.getId())
+        if (button.getId() == botao_produto.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto1().getIdProduto();
         }
-        else if (button.getId() == produto2.getId())
+        else if (button.getId() == botao_produto1.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto2().getIdProduto();
         }
-        else if (button.getId() == produto3.getId())
+        else if (button.getId() == botao_produto2.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto3().getIdProduto();
         }
-        else if (button.getId() == produto4.getId())
+        else if (button.getId() == botao_produto3.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto4().getIdProduto();
         }
-        else if (button.getId() == produto5.getId())
+        else if (button.getId() == botao_produto4.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto5().getIdProduto();
         }
-        else if (button.getId() == produto6.getId())
+        else if (button.getId() == botao_produto5.getId())
         {
             ControllerLogged.idProdutoAtual = this.pilhaPaginas.firstElement().getProduto6().getIdProduto();
         }
@@ -279,6 +307,24 @@ public class ExibirProdutosController extends ControllerLogged
 
     @FXML
     private Button adicionarLoja;
+
+    @FXML
+    private Button botao_produto;
+
+    @FXML
+    private Button botao_produto1;
+
+    @FXML
+    private Button botao_produto2;
+
+    @FXML
+    private Button botao_produto3;
+
+    @FXML
+    private Button botao_produto4;
+
+    @FXML
+    private Button botao_produto5;
 
     /* 
      *  Paineis produto
@@ -407,7 +453,9 @@ public class ExibirProdutosController extends ControllerLogged
     private PainelProdutoJAVAFX[] paineisProdutos;
 
     private int qtdTotalProdutos;
-    private int marcadorProdutoAtual = 6;
+    private int marcadorProdutoAtual = 0;
 
     private Stack<PaginaProduto> pilhaPaginas;
+
+    private ArrayList<Integer> produtos;
 }

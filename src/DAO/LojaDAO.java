@@ -37,9 +37,10 @@ public class LojaDAO extends DAO<Loja>
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
                 String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
+                int idUsuario = resultSet.getInt("Usuario_idUsuario");
 
 
-                Loja loja = new Loja(idLoja, nome, url, url_foto);
+                Loja loja = new Loja(idLoja, nome, url, url_foto, idUsuario);
 
                 lojas.add(loja);
             }
@@ -82,8 +83,9 @@ public class LojaDAO extends DAO<Loja>
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
                 String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
+                int idUsuario = resultSet.getInt("Usuario_idUsuario");
 
-                Loja loja = new Loja(idLoja, nome, url, url_foto);
+                Loja loja = new Loja(idLoja, nome, url, url_foto, idUsuario);
 
                 return loja;
             }
@@ -105,6 +107,7 @@ public class LojaDAO extends DAO<Loja>
     public void insert(Loja loja) 
     {
         ArrayList<String> valoresString = new ArrayList<String>();
+        ArrayList<Integer> valoresInt = new ArrayList<Integer>();
 
         ArrayList<String> arrayColunas = new ArrayList<String>();
 
@@ -114,6 +117,7 @@ public class LojaDAO extends DAO<Loja>
         arrayColunas.add(Loja.Coluna.NOME.getNomeColuna());
         arrayColunas.add(Loja.Coluna.URL.getNomeColuna());
         arrayColunas.add(Loja.Coluna.URL_FOTO.getNomeColuna());
+        arrayColunas.add("Usuario_idUsuario");
 
 
 
@@ -123,9 +127,12 @@ public class LojaDAO extends DAO<Loja>
         valoresString.add(loja.getNome());
         valoresString.add(loja.getUrl());
         valoresString.add(loja.getUrl_foto());
+        
+        valoresInt.add(loja.getIdUsuario());
 
 
         ArrayList<String> valoresStringNormalizados = StringManager.formatarString(valoresString);
+        ArrayList<String> valorsIntNormalizados = StringManager.formatarInt(valoresInt);
 
         /* 
          * Montando instrução
@@ -133,7 +140,8 @@ public class LojaDAO extends DAO<Loja>
 
         String colunas = StringManager.montarString(arrayColunas);
 
-        String valores = StringManager.montarString(valoresStringNormalizados);
+        String valores = StringManager.montarString(valoresStringNormalizados) + ", " + 
+        StringManager.montarString(valorsIntNormalizados);
 
         String instrucao = SQLiteTableManager.insertTo(Loja.getNomeTabela(), colunas, valores);
 
@@ -244,8 +252,6 @@ public class LojaDAO extends DAO<Loja>
 
         /* Select idProduto FROM Produto WHERE Loja_idLoja = x AND Usuario_idUsuario = y; */
         String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), condicao);
-
-        System.out.println("HERE: " + instrucao);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
@@ -398,9 +404,9 @@ public class LojaDAO extends DAO<Loja>
                 String nome = resultSet.getString(Loja.Coluna.NOME.getNomeColuna());
                 String url = resultSet.getString(Loja.Coluna.URL.getNomeColuna());
                 String url_foto = resultSet.getString(Loja.Coluna.URL_FOTO.getNomeColuna());
+                int idUsuario = resultSet.getInt("Usuario_idUsuario");
 
-
-                Loja loja = new Loja(idLoja, nome, url, url_foto);
+                Loja loja = new Loja(idLoja, nome, url, url_foto, idUsuario);
 
                 lojas.add(loja);
             }
@@ -443,23 +449,8 @@ public class LojaDAO extends DAO<Loja>
      */
     public ArrayList<Integer> selectLojaUsuario(int idUsuario)
     {
-        /* 
-        * Motando condição
-        */
-        
-        String condicao = StringManager.inserirIgualdade(Produto.getNomeTabela()+ "." + Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(idUsuario)); 
+        String instrucao = "SELECT Loja.idLoja FROM Loja WHERE Loja.Usuario_idUsuario = " + String.valueOf(idUsuario);
 
-        /* 
-        * Montando join
-        */
-        String tabela1 = Loja.getNomeTabela() + "." + Loja.Coluna.ID.getNomeColuna();
-        String tabela2 = Produto.getNomeTabela() + "." + Produto.Coluna.IDLOJA.getNomeColuna();
-        String join = StringManager.formatarJoin(Loja.getNomeTabela(), tabela1, tabela2);
-
-        /* SELECT Loja.idLoja FROM Produto JOIN Loja ON loja.idLoja = Produto.Loja_idLoja WHERE Produto.Usuario_idUsuario = x; */
-
-        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela() + join, Loja.getNomeTabela()+"." + Loja.Coluna.ID.getNomeColuna(), condicao);
-        System.out.println(instrucao);
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
         ArrayList<Integer> idLojas = new ArrayList<Integer>();
@@ -468,7 +459,6 @@ public class LojaDAO extends DAO<Loja>
         {
             while(resultSet.next())
             {
-                System.out.println("djaslkdjaslkjdlaskj");
                 idLojas.add(resultSet.getInt(Loja.Coluna.ID.getNomeColuna())); 
             }
 

@@ -257,7 +257,6 @@ public class UsuariosDAO extends DAO<Usuario>
             {
                 result = false;
             }
-
         }
         catch(SQLException e)
         {   

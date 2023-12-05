@@ -56,7 +56,7 @@
             <Glow />
          </effect>
       </Button>
-      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>
@@ -124,8 +124,8 @@
                         </Text>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                         <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                        <Button fx:id="botao_produto" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -224,8 +224,8 @@
                         </Text>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                         <Text fx:id="nomeProduto3" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                        <Button fx:id="botao_produto3" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto3" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -258,8 +258,8 @@
                         </Text>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                         <Text fx:id="nomeProduto4" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
-                        <Button fx:id="botao_produto4" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto4" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />

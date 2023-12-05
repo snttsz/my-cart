@@ -8,15 +8,12 @@ import java.util.Map;
 
 import DAO.DAOMTM.Especificacao_has_Produto;
 import DAO.DAOMTM.Tag_has_Produto;
+import DAO.EspecificacaoDAO;
 import bancodedados.SQLiteConnectionManager;
 import bancodedados.SQLiteTableManager;
 import sistema.Especificacao;
 import sistema.Produto;
 import sistema.ProdutoEletronico;
-import sistema.ProdutoFerramenta;
-import sistema.ProdutoLivro;
-import sistema.ProdutoMobilia;
-import sistema.ProdutoModa;
 import sistema.Tag;
 import utils.StringManager;
 
@@ -109,9 +106,6 @@ public class ProdutoDAO extends DAO<Produto>
     @Override
     public void insert(Produto produto) 
     {
-        ArrayList<String> valoresString = new ArrayList<String>();
-        ArrayList<Integer> valoresInteger = new ArrayList<Integer>();
-        ArrayList<Double> valoresDouble = new ArrayList<Double>();
 
         ArrayList<String> arrayColunas = new ArrayList<String>();
         /* 
@@ -120,52 +114,82 @@ public class ProdutoDAO extends DAO<Produto>
 
         /* Importante seguir a ordem abaixo */
         arrayColunas.add(Produto.Coluna.NOME.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.LINK.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.DESCRICAO.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.URL_FOTO.getNomeColuna());
-        arrayColunas.add(Produto.Coluna.CATEGORIA.getNomeColuna());
-        /* loja */
         arrayColunas.add(Produto.Coluna.PRECO.getNomeColuna()); 
+        arrayColunas.add(Produto.Coluna.LINK.getNomeColuna());
+        arrayColunas.add(Produto.Coluna.URL_FOTO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna());
+        arrayColunas.add(Produto.Coluna.DESCRICAO.getNomeColuna());
         arrayColunas.add(Produto.Coluna.VALOR_FRETE.getNomeColuna());
+        arrayColunas.add(Produto.Coluna.CATEGORIA.getNomeColuna());
+        arrayColunas.add("Loja_idLoja");
         arrayColunas.add(Produto.Coluna.IDUSUARIO.getNomeColuna());
-
-        /* 
-         * Montando os valores referente a cada coluna
-         */
-        /* Valores do tipo TEXT */
-        valoresString.add(produto.getNome());
-        valoresString.add(produto.getLink());
-        valoresString.add(produto.getDescricao());
-        valoresString.add(produto.getUrl_foto());
-        valoresString.add(produto.getCategoria());
-
-        ArrayList<String> valoresStringNormalizados = StringManager.formatarString(valoresString);
-
-        /* Valores do tipo Integer */
-        valoresInteger.add(produto.getIdUsuario());
-        
-        ArrayList<String> valoresIntegerNormalizados = StringManager.formatarInt(valoresInteger);
-
-        /* Valores do tipo Double */
-        valoresDouble.add(produto.getPreco());
-        valoresDouble.add(produto.getValorArrecadado());
-        valoresDouble.add(produto.getValorFrete());
-
-        ArrayList<String> valoresDoubleNormalizados = StringManager.formatarDouble(valoresDouble);
 
         /* Montando string com a tabela, coluna e valores */
         String colunas = StringManager.montarString(arrayColunas);
 
-        String valores = 
-        StringManager.montarString(valoresStringNormalizados) + ", " + 
-        StringManager.montarString(valoresIntegerNormalizados) + ", " +
-        StringManager.montarString(valoresDoubleNormalizados);
+        String valores = StringManager.formatarString(produto.getNome()) + ", " + 
+        String.valueOf(produto.getPreco()) + ", " + StringManager.formatarString(produto.getLink()) +
+        ", " + StringManager.formatarString(produto.getUrl_foto()) + ", " + 
+        String.valueOf(produto.getValorArrecadado()) + ", " + StringManager.formatarString(produto.getDescricao()) +
+        ", " + String.valueOf(produto.getValorFrete()) + ", " + 
+        StringManager.formatarString(produto.getCategoria()) + ", " + 
+        String.valueOf(produto.getIdLoja()) + ", " + String.valueOf(produto.getIdUsuario());
 
         String instrucao = SQLiteTableManager.insertTo(Produto.getNomeTabela(), colunas, valores);
-
         SQLiteConnectionManager.enviarQuery(instrucao);
 
+        this.cadastrarTabelasAssociadas(this.selectProdutosCadastradosRecentemente(1).get(0).getId(), produto.getEspecificacoes(), produto.getTags());
+    }
+
+    public void cadastrarTabelasAssociadas(int idProduto, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags)
+    {
+        EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
+        TagDAO tagDao = new TagDAO();
+
+        ArrayList<Integer> idEspecificacoes = this.cadastrarEspecificacoes(especificacoes);
+        ArrayList<Integer> idTags = this.cadastrarTags(tags);
+
+        for (int idEspecificacao : idEspecificacoes)
+        {
+            this.especificacao_has_Produto_DAO.insert(especificacaoDAO.selectById(idEspecificacao), this.selectById(idProduto));
+        }
+
+        for (int idTag : idTags)
+        {
+            this.tag_has_Produto_DAO.insert(tagDao.selectById(idTag), this.selectById(idProduto));
+        }
+    }
+
+    public ArrayList<Integer> cadastrarEspecificacoes(ArrayList<Especificacao> especificacoes)
+    {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
+
+        for (Especificacao especificacao : especificacoes)
+        {
+            especificacaoDAO.insert(especificacao);
+        }
+
+        result = especificacaoDAO.selectEspecificacoesCadastradosRecentemente(especificacoes.size());
+
+        return result;
+    }
+
+    public ArrayList<Integer> cadastrarTags(ArrayList<Tag> tags)
+    {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        TagDAO tagDAO = new TagDAO();
+
+        for (Tag tag : tags)
+        {
+            tagDAO.insert(tag);
+        }
+
+        result = tagDAO.selectTagsCadastradosRecentemente(tags.size());
+
+        return result;
     }
 
     @Override
@@ -250,62 +274,15 @@ public class ProdutoDAO extends DAO<Produto>
         String url_foto = produto.get(Produto.Coluna.URL_FOTO.getNomeColuna());
         String descricao = produto.get(Produto.Coluna.DESCRICAO.getNomeColuna());
 
-        if(categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()) || categoria.equals(Produto.Categorias.ELETRODOMESTICO.getCategoria()))
-        {
-            ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, idUsuario, idLoja);
-            
-            return produtoEletronico;
-        }
-        else if(categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
-        {
-            ProdutoFerramenta produtoFerramenta = new ProdutoFerramenta(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, idUsuario, idLoja);
+        // Especificacao_has_Produto especificacao_has_ProdutoDAO = new Especificacao_has_Produto();
+        // ArrayList<Especificacao> especificacoes = this.especificacao_has_Produto_DAO.selectTodasEspecificacoesDoProduto(id);
 
-            return produtoFerramenta;
-        }
-        else if(categoria.equals(Produto.Categorias.LIVRO.getCategoria()))
-        {
-            String autor = produto.get(ProdutoLivro.Coluna.AUTOR.getNomeColuna());
-            String genero = produto.get(ProdutoLivro.Coluna.GENERO.getNomeColuna());
+        // Tag_has_Produto tag_has_Produto = new Tag_has_Produto();
+        // ArrayList<Tag> tags = this.tag_has_Produto_DAO.selectTodasTagsDoProduto(id);
 
-            ProdutoLivro produtoLivro = new ProdutoLivro(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, autor, genero, idUsuario, idLoja);
-            
-            return produtoLivro;
-        }
-        else if(categoria.equals(Produto.Categorias.MOBILIA.getCategoria()) || categoria.equals(Produto.Categorias.CASAEJARDIM.getCategoria()) || categoria.equals(Produto.Categorias.AUTOMOTIVO.getCategoria()))
-        {
-                
-            String material = produto.get(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()); 
-            String cor = produto.get(ProdutoMobilia.Coluna.COR.getNomeColuna());
-            double altura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.ALTURA.getNomeColuna()));
-            double largura = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.LARGURA.getNomeColuna())); 
-            double comprimento = Double.parseDouble(produto.get(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna()));
-
-
-            ProdutoMobilia produtoMobilia = new ProdutoMobilia(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, material, cor, altura, largura, comprimento, idUsuario, idLoja );
-
-            return produtoMobilia;
-        }
-        else if(categoria.equals(Produto.Categorias.ROUPA.getCategoria()) || categoria.equals(Produto.Categorias.ACESSORIO.getCategoria()) || categoria.equals(Produto.Categorias.CALCADO.getCategoria()))
-        {
-            String tamanho = produto.get(ProdutoModa.Coluna.TAMANHO.getNomeColuna()); 
-            String cor = produto.get(ProdutoModa.Coluna.COR.getNomeColuna());
-            String material = produto.get(ProdutoModa.Coluna.MATERIAL.getNomeColuna());
-
-            ProdutoModa produtoRoupa = new ProdutoModa(id, descricao, nome, preco, link, url_foto, valorArrecadado, 
-            valorFrete, categoria, null, null, tamanho, cor, material, idUsuario, idLoja);
-
-            return produtoRoupa;
-        }
-        else
-        {
-            System.out.println("Categoria inexistente!");
-            
-            return null;
-        }
+        ProdutoEletronico produtoEletronico = new ProdutoEletronico(id, descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, null, null, idUsuario, idLoja, null, null);
+    
+        return produtoEletronico;
     }
 
     /* 
@@ -327,6 +304,51 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDUSUARIO.getNomeColuna())));
                 produto.put(Produto.Coluna.IDLOJA.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDLOJA.getNomeColuna())));
     
+                /* Strings */
+                produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
+                produto.put(Produto.Coluna.DESCRICAO.getNomeColuna(), resultSet.getString(Produto.Coluna.DESCRICAO.getNomeColuna()));
+                produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
+                produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
+                produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
+    
+                /* Doubles */
+                produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
+                produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
+
+                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
+
+                return instanciarProduto(produto, categoria);  
+            }
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+
+        return null;
+    }
+
+    /* 
+     * Método responsável por receber um resultSet(informação vinda do banco de dados) e montar um produto
+     */
+    public static Map<String, String> montarProdutoMap(ResultSet resultSet)
+    {
+         /* 
+         * Montando produtos
+         */
+        Map<String,String> produto = new HashMap<>();
+        try
+        {
+
+            if(resultSet.next())
+            {
+                /* Inteiros */
+                produto.put(Produto.Coluna.ID.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.ID.getNomeColuna())));
+                produto.put(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDUSUARIO.getNomeColuna())));
+                produto.put(Produto.Coluna.IDLOJA.getNomeColuna(), Integer.toString(resultSet.getInt(Produto.Coluna.IDLOJA.getNomeColuna())));
+    
     
                 /* Strings */
                 produto.put(Produto.Coluna.NOME.getNomeColuna(), resultSet.getString(Produto.Coluna.NOME.getNomeColuna()));
@@ -334,24 +356,14 @@ public class ProdutoDAO extends DAO<Produto>
                 produto.put(Produto.Coluna.LINK.getNomeColuna(), resultSet.getString(Produto.Coluna.LINK.getNomeColuna()));
                 produto.put(Produto.Coluna.URL_FOTO.getNomeColuna(), resultSet.getString(Produto.Coluna.URL_FOTO.getNomeColuna()));
                 produto.put(Produto.Coluna.CATEGORIA.getNomeColuna(), resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna()));
-                produto.put(ProdutoLivro.Coluna.AUTOR.getNomeColuna(), resultSet.getString(ProdutoLivro.Coluna.AUTOR.getNomeColuna()));
-                produto.put(ProdutoLivro.Coluna.GENERO.getNomeColuna(), resultSet.getString(ProdutoLivro.Coluna.GENERO.getNomeColuna()));
-                produto.put(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna(), resultSet.getString(ProdutoMobilia.Coluna.MATERIAL.getNomeColuna()));       
-                produto.put(ProdutoMobilia.Coluna.COR.getNomeColuna(), resultSet.getString(ProdutoMobilia.Coluna.COR.getNomeColuna()));
     
     
                 /* Doubles */
                 produto.put(Produto.Coluna.PRECO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.PRECO.getNomeColuna())));
                 produto.put(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_ARRECADADO.getNomeColuna())));
                 produto.put(Produto.Coluna.VALOR_FRETE.getNomeColuna(), Double.toString(resultSet.getDouble(Produto.Coluna.VALOR_FRETE.getNomeColuna())));
-                produto.put(ProdutoMobilia.Coluna.ALTURA.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.ALTURA.getNomeColuna())));
-                produto.put(ProdutoMobilia.Coluna.LARGURA.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.LARGURA.getNomeColuna())));
-                produto.put(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna(),Double.toString(resultSet.getDouble(ProdutoMobilia.Coluna.COMPRIMENTO.getNomeColuna())));
 
-                String categoria = resultSet.getString(Produto.Coluna.CATEGORIA.getNomeColuna());
-
-                return instanciarProduto(produto, categoria);
-    
+                return produto;
             }
         }
         catch(SQLException e) 
@@ -366,23 +378,23 @@ public class ProdutoDAO extends DAO<Produto>
     /* 
      * Este método retorna um ArrayList contendo todos os produtos de um usuário passado por parâmetro
      */
-    public ArrayList<Produto> selectTodosProdutosDoUsuario(int idUsuario)
+    public ArrayList<Integer> selectTodosProdutosDoUsuario(int idUsuario)
     {
         /* 
          * Montando condição
          */
         String condicao = StringManager.inserirIgualdade(Produto.Coluna.IDUSUARIO.getNomeColuna(), Integer.toString(idUsuario));
 
-        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), "*", condicao);
+        String instrucao = SQLiteTableManager.select(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), condicao);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
-        ArrayList<Produto> produtos = new ArrayList<>();
+        ArrayList<Integer> produtos = new ArrayList<Integer>();
         try
         {
             while(resultSet.next())
             {
-                produtos.add(montarProduto(resultSet));
+                produtos.add(resultSet.getInt(Produto.Coluna.ID.getNomeColuna()));
             }
 
             return produtos;
@@ -419,14 +431,49 @@ public class ProdutoDAO extends DAO<Produto>
 
         try
         {   
-            if(resultSet != null)
+            if(resultSet.next())
             {
                 resultado = resultSet.getInt(1);
-
-                return resultado;
             }
 
             return resultado;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
+    public ArrayList<Integer> selectProdutosCadastradosRecentementePorUser(int qtdProdutosCadastrados, int idUsuario)
+    {
+        /* SELECT * FROM Produto WHERE Produto.Usuario_idUsuario = Y ORDER BY idProduto DESC LIMIT X; */
+        String qtd = Integer.toString(qtdProdutosCadastrados);
+
+        // String instrucao = SQLiteTableManager.selectOrderByLimitDec(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), qtd);
+        
+        /* SELECT Produto.idProduto
+            FROM Produto
+            WHERE Produto.Usuario_idUsuario = X
+            ORDER BY Produto.idProduto DESC LIMIT Y;
+        */
+        String instrucao = "SELECT Produto.idProduto FROM Produto WHERE Produto.Usuario_idUsuario = " + String.valueOf(idUsuario) + " ORDER BY Produto.idProduto DESC LIMIT " + qtd;
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> produtos = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                produtos.add(resultSet.getInt("idProduto"));
+            }
+
+            return produtos;
         }
         catch(SQLException e) 
         {
@@ -486,6 +533,36 @@ public class ProdutoDAO extends DAO<Produto>
         }
     }
 
+    public ArrayList<Integer> selectProdutosCategorizadosDoUsuario(int idUsuario, String categoria)
+    {
+        categoria = StringManager.formatarString(categoria);
+
+        String instrucao = "SELECT Produto.idProduto FROM Produto WHERE Produto.Usuario_idUsuario = " + String.valueOf(idUsuario) + " AND Produto.categoria = " + categoria;
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> resultados = new ArrayList<Integer>();
+
+        try
+        {   
+            if(resultSet != null)
+            {
+                resultados.add(resultSet.getInt("idProduto"));
+            }
+
+            return resultados;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
     /* 
      * Método responsável por retornar os x produtos cadastrados mais recentemente no banco de dados
      */
@@ -523,31 +600,60 @@ public class ProdutoDAO extends DAO<Produto>
     /* 
      * Método responsável por buscar produto pelo nome
      */
-    public ArrayList<Produto> selectProdutosPorNome(String nome, int quantidadeRetornada)
+    public ArrayList<Integer> selectProdutosPorColuna(String coluna, String valorAtributo, int idUsuario)
     {
-        nome = StringManager.formatarString(nome);
-        
-        String condicao = StringManager.inserirIgualdade(Produto.Coluna.NOME.getNomeColuna(), nome);
+        valorAtributo = "'%" + valorAtributo + "%'";
 
-        /* SELECT * FROM Produto WHERE nome = 'nome' LIMIT X; */
-
-        String instrucao = SQLiteTableManager.selectLimit(Produto.getNomeTabela(), "*", condicao, Integer.toString(quantidadeRetornada));
+        String instrucao = "SELECT Produto.idProduto FROM Produto WHERE " + coluna + " LIKE " + valorAtributo + " AND Produto.Usuario_idUsuario = " + String.valueOf(idUsuario);
 
         ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
 
-        ArrayList<Produto> produtos = new ArrayList<>();
+        ArrayList<Integer> produtos = new ArrayList<Integer>();
         try
         {
             while(resultSet.next())
             {
-                produtos.add(montarProduto(resultSet));
+                produtos.add(resultSet.getInt(Produto.Coluna.ID.getNomeColuna()));
             }
 
             return produtos;
         }
         catch(SQLException e) 
         {
-            e.printStackTrace(); 
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+
+    }
+
+    /* 
+     * Método responsável por buscar produto pelo nome
+     */
+    public int countProdutosPorColuna(String coluna, String valorAtributo, int idUsuario)
+    {
+        valorAtributo = "'%" + valorAtributo + "%'";
+
+        String instrucao = "SELECT COUNT(*) FROM Produto WHERE " + coluna + " LIKE " + valorAtributo + " AND Produto.Usuario_idUsuario = " + String.valueOf(idUsuario) + " GROUP BY Produto.idProduto";
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        int produtos = 0;
+        try
+        {
+            while(resultSet.next())
+            {
+                produtos = resultSet.getInt(1);
+            }
+
+            return produtos;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace();
             throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
         }
         finally
@@ -576,6 +682,46 @@ public class ProdutoDAO extends DAO<Produto>
         produto.getEspecificacoes().forEach(especificacao -> {
             especificacao_has_Produto_DAO.insert(especificacao, produtoFromDB);
         });
+    }
+
+    /* 
+     * Função para pegar atributo x de um produto
+     */
+    public String getColunaDeProduto(String coluna, int idProduto)
+    {
+        String result = null;
+
+        /* 
+         * Montando condição
+         */
+
+        String instrucao = "SELECT " + coluna + " FROM Produto WHERE Produto.idProduto = " + String.valueOf(idProduto);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        try
+        {
+            while(resultSet.next())
+            {
+                result = resultSet.getString(coluna);
+            }
+
+            if (result.equals("null"))
+            {
+                return null;
+            }
+
+            return result;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
     }
 
     

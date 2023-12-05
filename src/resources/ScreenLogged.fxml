@@ -11,6 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
@@ -55,7 +56,7 @@
             <Glow />
          </effect>
       </Button>
-      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>
@@ -92,34 +93,126 @@
          </cursor>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="188.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="48.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="377.0" prefWidth="881.0">
+      <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="377.0" prefWidth="904.0">
         <content>
-          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="846.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="886.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
                <children>
-                  <ImageView fx:id="adicionadosRecentementeImg" fitHeight="50.0" fitWidth="334.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <Pane fx:id="produto" layoutX="55.0" layoutY="63.0" prefHeight="234.0" prefWidth="215.0" style="-fx-border-color: #e6e6e6;">
+                     <children>
+                        <ImageView fx:id="fotoProduto" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/memoria-ram-test.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="precoProduto" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                        <Text fx:id="arrecadadoProduto" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                        <Text fx:id="faltamProduto" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                        <Text fx:id="valorPrecoProduto" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorArrecadadoProduto" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorFaltamProduto" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                        <Text fx:id="nomeProduto" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <ImageView fitHeight="50.0" fitWidth="334.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/adicionadosrecentemente.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="quaseLaImg" fitHeight="30.0" fitWidth="146.0" layoutX="11.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/quasela.png" />
-                     </image>
-                  </ImageView>
-                  <Text fx:id="listaVaziaInicio" fill="#cdcdcd" layoutX="-1.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sua lista está vazia..." textAlignment="CENTER" wrappingWidth="848.09716796875">
+                  <Text fx:id="listaVaziaInicio" fill="#cdcdcd" layoutX="-1.0" layoutY="180.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sua lista está vazia..." textAlignment="CENTER" wrappingWidth="848.09716796875">
                      <font>
                         <Font name="System Italic" size="36.0" />
                      </font>
                   </Text>
-                  <Text fx:id="listaVazia2Inicio" fill="#cdcdcd" layoutX="-1.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sua lista está vazia..." textAlignment="CENTER" wrappingWidth="848.09716796875">
-                     <font>
-                        <Font name="System Italic" size="36.0" />
-                     </font>
-                  </Text>
+                  <Pane fx:id="produto1" layoutX="312.0" layoutY="63.0" prefHeight="234.0" prefWidth="215.0" style="-fx-border-color: #e6e6e6;">
+                     <children>
+                        <ImageView fx:id="fotoProduto1" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/memoria-ram-test.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="precoProduto1" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                        <Text fx:id="arrecadadoProduto1" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                        <Text fx:id="faltamProduto1" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                        <Text fx:id="valorPrecoProduto1" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorArrecadadoProduto1" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorFaltamProduto1" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                        <Text fx:id="nomeProduto1" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto1" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Pane fx:id="produto2" layoutX="567.0" layoutY="63.0" prefHeight="234.0" prefWidth="215.0" style="-fx-border-color: #e6e6e6;">
+                     <children>
+                        <ImageView fx:id="fotoProduto2" fitHeight="123.0" fitWidth="146.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/memoria-ram-test.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="precoProduto2" layoutX="9.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preço: " />
+                        <Text fx:id="arrecadadoProduto2" layoutX="9.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado: " />
+                        <Text fx:id="faltamProduto2" layoutX="9.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam: " />
+                        <Text fx:id="valorPrecoProduto2" fontSmoothingType="LCD" layoutX="54.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorArrecadadoProduto2" fontSmoothingType="LCD" layoutX="93.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="valorFaltamProduto2" fontSmoothingType="LCD" layoutX="65.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="82.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="8.0" layoutY="97.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+                        <Text fx:id="nomeProduto2" layoutX="9.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="-7.0" layoutY="-15.0" opacity="0.19" stroke="#e8dddd" strokeType="INSIDE" width="215.0" />
+                        <Button fx:id="botao_produto2" layoutX="5.0" mnemonicParsing="false" onAction="#exibirProdutoSelecionado" opacity="0.0" prefHeight="230.0" prefWidth="206.0" text="Button" />
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
                </children></AnchorPane>
         </content>
       </ScrollPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="11.0" layoutX="250.0" layoutY="198.0" stroke="WHITE" strokeType="INSIDE" width="838.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="250.0" layoutY="198.0" stroke="WHITE" strokeType="INSIDE" width="829.0" />
       <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />

@@ -11,17 +11,19 @@ public class PainelProduto
         this.valorArrecadado = produto.getValorArrecadado();
         this.valorProduto = produto.getPreco() + produto.getValorFrete();
         this.urlImagem = produto.getUrl_foto();
+        this.urlProduto = produto.getLink();
 
         this.setarValoresString();
     }
 
-    public PainelProduto(int idProduto, String nome, double valorArrecadado, double valorProduto, String urlImagem) 
+    public PainelProduto(int idProduto, String nome, double valorArrecadado, double valorProduto, String urlImagem, String urlProduto) 
     {
         this.idProduto = idProduto;
         this.valorArrecadado = valorArrecadado;
         this.valorProduto = valorProduto;
         this.urlImagem = urlImagem;
         this.nomeDoProduto = nome;
+        this.urlProduto = urlProduto;
 
         this.setarValoresString();
     }
@@ -121,10 +123,21 @@ public class PainelProduto
         this.nomeDoProduto = nomeDoProduto;
     }
 
+    public String getUrlProduto() 
+    {
+        return urlProduto;
+    }
+
+    public void setUrlProduto(String urlProduto) 
+    {
+        this.urlProduto = urlProduto;
+    }
+
     private int idProduto;
     private double valorArrecadado;
     private double valorProduto;
     private String urlImagem;
+    private String urlProduto;
     private String nomeDoProduto;
 
     private String valorProdutoString;

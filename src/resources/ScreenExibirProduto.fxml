@@ -57,7 +57,7 @@
             <Glow />
          </effect>
       </Button>
-      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>
@@ -92,7 +92,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="188.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="48.0" />
       <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="376.0" prefWidth="852.0">
         <content>
-          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1249.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1442.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
                <children>
                   <ImageView fx:id="fotoProduto" fitHeight="239.0" fitWidth="212.0" layoutX="21.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -144,22 +144,22 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="23.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Especificações:">
+                  <Text layoutX="23.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Especificações:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="28.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="46.01806640625">
+                  <Text layoutX="28.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="46.01806640625">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="882.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:" wrappingWidth="105.01806640625">
+                  <Text layoutX="24.0" layoutY="939.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:" wrappingWidth="105.01806640625">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="28.0" layoutY="1033.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loja do produto:" wrappingWidth="146.0">
+                  <Text layoutX="28.0" layoutY="1088.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loja do produto:" wrappingWidth="146.0">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -258,17 +258,17 @@
                   <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="528.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
                   <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="562.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
                   <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="599.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
-                  <ScrollPane layoutX="22.0" layoutY="495.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                  <ScrollPane layoutX="22.0" layoutY="555.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
                     <content>
                       <AnchorPane fx:id="anchorEspecificacao" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="712.0" style="-fx-background-color: white;">
                            <children>
-                              <TextFlow fx:id="textFlowEspecificacao" layoutX="5.0" prefHeight="146.0" prefWidth="715.0" />
+                              <TextFlow fx:id="textFlowEspecificacao" layoutX="5.0" layoutY="1.0" prefHeight="146.0" prefWidth="715.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </ScrollPane>
                   <Line endX="24.0" endY="42.5" layoutX="353.0" layoutY="261.0" startX="24.0" startY="185.5" stroke="#9e9c9c" />
-                  <ScrollPane layoutX="22.0" layoutY="702.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                  <ScrollPane layoutX="22.0" layoutY="759.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
                      <content>
                         <AnchorPane fx:id="anchorTag" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="714.0" style="-fx-background-color: white;">
                            <children>
@@ -277,21 +277,27 @@
                         </AnchorPane>
                      </content>
                   </ScrollPane>
-                  <ScrollPane layoutX="23.0" layoutY="898.0" prefHeight="102.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                  <ScrollPane layoutX="23.0" layoutY="956.0" prefHeight="102.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
                      <content>
                         <AnchorPane fx:id="anchorDescricao" minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="716.0" style="-fx-background-color: white;">
                            <children>
-                              <TextFlow fx:id="textFlowDescricao" prefHeight="92.0" prefWidth="715.0" />
+                              <TextFlow fx:id="textFlowDescricao" layoutY="2.0" prefHeight="92.0" prefWidth="715.0" />
                            </children>
                         </AnchorPane>
                      </content>
                   </ScrollPane>
-                  <ImageView fx:id="fotoDaLoja" fitHeight="121.0" fitWidth="121.0" layoutX="27.0" layoutY="1101.0" pickOnBounds="true" preserveRatio="true" />
-                  <Text fx:id="nomeDaLoja" layoutX="28.0" layoutY="1078.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da loja" wrappingWidth="162.0">
+                  <ImageView fx:id="fotoDaLoja" fitHeight="121.0" fitWidth="121.0" layoutX="27.0" layoutY="1146.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="nomeDaLoja" layoutX="28.0" layoutY="1125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da loja" wrappingWidth="162.0">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Text>
+                  <Text layoutX="23.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="linkProduto" layoutX="73.0" layoutY="476.0" prefHeight="30.0" prefWidth="640.0" promptText="Produto sem link..." />
                </children></AnchorPane>
         </content>
       </ScrollPane>
@@ -320,17 +326,17 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="33.0" layoutX="801.0" layoutY="164.0" stroke="WHITE" strokeType="INSIDE" width="292.0" />
-      <Button fx:id="sair" layoutX="249.0" layoutY="163.0" mnemonicParsing="false" onAction="#voltarParaInicio" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Sair" textFill="WHITE">
+      <Button fx:id="sair" layoutX="249.0" layoutY="163.0" mnemonicParsing="false" onAction="#voltarParaInicio" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Sair" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="editarProduto" layoutX="774.0" layoutY="166.0" mnemonicParsing="false" onAction="#editarProduto" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Editar Produto" textFill="WHITE">
+      <Button fx:id="editarProduto" layoutX="774.0" layoutY="166.0" mnemonicParsing="false" onAction="#editarProduto" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Editar Produto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="removerProduto" layoutX="918.0" layoutY="166.0" mnemonicParsing="false" onAction="#removerProduto" prefHeight="24.0" prefWidth="162.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Remover Produto" textFill="WHITE">
+      <Button fx:id="removerProduto" layoutX="918.0" layoutY="166.0" mnemonicParsing="false" onAction="#removerProduto" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="24.0" prefWidth="162.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Remover Produto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

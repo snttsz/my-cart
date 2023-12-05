@@ -9,22 +9,24 @@ public class Loja
     /* 
      * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
      */
-    public Loja(int id, String nome, String url, String url_foto) 
+    public Loja(int id, String nome, String url, String url_foto, int idUsuario) 
     {
         this.id = id;
         this.nome = nome;
         this.url = url;
         this.url_foto = url_foto;
+        this.idUsuario = idUsuario;
     }
 
     /* 
      * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
      */
-    public Loja(String nome, String url, String url_foto) 
+    public Loja(String nome, String url, String url_foto, int idUsuario) 
     {
         this.nome = nome;
         this.url = url;
         this.url_foto = url_foto;
+        this.idUsuario = idUsuario;
     }
 
     /* Funções gerais */
@@ -88,6 +90,18 @@ public class Loja
         this.url_foto = url_foto;
     }
 
+    public int getIdUsuario() 
+    {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) 
+    {
+        this.idUsuario = idUsuario;
+    }
+
+
+
     /* 
      * Enum com as tabelas da classe
      */
@@ -116,6 +130,7 @@ public class Loja
     private String url;
     private String url_foto;
     private int id;
+    private int idUsuario;
     private static final String nomeTabela = "Loja";
 
 }

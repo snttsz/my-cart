@@ -4,11 +4,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class PainelLojaJAVAFX 
 {   
-    public PainelLojaJAVAFX(AnchorPane paneLoja, Text nomeLoja, ImageView fotoLoja, Button maisProdutosLoja, PainelProdutoJAVAFX produto1, PainelProdutoJAVAFX produto2, PainelProdutoJAVAFX produto3) 
+    public PainelLojaJAVAFX(AnchorPane paneLoja, Text nomeLoja, ImageView fotoLoja, Button maisProdutosLoja, PainelProdutoJAVAFX produto1, PainelProdutoJAVAFX produto2, PainelProdutoJAVAFX produto3, Pane semProduto) 
     {
         this.paneLoja = paneLoja;
         this.nomeLoja = nomeLoja;
@@ -17,6 +18,7 @@ public class PainelLojaJAVAFX
         this.produto1 = produto1;
         this.produto2 = produto2;
         this.produto3 = produto3;
+        this.semProduto = semProduto;
     }
 
     public void atualizarAtributosComPainelLoja(PainelLoja painelLoja)
@@ -28,8 +30,23 @@ public class PainelLojaJAVAFX
 
         this.nomeLoja.setText(painelLoja.getNomeDaLoja());
         
-        Image imgLoja = new Image(painelLoja.getUrlDaImagem());
-        this.fotoLoja.setImage(imgLoja);
+
+        if (painelLoja.getUrlDaImagem() != null)
+        {
+            Image imgLoja = new Image(painelLoja.getUrlDaImagem());
+            this.fotoLoja.setImage(imgLoja);
+        }
+
+        if (painelLoja.getProduto1() != null)
+        {
+            this.semProduto.toBack();
+            this.semProduto.setOpacity(0);
+        }
+        else
+        {
+            this.semProduto.toFront();
+            this.semProduto.setOpacity(1);
+        }
 
         this.produto1.atualizarAtributosComPainelProduto(painelLoja.getProduto1());
         this.produto2.atualizarAtributosComPainelProduto(painelLoja.getProduto2());
@@ -105,6 +122,17 @@ public class PainelLojaJAVAFX
     {
         this.produto3 = produto3;
     }
+    
+    public Pane getSemProduto() 
+    {
+        return semProduto;
+    }
+
+    public void setSemProduto(Pane semProduto) 
+    {
+        this.semProduto = semProduto;
+    }
+    
 
     private AnchorPane paneLoja;
     private Text nomeLoja;
@@ -114,4 +142,6 @@ public class PainelLojaJAVAFX
     private PainelProdutoJAVAFX produto1;
     private PainelProdutoJAVAFX produto2;
     private PainelProdutoJAVAFX produto3;
+
+    private Pane semProduto;
 }

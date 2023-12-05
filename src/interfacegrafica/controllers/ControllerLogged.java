@@ -3,10 +3,12 @@ package interfacegrafica.controllers;
 import javafx.fxml.Initializable;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
@@ -21,6 +23,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sistema.Produto;
+import sistema.Usuario;
+import sistema.Produto.Categorias;
 
 import java.io.IOException;
 import java.net.URL;
@@ -73,6 +78,9 @@ public abstract class ControllerLogged extends Controller implements Initializab
             /* Mostrando foto na interface */
             Image image = new Image(getClass().getResource(caminhoFoto).toExternalForm());
             this.fotoUsuario.setImage(image);
+
+            /* Adicionando categorias no menu */
+            this.carregarCategorias();
         });
     }
 
@@ -225,7 +233,30 @@ public abstract class ControllerLogged extends Controller implements Initializab
             
             Font systemFont = Font.font(fontName, FontPosture.REGULAR, fontSize);
             this.pesquisarField.setFont(systemFont);
+
+            if (key.getCode() == KeyCode.ENTER)
+            {
+                this.pesquisarProdutoPorNome(this.pesquisarField.getText());
+            }
         }
+    }
+
+    private void pesquisarProdutoPorNome(String nomeDoProduto)
+    {
+        ArrayList<Integer> produtos = this.produtoDAO.selectProdutosPorColuna("Produto." + Produto.Coluna.NOME.getNomeColuna(), nomeDoProduto, ControllerLogged.idUsuario);
+        
+        if (produtos.size() > 0)
+        {
+            labelPaginaProdutoAtual = labelsPaginasProduto.NOME.getNomeLabel();
+            valorLabelAtual = this.pesquisarField.getText();
+
+            this.mudarScene("ScreenExibirProdutos.fxml");
+        }
+        else
+        {
+            this.abrirErroStage("Nenhum produto foi cadastrado com esse nome!");
+        }
+
     }
 
     /**
@@ -438,15 +469,13 @@ public abstract class ControllerLogged extends Controller implements Initializab
     {
         String novoNome = this.novoNomeUsuario.getText();
 
-        /* 
-         * TODO: luis
-         * 
-         * variavel com o id do usuario: this.idUsuario
-         */
-
         novoNome = this.tratarNomeDoUsuario(novoNome);
         
         this.username.setText(novoNome);
+
+        Usuario usuario = this.usuariosDAO.selectById(ControllerLogged.idUsuario);
+
+        this.usuariosDAO.updateNome(usuario, novoNome);
     }
 
     /**
@@ -479,6 +508,45 @@ public abstract class ControllerLogged extends Controller implements Initializab
         }
 
         return username;
+    }
+
+    private void carregarCategorias()
+    {
+        this.categoriasMenu.getItems().clear();
+        
+        Categorias[] categorias = Categorias.values();
+        
+        for (Categorias categoria : categorias)
+        {
+            MenuItem novaCategoria = new MenuItem(categoria.getCategoria());
+
+            EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+                
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    categoriasMenu.setText(categoria.getCategoria());
+                    
+                    labelPaginaProdutoAtual = labelsPaginasProduto.CATEGORIA.getNomeLabel();
+                    valorLabelAtual = categoria.getCategoria();
+                    
+                    int qtdTotalProdutos = produtoDAO.contarProdutosCategorizadosDoUsuario(ControllerLogged.idUsuario, ControllerLogged.valorLabelAtual);
+                    
+                    if (qtdTotalProdutos > 0)
+                    {
+                        mudarScene("ScreenExibirProdutos.fxml");
+                    }
+                    else
+                    {
+                        abrirErroStage("Não há produtos cadastrados nesta categoria!");
+                    }
+                }
+            };
+
+            novaCategoria.setOnAction(eventHandler);
+
+            this.categoriasMenu.getItems().add(novaCategoria);
+        }
     }
 
     /* 
@@ -582,16 +650,29 @@ public abstract class ControllerLogged extends Controller implements Initializab
     protected static int idProdutoAtual;
     protected static boolean editarProduto;
     
-    protected static int labelPaginaProdutoAtual;
+    protected static String labelPaginaProdutoAtual;
     protected static String valorLabelAtual;
 
-    protected enum labelsPaginasProduto
+    public enum labelsPaginasProduto
     {
-        TAG,
-        ESPECIFICACAO,
-        LOJA,
-        TODOS_OS_PRODUTOS,
-        CATEGORIA
+        TAG("Tag"),
+        ESPECIFICACAO("Especificacao"),
+        LOJA("Loja"),
+        TODOS_OS_PRODUTOS("*"),
+        CATEGORIA("Categoria"),
+        NOME("Nome");
+
+        private final String nomeLabel;
+
+        labelsPaginasProduto(String nomeLabel)
+        {
+            this.nomeLabel = nomeLabel;
+        }
+
+        public String getNomeLabel()
+        {
+            return this.nomeLabel;
+        }
     }
 
     protected LojaDAO lojaDAO = new LojaDAO();

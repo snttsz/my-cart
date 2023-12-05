@@ -180,7 +180,6 @@ public abstract class Controller
             /* Caso um usuário estiver logado */
             if (showUserName)
             {
-                // String title = "MyCart - " + this.puxarNomeDoUsuario() + "_" + String.valueOf(idUsuario);
                 String title = "MyCart - " + this.puxarNomeDoUsuario();
                 stage.setTitle(title);
             }

@@ -70,7 +70,7 @@ public class CadastrarLojaController extends ControllerLogged
         String linkDaLoja = this.linkDaLoja.getText();
         String caminhoFotoLoja = this.fotoLoja.getImage().getUrl();
 
-        Loja novaLoja = new Loja(nomeDaLoja, linkDaLoja, caminhoFotoLoja);
+        Loja novaLoja = new Loja(nomeDaLoja, linkDaLoja, caminhoFotoLoja, ControllerLogged.idUsuario);
         lojaDAO.insert(novaLoja);
 
         this.abrirErroStage("Loja cadastrada com sucesso!");

@@ -12,22 +12,24 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import sistema.Especificacao;
 import sistema.Loja;
 import sistema.Produto;
-import sistema.ProdutoLivro;
 import sistema.Tag;
-import sistema.Produto.Categorias;
+import sistema.ProdutoEletronico.ColunaProdutoEletronico;
+import sistema.ProdutoLivro.ColunaProdutoLivro;
+import sistema.ProdutoMobilia.ColunaProdutoMobilia;
+import sistema.ProdutoModa.ColunaProdutoModa;
 
 /**
  * 
@@ -48,9 +50,7 @@ public class ExibirProdutoController extends ControllerLogged
 
         Platform.runLater(() -> 
         {
-            Produto produto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
-            
-            this.exibirProduto(produto);
+            this.exibirProduto(produtoDAO.selectById(ControllerLogged.idProdutoAtual));
         });
     }
 
@@ -125,13 +125,21 @@ public class ExibirProdutoController extends ControllerLogged
         this.valorProduto.setText(painelProduto.getValorProdutoString());
         this.valorArrecadado.setText(painelProduto.getValorArrecadadoString());
         this.valorFaltam.setText(painelProduto.getValorFaltamString());
+        this.linkProduto.setText(painelProduto.getUrlProduto());
+
+        if (!painelProduto.getUrlImagem().isEmpty())
+        {
+            Image img = new Image(painelProduto.getUrlImagem());
+            this.fotoProduto.setImage(img);
+        }
 
         this.mostrarPorcentagemParaValorProduto(produto.getValorArrecadado(), produto.getPreco() + produto.getValorFrete());
-        this.setarAtributosCategoria(produto.getCategoria());
         this.setarEspecificacoes(produto.getEspecificacoes());
         this.setarTags(produto.getTags());
         this.setarDescricao(produto.getDescricao());
         this.setarLojaDoProduto();
+        
+        this.setarAtributosCategoria(produto.getCategoria());
     }
 
     /**
@@ -143,6 +151,11 @@ public class ExibirProdutoController extends ControllerLogged
     private void setarEspecificacoes(ArrayList<Especificacao> especificacoes)
     {
         Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
+
+        if (especificacoes == null)
+        {
+            return;
+        }
 
         for (Especificacao especificacao : especificacoes)
         {
@@ -164,6 +177,11 @@ public class ExibirProdutoController extends ControllerLogged
     private void setarTags(ArrayList<Tag> tags)
     {
         Font systemFont = Font.font("Arial", FontPosture.ITALIC, 17);
+
+        if (tags == null)
+        {
+            return;
+        }
 
         for (Tag tag : tags)
         {
@@ -203,6 +221,7 @@ public class ExibirProdutoController extends ControllerLogged
     {
         Loja loja = null;
         Produto produto = produtoDAO.selectById(ControllerLogged.idProdutoAtual);
+        
         if(produto != null)
         {
             loja = lojaDAO.selectById(produto.getIdLoja());
@@ -233,13 +252,6 @@ public class ExibirProdutoController extends ControllerLogged
     {
         this.nomeCategoria.setText(categoriaProduto);
 
-        /* 
-         * TODO: luis
-         * Como nós temos alguns atributos que são próprios de cada
-         * classe, essa função irá puxar esses atributos a parte
-         * e setar as coisas na tela de acordo
-         */
-
         String autor = null;
         String genero = null;
         String tamanho = null;
@@ -249,38 +261,43 @@ public class ExibirProdutoController extends ControllerLogged
         String altura = null;
         String comprimento = null;
 
-        /* 
-         * TODO: luis
-         * id do objeto: ControllerLogged.idProdutoAtual
-         */
-        /* Puxar do banco os atributos dos objetos */
-
-        if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
+        if (categoriaProduto.equals(Produto.Categorias.LIVRO.getCategoria()))
         {
-            autor = "Glenda";
-            genero = "Terror";
-        }
-        else if (categoriaProduto == Produto.Categorias.ROUPA.getCategoria() || categoriaProduto == Produto.Categorias.ACESSORIO.getCategoria() || categoriaProduto == Produto.Categorias.CALCADO.getCategoria())
-        {
-            tamanho = null;
-            cor = null;
-            material = null;
-        }
-        else if (categoriaProduto == Produto.Categorias.ELETRONICO.getCategoria() || categoriaProduto == Produto.Categorias.ELETRODOMESTICO.getCategoria())
-        {
-            cor = null;
-            material = null;
-        }
-        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria())
-        {
-            material = null;
-            cor = null;
-            altura = null;
-            largura = null;
-            comprimento = null;
+            autor = produtoDAO.getColunaDeProduto(ColunaProdutoLivro.AUTOR.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            genero = produtoDAO.getColunaDeProduto(ColunaProdutoLivro.GENERO.getNomeColuna(), ControllerLogged.idProdutoAtual);
         }
 
-        Font systemFont = Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, Font.getDefault().getSize());
+        else if (categoriaProduto.equals(Produto.Categorias.ROUPA.getCategoria()) || categoriaProduto.equals(Produto.Categorias.ACESSORIO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.CALCADO.getCategoria()))
+        {
+            tamanho = produtoDAO.getColunaDeProduto(ColunaProdutoModa.TAMANHO.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            cor = produtoDAO.getColunaDeProduto(ColunaProdutoModa.COR.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            material = produtoDAO.getColunaDeProduto(ColunaProdutoModa.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual);
+        }
+        
+        else if (categoriaProduto.equals(Produto.Categorias.ELETRONICO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.ELETRODOMESTICO.getCategoria()))
+        {
+            cor = produtoDAO.getColunaDeProduto(ColunaProdutoEletronico.COR.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            material = produtoDAO.getColunaDeProduto(ColunaProdutoEletronico.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual);
+        }
+
+        else if (categoriaProduto.equals(Produto.Categorias.MOBILIA.getCategoria()) || categoriaProduto.equals(Produto.Categorias.CASAEJARDIM.getCategoria()) || categoriaProduto.equals(Produto.Categorias.AUTOMOTIVO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
+        {
+            cor = produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.COR.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            material = produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            altura = produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.ALTURA.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            largura = produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.LARGURA.getNomeColuna(), ControllerLogged.idProdutoAtual);
+            
+            comprimento = produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.COMPRIMENTO.getNomeColuna(), ControllerLogged.idProdutoAtual);
+        }
+
+        Font systemFont = Font.font("System", FontPosture.REGULAR, 15);
 
         if (autor != null)
         {
@@ -432,6 +449,9 @@ public class ExibirProdutoController extends ControllerLogged
 
     @FXML
     private TextFlow textFlowDescricao;
+
+    @FXML
+    private TextField linkProduto;
 
     /* 
      *  Figuras Geométricas

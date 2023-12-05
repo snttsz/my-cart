@@ -7,9 +7,13 @@ import sistema.Produto;
 import sistema.ProdutoEletronico;
 import sistema.ProdutoFerramenta;
 import sistema.ProdutoLivro;
+import sistema.ProdutoLivro.ColunaProdutoLivro;
+import sistema.ProdutoMobilia.ColunaProdutoMobilia;
 import sistema.ProdutoMobilia;
 import sistema.ProdutoModa;
+import sistema.ProdutoModa.ColunaProdutoModa;
 import sistema.Produto.Categorias;
+import sistema.ProdutoEletronico.ColunaProdutoEletronico;
 
 import java.io.IOException;
 import java.net.URL;
@@ -450,9 +454,9 @@ public class CadastrarProdutoController extends ControllerLogged
         String nomeDoProduto = this.nomeDoProduto.getText();
         String linkDoProduto = this.linkDoProduto.getText();
         
-        double valorArrecadado = Double.parseDouble(this.valorArrecadado.getText());
-        double valorDoProduto = Double.parseDouble(this.valorDoProduto.getText());
-        double valorDoFrete = Double.parseDouble(this.valorDoFrete.getText());
+        double valorArrecadado = Double.valueOf(this.valorArrecadado.getText());
+        double valorDoProduto = Double.valueOf(this.valorDoProduto.getText());
+        double valorDoFrete = Double.valueOf(this.valorDoFrete.getText());
 
         for (Text especificacao : this.especificacoesText) 
         {
@@ -482,9 +486,9 @@ public class CadastrarProdutoController extends ControllerLogged
         String descricao = this.descricao.getText();
         String tamanho = this.tamanho.getText();
         
-        double altura = Double.parseDouble(this.altura.getText());
-        double largura = Double.parseDouble(this.largura.getText());
-        double comprimento = Double.parseDouble(this.comprimento.getText());
+        double altura = Double.valueOf(this.altura.getText());
+        double largura = Double.valueOf(this.largura.getText());
+        double comprimento = Double.valueOf(this.comprimento.getText());
 
         String fotoDoProduto = this.fotoProdutoImg.getImage().getUrl();
 
@@ -494,12 +498,13 @@ public class CadastrarProdutoController extends ControllerLogged
         {
             int idLoja = getIdLoja();
 
-            if (categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()))
+            if (categoria.equals(Produto.Categorias.ELETRONICO.getCategoria()) || categoria.equals(Categorias.ELETRODOMESTICO.getCategoria()))
             {
                 ProdutoEletronico novoProduto = new ProdutoEletronico(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, ControllerLogged.idUsuario, idLoja, cor, material);
-
+                
                 if (ControllerLogged.editarProduto)
                 {
+                    novoProduto.setId(ControllerLogged.idProdutoAtual);
                     novoProduto.updateProdutoBD();
                 }
                 else
@@ -507,12 +512,13 @@ public class CadastrarProdutoController extends ControllerLogged
                     novoProduto.inserirProdutoNoBD();
                 }
             } 
-            else if (categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
+            else if (categoria.equals(Produto.Categorias.FERRAMENTA.getCategoria()) || categoria.equals(Categorias.AUTOMOTIVO.getCategoria()))
             {
                 ProdutoFerramenta novoProduto = new ProdutoFerramenta(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, ControllerLogged.idUsuario, idLoja, material, cor, altura, largura, comprimento);
                 
                 if (ControllerLogged.editarProduto)
                 {
+                    novoProduto.setId(ControllerLogged.idProdutoAtual);
                     novoProduto.updateProdutoBD();
                 }
                 else
@@ -526,6 +532,7 @@ public class CadastrarProdutoController extends ControllerLogged
                 
                 if (ControllerLogged.editarProduto)
                 {
+                    novoProduto.setId(ControllerLogged.idProdutoAtual);
                     novoProduto.updateProdutoBD();
                 }
                 else
@@ -533,12 +540,13 @@ public class CadastrarProdutoController extends ControllerLogged
                     novoProduto.inserirProdutoNoBD();
                 }
             }
-            else if (categoria.equals(Produto.Categorias.MOBILIA.getCategoria()))
+            else if (categoria.equals(Produto.Categorias.MOBILIA.getCategoria()) || categoria.equals(Categorias.CASAEJARDIM.getCategoria()))
             {
                 ProdutoMobilia novoProduto = new ProdutoMobilia(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, especificacoes, tags, material, cor, altura, largura, comprimento, idUsuario, idLoja);
                 
                 if (ControllerLogged.editarProduto)
                 {
+                    novoProduto.setId(ControllerLogged.idProdutoAtual);
                     novoProduto.updateProdutoBD();
                 }
                 else
@@ -546,12 +554,13 @@ public class CadastrarProdutoController extends ControllerLogged
                     novoProduto.inserirProdutoNoBD();
                 }
             }
-            else if (categoria.equals(Produto.Categorias.ROUPA.getCategoria()))
+            else if (categoria.equals(Produto.Categorias.ROUPA.getCategoria()) || categoria.equals(Categorias.ACESSORIO.getCategoria()) || categoria.equals(Categorias.CALCADO.getCategoria()))
             {
                 ProdutoModa novoProduto = new ProdutoModa(descricao, nomeDoProduto, valorDoProduto, linkDoProduto, fotoDoProduto, valorArrecadado, valorDoFrete, categoria, this.especificacoes, this.tags, tamanho, cor, material, ControllerLogged.idUsuario, idLoja);
                 
                 if (ControllerLogged.editarProduto)
                 {
+                    novoProduto.setId(ControllerLogged.idProdutoAtual);
                     novoProduto.updateProdutoBD();
                 }
                 else
@@ -579,7 +588,7 @@ public class CadastrarProdutoController extends ControllerLogged
         {
             Loja loja = lojaDAO.selectById(idLoja);
 
-            if (loja.getNome() == this.adicionarNaLojaCampo.getText())
+            if (loja.getNome().equals(this.adicionarNaLojaCampo.getText()))
             {
                 result = loja.getId();
                 break;
@@ -728,17 +737,19 @@ public class CadastrarProdutoController extends ControllerLogged
 
         boolean result = false;
 
-        ArrayList<Loja> lojas = lojaDAO.selectLojaPorNome(nomeDaLoja, 1);
+        ArrayList<Integer> lojas = lojaDAO.selectLojaUsuario(ControllerLogged.idUsuario);
         
-        for (Loja loja : lojas)
+        for (Integer lojaID : lojas)
         {
+            Loja loja = lojaDAO.selectById(lojaID);
+
             if (loja.getNome().equals(nomeDaLoja))
             {
                 result = true;
             }
         }
 
-        if (result)
+        if (result == true)
         {
             this.retanguloResultadoLoja.setFill(Color.GREEN);
             this.textoResultadoLoja.setText("Encontramos a loja " + nomeDaLoja + "!");
@@ -832,24 +843,17 @@ public class CadastrarProdutoController extends ControllerLogged
 
         this.categoriasSplitDown.setText(categoriaProduto);
 
-        if (categoriaProduto == Produto.Categorias.LIVRO.getCategoria())
+        if (categoriaProduto.equals(Produto.Categorias.LIVRO.getCategoria()))
         {
             this.autor.setOpacity(1);
             this.autor.setDisable(false);
             this.genero.setOpacity(1);
             this.genero.setDisable(false);
 
-            /* TODO: luis
-             *  puxar do banco de dados
-             * id do produto: ControllerLogged.idProdutoAtual
-             */
-            String autor;
-            String genero;
-
-            // this.genero.setText(genero);
-            // this.autor.setText(autor);
+            this.genero.setText(produtoDAO.getColunaDeProduto(ColunaProdutoLivro.GENERO.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.autor.setText(produtoDAO.getColunaDeProduto(ColunaProdutoLivro.AUTOR.getNomeColuna(), ControllerLogged.idProdutoAtual));
         }
-        else if (categoriaProduto == Produto.Categorias.ROUPA.getCategoria() || categoriaProduto == Produto.Categorias.ACESSORIO.getCategoria() || categoriaProduto == Produto.Categorias.CALCADO.getCategoria())
+        else if (categoriaProduto.equals(Produto.Categorias.ROUPA.getCategoria()) || categoriaProduto.equals(Produto.Categorias.ACESSORIO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.CALCADO.getCategoria()))
         {
             this.cor.setOpacity(1);
             this.cor.setDisable(false);
@@ -860,19 +864,11 @@ public class CadastrarProdutoController extends ControllerLogged
             this.material.setOpacity(1);
             this.material.setDisable(false);
 
-            /* TODO: luis
-             *  puxar do banco de dados
-             * id do produto: ControllerLogged.idProdutoAtual
-             */
-            String cor;
-            String tamanho;
-            String material;
-
-            // this.cor.setText(cor);
-            // this.tamanho.setText(tamanho);
-            // this.material.setText(material);
+            this.tamanho.setText(produtoDAO.getColunaDeProduto(ColunaProdutoModa.TAMANHO.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.cor.setText(produtoDAO.getColunaDeProduto(ColunaProdutoModa.COR.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.material.setText(produtoDAO.getColunaDeProduto(ColunaProdutoModa.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual));
         }
-        else if (categoriaProduto == Produto.Categorias.ELETRONICO.getCategoria() || categoriaProduto == Produto.Categorias.ELETRODOMESTICO.getCategoria())
+        else if (categoriaProduto.equals(Produto.Categorias.ELETRONICO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.ELETRODOMESTICO.getCategoria()))
         {
             this.cor.setOpacity(1);
             this.cor.setDisable(false);
@@ -880,23 +876,13 @@ public class CadastrarProdutoController extends ControllerLogged
             this.material.setOpacity(1);
             this.material.setDisable(false);
 
-            /* TODO: luis
-             *  puxar do banco de dados
-             * id do produto: ControllerLogged.idProdutoAtual
-             */
-            String cor;
-            String material;
-
-            // this.cor.setText(cor);
-            // this.material.setText(material);
+            this.cor.setText(produtoDAO.getColunaDeProduto(ColunaProdutoEletronico.COR.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.material.setText(produtoDAO.getColunaDeProduto(ColunaProdutoEletronico.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual));
         }
-        else if (categoriaProduto == Produto.Categorias.MOBILIA.getCategoria() || categoriaProduto == Produto.Categorias.CASAEJARDIM.getCategoria() || categoriaProduto == Produto.Categorias.AUTOMOTIVO.getCategoria() || categoriaProduto == Produto.Categorias.FERRAMENTA.getCategoria())
+        else if (categoriaProduto.equals(Produto.Categorias.MOBILIA.getCategoria()) || categoriaProduto.equals(Produto.Categorias.CASAEJARDIM.getCategoria()) || categoriaProduto.equals(Produto.Categorias.AUTOMOTIVO.getCategoria()) || categoriaProduto.equals(Produto.Categorias.FERRAMENTA.getCategoria()))
         {
             this.cor.setOpacity(0.5);
             this.cor.setDisable(true);
-
-            this.tamanho.setOpacity(0.5);
-            this.tamanho.setDisable(true);
 
             this.material.setOpacity(0.5);
             this.material.setDisable(true);
@@ -910,23 +896,11 @@ public class CadastrarProdutoController extends ControllerLogged
             this.comprimento.setOpacity(0.5);
             this.comprimento.setDisable(true);
 
-            /* TODO: luis
-             *  puxar do banco de dados
-             * id do produto: ControllerLogged.idProdutoAtual
-             */
-            String cor;
-            String tamanho;
-            String material;
-            String altura;
-            String largura;
-            String comprimento;
-
-            // this.cor.setText(cor);
-            // this.tamanho.setText(tamanho);
-            // this.material.setText(material);
-            // this.altura.setText(altura);
-            // this.largura.setText(largura);
-            // this.comprimento.setText(comprimento);
+            this.cor.setText(produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.COR.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.material.setText(produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.MATERIAL.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.altura.setText(produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.ALTURA.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.largura.setText(produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.LARGURA.getNomeColuna(), ControllerLogged.idProdutoAtual));
+            this.comprimento.setText(produtoDAO.getColunaDeProduto(ColunaProdutoMobilia.COMPRIMENTO.getNomeColuna(), ControllerLogged.idProdutoAtual));
         }
 
     }

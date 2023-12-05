@@ -94,6 +94,11 @@ public abstract class Produto
         this.setDescricao(descricao);
     }
     
+    public void setId(int id) 
+    {
+        this.id = id;
+    }
+
     public static String getNomeTabela() 
     {
         return Produto.nomeTabela;

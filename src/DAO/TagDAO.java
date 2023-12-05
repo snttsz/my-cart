@@ -248,6 +248,43 @@ public class TagDAO extends DAO<Tag>
 
     }
 
+    public ArrayList<Integer> selectTagsCadastradosRecentemente(int qtdProdutosCadastrados)
+    {
+        /* SELECT * FROM Produto WHERE Produto.Usuario_idUsuario = Y ORDER BY idProduto DESC LIMIT X; */
+        String qtd = Integer.toString(qtdProdutosCadastrados);
+
+        // String instrucao = SQLiteTableManager.selectOrderByLimitDec(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), qtd);
+        
+        /* SELECT Produto.idProduto
+            FROM Produto
+            WHERE Produto.Usuario_idUsuario = X
+            ORDER BY Produto.idProduto DESC LIMIT Y;
+        */
+        String instrucao = "SELECT Tag.idTag FROM Tag ORDER BY Tag.idTag DESC LIMIT " + String.valueOf(qtdProdutosCadastrados);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> tags = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                tags.add(resultSet.getInt("idTag"));
+            }
+
+            return tags;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
+    }
+
     /*
      * Funções de update para cada atributo da classe Tag
      */

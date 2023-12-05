@@ -11,12 +11,36 @@ public class PaginaProduto
             return;
         }
 
-        this.produto1 = new PainelProduto(produtos[0]);
-        this.produto2 = new PainelProduto(produtos[1]);
-        this.produto3 = new PainelProduto(produtos[2]);
-        this.produto4 = new PainelProduto(produtos[3]);
-        this.produto5 = new PainelProduto(produtos[4]);
-        this.produto6 = new PainelProduto(produtos[5]);
+        if (produtos[0] != null)
+        {
+            this.produto1 = new PainelProduto(produtos[0]);
+        }
+
+        if (produtos[1] != null)
+        {
+            this.produto2 = new PainelProduto(produtos[1]);
+        }
+
+        if (produtos[2] != null)
+        {
+            this.produto3 = new PainelProduto(produtos[2]);
+        }
+
+        if (produtos[3] != null)
+        {
+            this.produto4 = new PainelProduto(produtos[3]);
+        }   
+
+        if (produtos[4] != null)
+        {
+            this.produto5 = new PainelProduto(produtos[4]);
+        }
+
+        if (produtos[5] != null)
+        {
+            this.produto6 = new PainelProduto(produtos[5]);
+        }
+        
     }
 
     public PainelProduto getProduto1() 

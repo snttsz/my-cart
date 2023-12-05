@@ -124,7 +124,7 @@ public class ProdutoFerramenta extends Produto
     private double largura; 
     private double comprimento; 
 
-    private enum ColunaProdutoFerramenta
+    public enum ColunaProdutoFerramenta
     {
         COR("cor"),
         MATERIAL("material"),

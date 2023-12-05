@@ -57,7 +57,7 @@
             <Glow />
          </effect>
       </Button>
-      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>

@@ -11,6 +11,7 @@ import sistema.Especificacao;
 import sistema.Produto;
 import utils.StringManager;
 
+
 public class EspecificacaoDAO extends DAO<Especificacao>
 {
 
@@ -189,6 +190,43 @@ public class EspecificacaoDAO extends DAO<Especificacao>
 
         SQLiteConnectionManager.enviarQuery(instrucao);
         
+    }
+
+    public ArrayList<Integer> selectEspecificacoesCadastradosRecentemente(int qtdProdutosCadastrados)
+    {
+        /* SELECT * FROM Produto WHERE Produto.Usuario_idUsuario = Y ORDER BY idProduto DESC LIMIT X; */
+        String qtd = Integer.toString(qtdProdutosCadastrados);
+
+        // String instrucao = SQLiteTableManager.selectOrderByLimitDec(Produto.getNomeTabela(), Produto.Coluna.ID.getNomeColuna(), qtd);
+        
+        /* SELECT Produto.idProduto
+            FROM Produto
+            WHERE Produto.Usuario_idUsuario = X
+            ORDER BY Produto.idProduto DESC LIMIT Y;
+        */
+        String instrucao = "SELECT Especificacao.idEspecificacao FROM Especificacao ORDER BY Especificacao.idEspecificacao DESC LIMIT " + String.valueOf(qtdProdutosCadastrados);
+
+        ResultSet resultSet = SQLiteConnectionManager.receberQuery(instrucao);
+
+        ArrayList<Integer> especificacoes = new ArrayList<>();
+        try
+        {
+            while(resultSet.next())
+            {
+                especificacoes.add(resultSet.getInt("idEspecificacao"));
+            }
+
+            return especificacoes;
+        }
+        catch(SQLException e) 
+        {
+            e.printStackTrace(); 
+            throw new RuntimeException("Erro ao processar resultado do banco de dados", e);
+        }
+        finally
+        {
+            SQLiteConnectionManager.desconectar();
+        }
     }
 
     /*

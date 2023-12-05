@@ -24,8 +24,6 @@ import javafx.scene.text.Text;
 // Java libraries
 import java.util.Stack;
 
-import DAO.LojaDAO;
-import DAO.ProdutoDAO;
 // Local libraries
 import interfacegrafica.models.PaginaLoja;
 import interfacegrafica.models.PainelLoja;
@@ -69,9 +67,11 @@ public class LojasCadastradasController extends ControllerLogged
 
             this.todasLojas = this.lojaDAO.selectLojaUsuario(ControllerLogged.idUsuario);
 
-            this.checarBotoesProxAnt();
-            
             this.addNovaPaginaLoja(this.getLojas());
+            
+            this.marcadorLojaAtual += 2;
+            
+            this.checarBotoesProxAnt();
             
             this.exibirNovaPaginaLoja();
         }
@@ -88,6 +88,12 @@ public class LojasCadastradasController extends ControllerLogged
         
         this.proxPagina.setOpacity(0.5);
         this.proxPagina.setDisable(true);
+    }
+
+    public void esconderPaneSemLoja()
+    {
+        this.paneSemLoja.toBack();
+        this.paneSemLoja.setOpacity(0);
     }
 
     @FXML
@@ -141,14 +147,15 @@ public class LojasCadastradasController extends ControllerLogged
         Loja[] lojas = new Loja[2];
 
         lojas[0] = this.lojaDAO.selectById(this.todasLojas.get(this.marcadorLojaAtual));
+        lojas[1] = null;
 
-        if (this.todasLojas.get(this.marcadorLojaAtual + 1) != null)
+        try
         {
             lojas[1] = this.lojaDAO.selectById(this.todasLojas.get(this.marcadorLojaAtual + 1));
         }
-        else
+        catch (IndexOutOfBoundsException error)
         {
-            lojas[1] = null;
+
         }
 
         return lojas;
@@ -177,9 +184,13 @@ public class LojasCadastradasController extends ControllerLogged
 
         for (int i = 0; i < 3; i++)
         {
-            if (produtos.get(i) != null)
+            try
             {
                 result[i] = this.produtoDAO.selectById(produtos.get(i));
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                
             }
         }
 
@@ -194,16 +205,23 @@ public class LojasCadastradasController extends ControllerLogged
      */
     public void addNovaPaginaLoja(Loja[] lojas)
     {
+        PainelProduto[] produtosLoja1 = this.getPaineisProdutos(this.getProdutos(lojas[0]));
+        
+        PainelLoja painelLoja1 = new PainelLoja(lojas[0], produtosLoja1[0], produtosLoja1[1], produtosLoja1[2]);
+        PainelLoja painelLoja2 = null;
+
         if (lojas[1] == null)
         {
             this.mostrarPaneSemLoja2();
         }
+        else
+        {
+            this.esconderPaneSemLoja();
 
-        PainelProduto[] produtosLoja1 = this.getPaineisProdutos(this.getProdutos(lojas[0]));
-        PainelProduto[] produtosLoja2 = this.getPaineisProdutos(this.getProdutos(lojas[1]));
-    
-        PainelLoja painelLoja1 = new PainelLoja(lojas[0], produtosLoja1[0], produtosLoja1[1], produtosLoja1[2]);
-        PainelLoja painelLoja2 = new PainelLoja(lojas[1], produtosLoja2[0], produtosLoja2[1], produtosLoja2[2]);
+            PainelProduto[] produtosLoja2 = this.getPaineisProdutos(this.getProdutos(lojas[1]));
+
+            painelLoja2 = new PainelLoja(lojas[1], produtosLoja2[0], produtosLoja2[1], produtosLoja2[2]);
+        }
 
         PaginaLoja paginaLoja = new PaginaLoja(painelLoja1, painelLoja2);
 
@@ -226,9 +244,13 @@ public class LojasCadastradasController extends ControllerLogged
 
         for (int i = 0; i < 3; i++)
         {
-            if (produtos[i] != null)
+            try
             {
                 paineis[i] = new PainelProduto(produtos[i]);
+            }
+            catch (NullPointerException exception)
+            {
+
             }
         }
 
@@ -272,7 +294,7 @@ public class LojasCadastradasController extends ControllerLogged
             this.proxPagina.setDisable(false);
         }
 
-        if (this.marcadorLojaAtual <= 0)
+        if (this.marcadorLojaAtual <= 2)
         {
             this.pagAnterior.setOpacity(0.5);
             this.pagAnterior.setDisable(true);
@@ -362,13 +384,13 @@ public class LojasCadastradasController extends ControllerLogged
         PainelProdutoJAVAFX produto2 = new PainelProdutoJAVAFX(this.produtoLoja2, this.nomeProduto2, this.valorPrecoProduto2, this.valorArrecadadoProduto2, this.valorFaltamProduto2, this.fotoProduto2);;
         PainelProdutoJAVAFX produto3 = new PainelProdutoJAVAFX(this.produtoLoja3, this.nomeProduto3, this.valorPrecoProduto3, this.valorArrecadadoProduto3, this.valorFaltamProduto3, this.fotoProduto3);
 
-        this.loja1 = new PainelLojaJAVAFX(this.paneLoja1, this.nomeLoja1, this.fotoLoja1, this.maisProdutosLoja1, produto1, produto2, produto3);
+        this.loja1 = new PainelLojaJAVAFX(this.paneLoja1, this.nomeLoja1, this.fotoLoja1, this.maisProdutosLoja1, produto1, produto2, produto3, this.semProdutosLoja1);
         
         PainelProdutoJAVAFX produto1_2 = new PainelProdutoJAVAFX(this.produtoLoja1_2, this.nomeProduto1_2, this.valorPrecoProduto1_2, this.valorArrecadadoProduto1_2, this.valorFaltamProduto1_2, this.fotoProduto1_2);
         PainelProdutoJAVAFX produto2_2 = new PainelProdutoJAVAFX(this.produtoLoja2_2, this.nomeProduto2_2, this.valorPrecoProduto2_2, this.valorArrecadadoProduto2_2, this.valorFaltamProduto2_2, this.fotoProduto2_2);
         PainelProdutoJAVAFX produto3_2 = new PainelProdutoJAVAFX(this.produtoLoja3_2, this.nomeProduto3_2, this.valorPrecoProduto3_2, this.valorArrecadadoProduto3_2, this.valorFaltamProduto3_2, this.fotoProduto3_2);
 
-        this.loja2 = new PainelLojaJAVAFX(this.paneLoja2, this.nomeLoja2, this.fotoLoja2, this.maisProdutosLoja2, produto1_2, produto2_2, produto3_2);
+        this.loja2 = new PainelLojaJAVAFX(this.paneLoja2, this.nomeLoja2, this.fotoLoja2, this.maisProdutosLoja2, produto1_2, produto2_2, produto3_2, this.semProdutosLoja2);
     }
 
     /**
@@ -510,6 +532,12 @@ public class LojasCadastradasController extends ControllerLogged
 
     @FXML
     private Pane paneSemLoja;
+
+    @FXML
+    private Pane semProdutosLoja1;
+
+    @FXML
+    private Pane semProdutosLoja2;
 
     @FXML
     private Text numeroPagina;

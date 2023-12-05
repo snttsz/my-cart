@@ -9,38 +9,49 @@ public class PainelProdutoJAVAFX
 {
     public PainelProdutoJAVAFX() {}
 
-    public PainelProdutoJAVAFX(Pane produtoLoja, Text nomeDoProduto, Text valorPrecoProduto, Text valorArrecadadoProduto, Text valorFaltamProduto, ImageView fotoProduto) 
+    public PainelProdutoJAVAFX(Pane paneProduto, Text nomeDoProduto, Text valorPrecoProduto, Text valorArrecadadoProduto, Text valorFaltamProduto, ImageView fotoProduto) 
     {
-        this.produtoLoja = produtoLoja;
+        this.paneProduto = paneProduto;
         this.nomeDoProduto = nomeDoProduto;
         this.valorPrecoProduto = valorPrecoProduto;
         this.valorArrecadadoProduto = valorArrecadadoProduto;
         this.valorFaltamProduto = valorFaltamProduto;
         this.fotoProduto = fotoProduto;
+
+        this.produto = null;
     }
 
     public void atualizarAtributosComPainelProduto(PainelProduto painelProduto)
     {
         if (painelProduto == null)
         {
-            this.produtoLoja.setOpacity(0);
-            this.produtoLoja.setDisable(true);
+            this.paneProduto.setOpacity(0);
+            this.paneProduto.setDisable(true);
             
             return;
         }
+
+        this.produto = painelProduto;
 
         this.valorPrecoProduto.setText(painelProduto.getValorProdutoString());
         this.valorArrecadadoProduto.setText(painelProduto.getValorArrecadadoString());
         this.valorFaltamProduto.setText(painelProduto.getValorFaltamString());
         this.nomeDoProduto.setText(painelProduto.getNomeDoProduto());
 
-        Image fotoProdutoImg = new Image(painelProduto.getUrlImagem());
-        this.fotoProduto.setImage(fotoProdutoImg);
+        try
+        {
+            Image fotoProdutoImg = new Image(painelProduto.getUrlImagem());
+            this.fotoProduto.setImage(fotoProdutoImg);
+        }
+        catch (IllegalArgumentException exception)
+        {
+            
+        }
     }
 
-    public Pane getProdutoLoja() 
+    public Pane getPaneProduto() 
     {
-        return this.produtoLoja;
+        return this.paneProduto;
     }
 
     public Text getNomeDoProduto() 
@@ -53,9 +64,9 @@ public class PainelProdutoJAVAFX
         this.nomeDoProduto = nomeDoProduto;
     }
 
-    public void setProdutoLoja(Pane produtoLoja) 
+    public void setPaneProduto(Pane paneProduto) 
     {
-        this.produtoLoja = produtoLoja;
+        this.paneProduto = paneProduto;
     }
 
     public Text getValorPrecoProduto() 
@@ -98,7 +109,17 @@ public class PainelProdutoJAVAFX
         this.fotoProduto = fotoProduto;
     }
 
-    private Pane produtoLoja;
+    public PainelProduto getProduto() 
+    {
+        return produto;
+    }
+
+    public void setProduto(PainelProduto produto) 
+    {
+        this.produto = produto;
+    }
+
+    private Pane paneProduto;
 
     private Text nomeDoProduto;
 
@@ -109,4 +130,6 @@ public class PainelProdutoJAVAFX
     private Text valorFaltamProduto;
 
     private ImageView fotoProduto;
+
+    PainelProduto produto;
 }

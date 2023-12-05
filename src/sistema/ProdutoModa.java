@@ -35,6 +35,7 @@ public class ProdutoModa extends Produto
     @Override
     public void inserirProdutoNoBD()
     {
+        
         super.inserirProdutoNoBD();
 
         /* 
