@@ -1,7 +1,19 @@
-public class Main 
+import interfacegrafica.screens.Screen;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Main extends Application
 {
-    public static void main(String[] args) throws Exception 
+    @Override
+    public void start(Stage stage) 
     {
-        System.out.println("Hello, World!");
+        Screen minhaTela = new Screen("MyCart", "LoginScreen2.fxml");
+
+        minhaTela.start(stage);
+    }
+
+    public static void main(String[] args) 
+    {
+        launch(args);
     }
 }

@@ -59,7 +59,6 @@ public class InitialScreenLoggedController extends ControllerLogged
             try
             {
                 paineis[i] = new PainelProduto(produtoDAO.selectById(produtosBD.get(i)));
-                System.out.println("id produto ---> " + produtoDAO.selectById(produtosBD.get(i)).getId());
             }
             catch(IndexOutOfBoundsException exception)
             {

@@ -227,7 +227,7 @@ public class ExibirProdutoController extends ControllerLogged
             loja = lojaDAO.selectById(produto.getIdLoja());
         }
 
-        if (loja != null)
+        if (loja != null && loja.getId() != 0)
         {
             this.nomeDaLoja.setText(loja.getNome());
 
