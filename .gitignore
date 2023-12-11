@@ -1,2 +1,14 @@
+# vscode 
 .vscode/
+
+# compilador
 bin/
+
+# Executaveis
+.class
+
+#imagens de usuarios do banco de dados
+src/img/users/
+
+# banco de dados
+database/*.db

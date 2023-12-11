@@ -3,50 +3,100 @@ package sistema;
 import java.util.ArrayList;
 
 public class ProdutoEletronico extends Produto
-{   
-    public ProdutoEletronico(double preco, String nome, int codigo, Categoria categoria, String marca) 
+{
+
+    /* Construtores */
+
+    public ProdutoEletronico(){};
+
+    /* 
+     * Construtor feito para montagem do objeto que está vindo do banco de dados (Possui ID)
+     */
+    public ProdutoEletronico(int id, String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja, String cor, String material) 
     {
-        super(preco, nome, codigo, categoria);
-        this.marca = marca;
-        this.especificacoes = new ArrayList<Especificacao>();
+        super(id, descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
+        this.cor = cor;
+        this.material = material;
     }
 
-    public ProdutoEletronico(double preco, String nome, int codigo, Categoria categoria, int valorArrecadado, String marca) 
+    /* 
+     * Construtor feito para montagem do objeto que será enviado para o banco de dados ( Não possui ID, pois ele é gerado automaticamente no BD)
+     */
+    public ProdutoEletronico(String descricao, String nome, double preco, String link, String url_foto, double valorArrecadado, double valorFrete, String categoria, ArrayList<Especificacao> especificacoes, ArrayList<Tag> tags, int idUsuario, int idLoja, String cor, String material) 
     {
-        super(preco, nome, codigo, categoria, valorArrecadado);
-        this.marca = marca;
-        this.especificacoes = new ArrayList<Especificacao>();
+        super(descricao, nome, preco, link, url_foto, valorArrecadado, valorFrete, categoria, especificacoes, tags, idUsuario, idLoja);
+        this.cor = cor;
+        this.material = material;
     }
 
-    public String getMarca() 
+    @Override
+    public void inserirProdutoNoBD()
     {
-        return this.marca;
+        super.inserirProdutoNoBD();
+
+        /* 
+         * Adicionando atributos específicos da classe
+         */
+        this.atualizarAtributosEspecificos();
     }
 
-    public void setMarca(String marca) 
+    @Override
+    public void updateProdutoBD()
     {
-        this.marca = marca;
+        super.updateProdutoBD();
+
+        /* 
+         * Atualizando atributos específicos da classe
+         */
+
+        this.atualizarAtributosEspecificos();
     }
 
-    // Isso pode ser usado na interface --> Se um usuário quiser adicionar uma especificação pro produto
-    // ex: Memória Ram
-    // Seria criado um objeto especificação (com nome da especificação e o valor)
-    // ex: nome: capacidade / valor: 8GB
-    // ex: nome: tipo / valor: DDR4
-    // No banco de dados teria uma tabela com 0 ou muitas especificações onde a gente guardaria essas
-    // informações, na hora de mostrar o produto seria só puxar elas pra esse vetor
-    // É uma ideia inicial, pode ser desenvolvida ou descartada. A gente pode criar especificações 
-    // padrões também, mas seria mais difícil pela variedade de produtos que podem existir.
-    public ArrayList<Especificacao> getEspecificacoes() 
+    private void atualizarAtributosEspecificos()
     {
-        return especificacoes;
+        this.produtoDao.updateString(this, ColunaProdutoEletronico.COR.getNomeColuna(), this.cor);
+        this.produtoDao.updateString(this, ColunaProdutoEletronico.MATERIAL.getNomeColuna(), this.material);
     }
 
-    public void setEspecificacoes(ArrayList<Especificacao> especificacoes) 
+    public String getCor() 
     {
-        this.especificacoes = especificacoes;
+        return cor;
     }
 
-    private String marca;
-    private ArrayList<Especificacao> especificacoes;
+    public void setCor(String cor) 
+    {
+        this.cor = cor;
+    }
+
+    public String getMaterial() 
+    {
+        return material;
+    }
+
+    public void setMaterial(String material) 
+    {
+        this.material = material;
+    }
+
+    private String cor;
+    private String material;
+
+    public enum ColunaProdutoEletronico
+    {
+        COR("cor"),
+        MATERIAL("material");
+
+        private final String nomeColuna;
+
+        ColunaProdutoEletronico(String nomeColuna)
+        {
+            this.nomeColuna = nomeColuna;
+        }
+
+        public String getNomeColuna()
+        {
+            return this.nomeColuna;
+        }
+    }
+
 }

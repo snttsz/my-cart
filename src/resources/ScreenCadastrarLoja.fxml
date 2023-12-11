@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.CadastrarLojaController">
+   <children>
+      <TextField fx:id="novoNomeUsuario" layoutX="50.0" layoutY="501.0" onKeyPressed="#checarEnterTrocaNomeUsuario" onMouseExited="#cancelarTrocaNome" opacity="0.0" prefHeight="33.0" prefWidth="162.0" promptText="DIgite o novo nome" />
+      <SplitMenuButton fx:id="categoriasMenu" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="225.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="62.0" prefWidth="241.0" text="SplitMenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+      <ImageView fx:id="imgView" fitHeight="575.0" fitWidth="1096.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/layout1-padrao.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="inicio" layoutX="1.0" layoutY="161.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="categorias" layoutX="1.0" layoutY="226.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="lojasCadastradas" layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Button fx:id="pesquisar" layoutX="850.0" layoutY="59.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="33.0" prefWidth="31.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onAction="#sairDaConta" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="logomarcaInicio" layoutX="57.0" layoutY="4.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="102.0" prefWidth="179.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="25.0" layoutY="472.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="22.0" layoutX="39.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="376.0" prefWidth="851.0" style="-fx-background-color: white;">
+        <content>
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="376.0" prefWidth="834.0" style="-fx-background-color: white;">
+               <children>
+                  <Text layoutX="16.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da loja: " wrappingWidth="146.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="fotoLoja" fitHeight="150.0" fitWidth="200.0" layoutX="317.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/uploadfoto.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <TextField fx:id="nomeDaLoja" layoutX="128.0" layoutY="188.0" prefHeight="22.0" prefWidth="324.0" promptText="Digite o nome da loja" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <Text layoutX="470.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link:" wrappingWidth="42.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="linkDaLoja" layoutX="513.0" layoutY="188.0" prefHeight="28.0" prefWidth="263.0" promptText="Digite o link da loja" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1.5;" />
+                  <Button fx:id="adicionarFotoLoja" layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#cadastrarFotoLoja" opacity="0.0" prefHeight="154.0" prefWidth="152.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Text fill="#7c7c7c" layoutX="17.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dica: Para adicionar um produto numa loja, você pode clicar no produto e no botão &quot;Editar dados do produto&quot;. No final da página, você encontrará o campo para associar o produto a uma loja!" wrappingWidth="757.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="250.0" layoutY="198.0" stroke="WHITE" strokeType="INSIDE" width="829.0" />
+      <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Text fx:id="username" fill="WHITE" layoutX="41.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER" wrappingWidth="162.0">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="879.0" layoutY="161.0" stroke="WHITE" strokeType="INSIDE" width="209.0" />
+      <Text layoutX="256.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loja">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Button fx:id="cadastrarLoja" layoutX="857.0" layoutY="164.0" mnemonicParsing="false" onAction="#cadastrarLojaBD" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="30.0" prefWidth="223.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Cadastrar Loja" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="694.0" layoutY="164.0" mnemonicParsing="false" onAction="#voltarParaOInicio" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="30.0" prefWidth="156.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fx:id="fotoUsuario" fitHeight="114.0" fitWidth="162.0" layoutX="65.0" layoutY="372.0" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
+         <image>
+            <Image url="@../img/avatar.png" />
+         </image>
+      </ImageView>
+      <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="44.0" layoutY="354.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="165.0" layoutY="354.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="165.0" layoutY="467.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="44.0" layoutY="464.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="129.0" layoutX="176.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Button fx:id="trocarNomeUsuario" layoutX="61.0" layoutY="501.0" mnemonicParsing="false" onAction="#mostrarCampoTrocarNomeUsuario" onMouseEntered="#exibirTextoTrocarNomeUsuario" opacity="0.0" prefHeight="24.0" prefWidth="121.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarFotoUsuario" layoutX="62.0" layoutY="372.0" mnemonicParsing="false" onAction="#alterarFotoUsuario" onMouseEntered="#exibirTextoTrocarFotoUsuario" opacity="0.0" prefHeight="114.0" prefWidth="114.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+
+</AnchorPane>

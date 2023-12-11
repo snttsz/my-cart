@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfacegrafica.controllers.ExibirProdutoController">
+   <children>
+      <TextField fx:id="novoNomeUsuario" layoutX="50.0" layoutY="501.0" onKeyPressed="#checarEnterTrocaNomeUsuario" onMouseExited="#cancelarTrocaNome" opacity="0.0" prefHeight="33.0" prefWidth="162.0" promptText="DIgite o novo nome" />
+      <SplitMenuButton fx:id="categoriasMenu" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="225.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="62.0" prefWidth="241.0" text="SplitMenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+      <ImageView fx:id="imgView" fitHeight="575.0" fitWidth="1142.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/layout1-padrao.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="inicio" layoutX="1.0" layoutY="161.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="categorias" layoutX="1.0" layoutY="226.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="lojasCadastradas" layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onMouseEntered="#botaoMenuMouseOn" onMouseExited="#botaoMenuMouseOff" onMousePressed="#botaoMenuClicked" onMouseReleased="#botaoMenuMouseOn" opacity="0.0" prefHeight="62.0" prefWidth="241.0" text="Button" textFill="TRANSPARENT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <TextField fx:id="pesquisarField" layoutX="450.0" layoutY="59.0" onKeyPressed="#opacityPesquisaField" onKeyTyped="#opacityPesquisaField" opacity="0.65" prefHeight="19.0" prefWidth="390.0" promptText="Pesquisar um produto" style="-fx-background-color: white;">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Button fx:id="pesquisar" layoutX="850.0" layoutY="59.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="33.0" prefWidth="31.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarUsuario" layoutX="11.0" layoutY="361.0" mnemonicParsing="false" onAction="#sairDaConta" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="4.0" prefWidth="18.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="logomarcaInicio" layoutX="57.0" layoutY="4.0" mnemonicParsing="false" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" opacity="0.0" prefHeight="102.0" prefWidth="179.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="56.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+      <ImageView fx:id="fotoUsuario" fitHeight="114.0" fitWidth="162.0" layoutX="65.0" layoutY="372.0" onMouseEntered="#exibirTextoTrocarFotoUsuario" onMousePressed="#cursorNormal" onMouseReleased="#cursorOn" pickOnBounds="true" preserveRatio="true" style="-fx: 100;">
+         <image>
+            <Image url="@../img/avatar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="131.0" layoutX="188.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" width="48.0" />
+      <ScrollPane fx:id="scrollPane" layoutX="244.0" layoutY="199.0" prefHeight="376.0" prefWidth="852.0">
+        <content>
+          <AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="1442.0" prefWidth="835.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-width: 0; -fx-border-image-width: 0;">
+               <children>
+                  <ImageView fx:id="fotoProduto" fitHeight="239.0" fitWidth="212.0" layoutX="21.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/memoria-ram-test.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="nomeProduto" layoutX="265.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome Produto" wrappingWidth="579.62109375">
+                     <font>
+                        <Font name="System Bold Italic" size="30.0" />
+                     </font>
+                  </Text>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="24.0" layoutX="21.0" layoutY="221.0" stroke="#9e9c9c" strokeType="INSIDE" width="213.0" />
+                  <Rectangle fx:id="retanguloPorcentagem" arcHeight="5.0" arcWidth="5.0" fill="#23dd2c" height="24.0" layoutX="21.0" layoutY="221.0" stroke="#9e9c9c" strokeType="INSIDE" />
+                  <Text layoutX="264.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrecadado:" wrappingWidth="104.62109375">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="valorArrecadado" fill="#fd384f" layoutX="354.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="488.0">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="264.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor do produto:" wrappingWidth="121.0">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Text>
+                  <Text fx:id="valorProduto" layoutX="390.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="444.0">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="porcentagemProduto" layoutX="22.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0%" textAlignment="CENTER" wrappingWidth="211.62109375">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="264.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faltam:" wrappingWidth="54.0">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Text>
+                  <Text fx:id="valorFaltam" layoutX="324.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 0,0" wrappingWidth="524.0">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="33.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoria:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="23.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Especificações:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="28.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="46.01806640625">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="24.0" layoutY="939.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:" wrappingWidth="105.01806640625">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="28.0" layoutY="1088.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loja do produto:" wrappingWidth="146.0">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="nomeCategoria" layoutX="130.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nome da categoria">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="corText" layoutX="33.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cor: ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tamanhoText" layoutX="33.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tamanho:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="materialText" layoutX="33.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="alturaText" layoutX="33.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altura:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="389.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Largura:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="comprimentoText" layoutX="389.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comprimento:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="autorText" layoutX="389.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autor:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="generoText" layoutX="389.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gênero:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="cor" layoutX="128.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="material" layoutX="128.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="altura" layoutX="128.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tamanho" layoutX="128.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="autor" layoutX="522.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="genero" layoutX="522.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="largura" layoutX="522.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="comprimento" layoutX="522.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-style: italic;" text="Não definido">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Line endX="678.0" layoutX="77.0" layoutY="304.0" startX="-54.0" stroke="#9e9c9c" />
+                  <Line endX="-310.5" endY="53.0" layoutX="333.0" layoutY="251.0" startX="-310.5" startY="196.5" stroke="#9e9c9c" />
+                  <Line endX="288.0" endY="18.0" layoutX="466.0" layoutY="252.0" startX="-444.0" startY="18.0" stroke="#9e9c9c" />
+                  <Line endX="-280.0" endY="-1.5" layoutX="303.0" layoutY="270.0" startX="-280.0" startY="33.0" stroke="#9e9c9c" />
+                  <Line endX="201.5" endY="-52.5" layoutX="554.0" layoutY="499.0" startX="200.5" startY="-229.5" stroke="#9e9c9c" />
+                  <Line endX="702.0" layoutX="53.0" layoutY="447.0" startX="-31.0" stroke="#9e9c9c" />
+                  <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="528.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
+                  <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="562.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
+                  <Line endX="523.7928466796875" endY="-187.0" layoutX="230.0" layoutY="599.0" startX="-207.0" startY="-187.0" stroke="#9e9c9c" />
+                  <ScrollPane layoutX="22.0" layoutY="555.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                    <content>
+                      <AnchorPane fx:id="anchorEspecificacao" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="712.0" style="-fx-background-color: white;">
+                           <children>
+                              <TextFlow fx:id="textFlowEspecificacao" layoutX="5.0" layoutY="1.0" prefHeight="146.0" prefWidth="715.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+                  <Line endX="24.0" endY="42.5" layoutX="353.0" layoutY="261.0" startX="24.0" startY="185.5" stroke="#9e9c9c" />
+                  <ScrollPane layoutX="22.0" layoutY="759.0" prefHeight="146.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                     <content>
+                        <AnchorPane fx:id="anchorTag" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="714.0" style="-fx-background-color: white;">
+                           <children>
+                              <TextFlow fx:id="textFlowTag" layoutX="3.0" layoutY="-1.0" prefHeight="146.0" prefWidth="715.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane layoutX="23.0" layoutY="956.0" prefHeight="102.0" prefWidth="734.0" style="-fx-background-color: white; -fx-border-color: #9e9c9c;">
+                     <content>
+                        <AnchorPane fx:id="anchorDescricao" minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="716.0" style="-fx-background-color: white;">
+                           <children>
+                              <TextFlow fx:id="textFlowDescricao" layoutY="2.0" prefHeight="92.0" prefWidth="715.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <ImageView fx:id="fotoDaLoja" fitHeight="121.0" fitWidth="121.0" layoutX="27.0" layoutY="1146.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="nomeDaLoja" layoutX="28.0" layoutY="1125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da loja" wrappingWidth="162.0">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="23.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="linkProduto" layoutX="73.0" layoutY="476.0" prefHeight="30.0" prefWidth="640.0" promptText="Produto sem link..." />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="250.0" layoutY="198.0" stroke="WHITE" strokeType="INSIDE" width="831.0" />
+      <Polygon fx:id="setaInicio" layoutX="276.0" layoutY="224.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaCategorias" layoutX="275.0" layoutY="288.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="setaLojasCadastradas" layoutX="275.0" layoutY="350.0" opacity="0.0" points="-34.000030517578125, -63.0, -34.000030517578125, 1.0, -17.100006103515625, -27.0" stroke="BLACK" strokeType="INSIDE" />
+      <Text fx:id="username" fill="WHITE" layoutX="41.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER" wrappingWidth="162.0">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Text>
+      <Circle fill="#1f93ff00" layoutX="123.0" layoutY="429.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="22.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="44.0" layoutY="464.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="33.0" layoutX="169.0" layoutY="364.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="38.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="166.0" layoutY="459.0" stroke="BLACK" strokeType="INSIDE" width="54.0" />
+      <Button fx:id="trocarFotoUsuario" layoutX="66.0" layoutY="369.0" mnemonicParsing="false" onAction="#alterarFotoUsuario" onMouseEntered="#exibirTextoTrocarFotoUsuario" opacity="0.0" prefHeight="114.0" prefWidth="121.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="trocarNomeUsuario" layoutX="61.0" layoutY="501.0" mnemonicParsing="false" onAction="#mostrarCampoTrocarNomeUsuario" onMouseEntered="#exibirTextoTrocarNomeUsuario" opacity="0.0" prefHeight="24.0" prefWidth="121.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="33.0" layoutX="801.0" layoutY="164.0" stroke="WHITE" strokeType="INSIDE" width="292.0" />
+      <Button fx:id="sair" layoutX="249.0" layoutY="163.0" mnemonicParsing="false" onAction="#voltarParaInicio" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Sair" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="editarProduto" layoutX="774.0" layoutY="166.0" mnemonicParsing="false" onAction="#editarProduto" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Editar Produto" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="removerProduto" layoutX="918.0" layoutY="166.0" mnemonicParsing="false" onAction="#removerProduto" onMouseClicked="#clickedButton" onMouseEntered="#onButton" onMouseExited="#offButton" onMousePressed="#clickedButton" onMouseReleased="#onButton" prefHeight="24.0" prefWidth="162.0" style="-fx-background-color: black; -fx-background-radius: 50;" text="Remover Produto" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+   </children>
+
+</AnchorPane>
