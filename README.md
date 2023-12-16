@@ -11,6 +11,8 @@ Authors: <br>
 
 ## How to Setup 
 
+*Java 17 or higher is required to run this program.*
+
 ### VSCode
 
 In your Visual Studio Code, click on the "Run" button, placed in top left menu, just bellow the window name. Then, click on "Add Configuration" and choose the Java option. It will create a launch.json file in your project, so you can setup the configurations VSCode will use to compile your program. 
