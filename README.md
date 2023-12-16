@@ -2,12 +2,15 @@
 
 This program was part of the assessments required by the Program Language II discipline. 
 
-MyCart is a shopping management program designed to simplify the shopping experience across various websites, like AliExpress, Shein and Shopee. The application allows users to easily track their purchases, managing the amount already collected for each product and monitoring the remaining amount. It also offers various features, such as adding tags for organization, including favorite stores, registering direct links to products, and tracking values. It acts as a universal cart, streamlining the management of purchases across different websites.
+MyCart is a shopping management program designed to simplify the shopping experience across various websites, like AliExpress, Shein and Shopee. The application allows users to easily track their purchases, managing the amount already collected for each product and monitoring the remaining amount. 
+
+It also offers various features, such as adding tags for organization, including favorite stores, registering direct links to products, and tracking values. It acts as a universal cart, streamlining the management of purchases across different websites.
 
 Authors: <br>
 [@snttsz](https://github.com/snttsz) - Glenda Santana<br>
 [@LuisHBM](https://github.com/LuisHBM) - Luís Henrique Magalhães<br>
 [@KalvinAlbuquerque](https://github.com/KalvinAlbuquerque) - Kalvin Albuquerque
+
 
 ## How to Setup 
 
