@@ -1,6 +1,6 @@
 # My Cart
 
-This program was part of the assessments required by the Program Language II discipline. 
+This project was part of the assessments required by the Program Language II discipline. 
 
 MyCart is a shopping management program designed to simplify the shopping experience across various websites, like AliExpress, Shein and Shopee. The application allows users to easily track their purchases, managing the amount already collected for each product and monitoring the remaining amount. 
 
