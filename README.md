@@ -13,7 +13,7 @@ Authors: <br>
 
 ### VSCode
 
-In your Visual Studio Code, click on the "Run" button, placed in top left menu, just bellow the window name. Then, click on "Add Configuration" and choose the Java option. It will create a launch.json file in your project, so you cant setup the configurations VSCode will use to compile your program. 
+In your Visual Studio Code, click on the "Run" button, placed in top left menu, just bellow the window name. Then, click on "Add Configuration" and choose the Java option. It will create a launch.json file in your project, so you can setup the configurations VSCode will use to compile your program. 
 
 Search for the class that has your "main" function and create a new key named "vmArgs", put the : and open the quotation marks ("") to set the value of the key. As we're only using JAVAFX as external module, you'll just have to paste this line:
 
